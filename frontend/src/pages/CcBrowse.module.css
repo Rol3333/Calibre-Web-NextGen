@@ -10,12 +10,51 @@
   justify-content: space-between;
   gap: var(--sp-3);
   margin-bottom: var(--sp-5);
+  flex-wrap: wrap;
 }
 
 .title {
   font-family: var(--font-display);
   font-size: var(--fs-xl);
   color: var(--text);
+}
+
+/* ── books-placement toolbar (after-tree / after-children) ────────────── */
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+}
+
+.toolbarLabel {
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+}
+
+.viewToggle {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  background: var(--surface-2);
+  border-radius: var(--r-md);
+}
+.viewToggle button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  padding: 0 var(--sp-3);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  border-radius: var(--r-sm);
+}
+.viewToggle button[aria-pressed='true'] {
+  color: var(--accent-text);
+  background: var(--accent-soft);
+}
+.viewToggle button:focus-visible {
+  outline: 2px solid var(--accent-ring);
+  outline-offset: 2px;
 }
 
 .count {
@@ -100,6 +139,11 @@
 .treeNode summary:hover { background: var(--surface-2); }
 .treeNode summary:focus-visible { outline: 2px solid var(--accent-ring); outline-offset: 2px; }
 
+/* Leaf rows use the same flex row as summaries (marker | name | count) but
+   without cursor/hover affordances that imply expandability. */
+div.treeSummary { cursor: default; }
+div.treeSummary:hover { background: transparent; }
+
 .chevron {
   flex-shrink: 0;
   color: var(--text-faint);
@@ -107,7 +151,14 @@
 }
 .treeNode[open] > summary .chevron { transform: rotate(90deg); }
 
+.nodeIcon {
+  flex-shrink: 0;
+  color: var(--text-muted);
+}
+
 .nodeLink {
+  flex: 1;
+  min-width: 0;
   color: var(--text);
   overflow-wrap: anywhere;
 }
@@ -126,6 +177,41 @@
   border-left: 1px solid var(--border);
   margin-left: calc(var(--sp-3) + 8px);
 }
+
+/* ── books inserted inside the tree (after-children mode) ─────────────── */
+
+.booksInset { margin: var(--sp-2) 0; }
+
+.insetBooks {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+  margin: var(--sp-2) 0;
+}
+
+/* "───── Books ─────" divider: a hairline with the label interrupting it,
+   so the block reads as content belonging to the selected node rather than
+   as another hierarchy level. */
+.insetDivider {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.insetDivider::before,
+.insetDivider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+.insetDividerLabel { flex-shrink: 0; }
 
 /* ── books under a node ───────────────────────────────────────────────── */
 
@@ -152,6 +238,13 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: var(--sp-4);
+}
+
+/* Inside the tree inset the available width shrinks with depth — tighter
+   columns keep the cards usable on narrow viewports too. */
+.insetBooks .bookGrid {
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: var(--sp-3);
 }
 
 .pager {
