@@ -2,7 +2,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { Link, useSearch } from 'wouter';
 import {
   ChevronLeft, ChevronRight, ChevronRight as Chevron,
-  Folder, FolderOpen, FileText,
+  Folder, FolderOpen,
 } from 'lucide-react';
 import { useColumns, useCcTree, useCcBooks, useMe } from '../lib/queries';
 import type { CcNode } from '../lib/api';
@@ -61,7 +61,8 @@ function TreeNode({ node, colId, selected, booksSlot }: {
     return (
       <li className={styles.treeNode}>
         <div className={styles.treeSummary}>
-          <FileText size={15} className={styles.nodeIcon} aria-hidden="true" focusable={false} />
+          <span className={styles.chevronPlaceholder} aria-hidden="true" />
+          <span className={styles.leafMarker} aria-hidden="true">•</span>
           {link}
           {count}
         </div>
