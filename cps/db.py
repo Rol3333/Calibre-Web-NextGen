@@ -2425,6 +2425,30 @@ class CalibreDB:
         cc = cc_classes[col_id]
         return cc.value.in_(hierarchy.subtree_values(node))
 
+    def flat_cc_filter(self, col_id, value):
+        """SQLAlchemy filter matching one exact stored value of a flat column.
+
+        The counterpart to ``hierarchical_cc_filter``: a flat column's stored
+        value is an opaque atomic string. Dewey ``778.3`` is ONE
+        classification, not a ``778`` node with a ``3`` child, so there is
+        deliberately no prefix expansion and no LIKE here. A node that happens
+        to be a valid hierarchical path (``778.3`` where ``778`` also exists)
+        must not pull in its "descendants".
+        """
+        return cc_classes[col_id].value == value
+
+    def is_flat_cc_column(self, col_id):
+        """True when ``col_id`` is a browsable column that is NOT a hierarchy.
+
+        The single source of truth for the two-mode browse model. A column is
+        hierarchical exactly when ``get_hierarchical_column_ids`` detected a
+        real prefix relationship; everything else tag-like is flat. Callers
+        must not re-derive this, or the sidebar, the browse route, OPDS and
+        the SPA can disagree about what a column is.
+        """
+        return (col_id in cc_classes
+                and col_id not in self.get_hierarchical_column_ids())
+
     def get_hierarchical_column_ids(self, ttl=300):
         """Return the set of custom column ids that behave as hierarchies.
 
