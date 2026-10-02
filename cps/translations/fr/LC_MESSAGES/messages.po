@@ -263,6 +263,14 @@ msgstr ""
 "caractères maximum."
 
 #: cps/admin.py
+msgid "Invalid default body font option"
+msgstr "Option de police de corps par défaut invalide"
+
+#: cps/admin.py
+msgid "Invalid default display font option"
+msgstr "Option de police d’affichage par défaut invalide"
+
+#: cps/admin.py
 msgid ""
 "The title-sort rule was saved, but reordering the existing library failed — "
 "books may keep their previous order until you retry or edit them."
@@ -3617,6 +3625,24 @@ msgstr ""
 "S’applique aux comptes créés à partir de maintenant. Chacun choisit le sien "
 "dans Compte → Thème."
 
+#: cps/spa_strings.py cps/templates/config_view_edit.html
+msgid "Default UI body font for new users"
+msgstr ""
+"Police de corps par défaut de l’interface pour les nouveaux utilisateurs"
+
+#: cps/spa_strings.py cps/templates/config_view_edit.html
+msgid "Default UI display font for new users"
+msgstr ""
+"Police d’affichage par défaut de l’interface pour les nouveaux utilisateurs"
+
+#: cps/spa_strings.py cps/templates/config_view_edit.html
+msgid ""
+"Applies to accounts created from now on. Each user can change these fonts "
+"under Account settings."
+msgstr ""
+"S’applique aux comptes créés à partir de maintenant. Chaque utilisateur peut "
+"modifier ces polices dans les paramètres du compte."
+
 #: cps/spa_strings.py
 msgid "Add a format"
 msgstr "Ajouter un format"
@@ -3886,15 +3912,15 @@ msgstr "Par défaut (Optima / Sans-Serif)"
 msgid "Default (Bookish Serif)"
 msgstr "Par défaut (Bookish Serif)"
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "System Sans-Serif"
 msgstr "Police sans empattement du système"
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "Bookish Serif"
 msgstr "Bookish Serif"
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "Monospace"
 msgstr "Chasse fixe"
 
@@ -6207,7 +6233,7 @@ msgstr "Date d'ajout"
 msgid "Declined. {name} was not connected."
 msgstr "Refusé. {name} n’a pas été connecté."
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "Default (System Sans-Serif)"
 msgstr "Par défaut (police sans empattement du système)"
 
@@ -12690,8 +12716,8 @@ msgid ""
 "be changed here; secret-file rotation takes effect after restart."
 msgstr ""
 "Generic OIDC est géré par l’environnement. Ses paramètres et son secret ne "
-"peuvent pas être modifiés ici ; le renouvellement du secret monté prend effet "
-"après redémarrage."
+"peuvent pas être modifiés ici ; le renouvellement du secret monté prend "
+"effet après redémarrage."
 
 #: cps/templates/config_edit.html
 #, python-format
@@ -12699,8 +12725,8 @@ msgid ""
 "Generic OIDC is inactive because its environment configuration is incomplete "
 "or invalid: %(reason)s"
 msgstr ""
-"Generic OIDC est inactif car sa configuration d’environnement est "
-"incomplète ou invalide : %(reason)s"
+"Generic OIDC est inactif car sa configuration d’environnement est incomplète "
+"ou invalide : %(reason)s"
 
 #: cps/templates/config_edit.html
 msgid "Server Configuration"

@@ -242,6 +242,14 @@ msgid ""
 msgstr ""
 
 #: cps/admin.py
+msgid "Invalid default body font option"
+msgstr ""
+
+#: cps/admin.py
+msgid "Invalid default display font option"
+msgstr ""
+
+#: cps/admin.py
 msgid ""
 "The title-sort rule was saved, but reordering the existing library failed — "
 "books may keep their previous order until you retry or edit them."
@@ -3471,6 +3479,20 @@ msgid ""
 msgstr ""
 "Dotyczy kont tworzonych od teraz. Każdy może wybrać własny w Konto → Motyw."
 
+#: cps/spa_strings.py cps/templates/config_view_edit.html
+msgid "Default UI body font for new users"
+msgstr ""
+
+#: cps/spa_strings.py cps/templates/config_view_edit.html
+msgid "Default UI display font for new users"
+msgstr ""
+
+#: cps/spa_strings.py cps/templates/config_view_edit.html
+msgid ""
+"Applies to accounts created from now on. Each user can change these fonts "
+"under Account settings."
+msgstr ""
+
 #: cps/spa_strings.py
 msgid "Add a format"
 msgstr "Dodaj format"
@@ -3740,15 +3762,15 @@ msgstr "Domyślna (Optima / bezszeryfowa)"
 msgid "Default (Bookish Serif)"
 msgstr "Domyślna (szeryfowa, książkowa)"
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "System Sans-Serif"
 msgstr "Systemowa bezszeryfowa"
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "Bookish Serif"
 msgstr "Szeryfowa, książkowa"
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "Monospace"
 msgstr "O stałej szerokości"
 
@@ -5996,7 +6018,7 @@ msgstr "Data dodania"
 msgid "Declined. {name} was not connected."
 msgstr ""
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "Default (System Sans-Serif)"
 msgstr "Domyślna (systemowa bezszeryfowa)"
 

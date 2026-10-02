@@ -235,6 +235,14 @@ msgid ""
 msgstr ""
 
 #: cps/admin.py
+msgid "Invalid default body font option"
+msgstr ""
+
+#: cps/admin.py
+msgid "Invalid default display font option"
+msgstr ""
+
+#: cps/admin.py
 msgid ""
 "The title-sort rule was saved, but reordering the existing library failed — "
 "books may keep their previous order until you retry or edit them."
@@ -3532,6 +3540,20 @@ msgstr ""
 "Gäller konton som skapas från och med nu. Var och en väljer sitt eget under "
 "Konto → Tema."
 
+#: cps/spa_strings.py cps/templates/config_view_edit.html
+msgid "Default UI body font for new users"
+msgstr ""
+
+#: cps/spa_strings.py cps/templates/config_view_edit.html
+msgid "Default UI display font for new users"
+msgstr ""
+
+#: cps/spa_strings.py cps/templates/config_view_edit.html
+msgid ""
+"Applies to accounts created from now on. Each user can change these fonts "
+"under Account settings."
+msgstr ""
+
 #: cps/spa_strings.py
 msgid "Add a format"
 msgstr "Lägg till ett format"
@@ -3799,15 +3821,15 @@ msgstr "Standard (Optima / sans serif)"
 msgid "Default (Bookish Serif)"
 msgstr "Standard (bokserif)"
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "System Sans-Serif"
 msgstr "Systemets sans serif"
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "Bookish Serif"
 msgstr "Bokserif"
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "Monospace"
 msgstr "Fast bredd"
 
@@ -6063,7 +6085,7 @@ msgstr "Datum tillagt"
 msgid "Declined. {name} was not connected."
 msgstr ""
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "Default (System Sans-Serif)"
 msgstr "Standard (systemets sans serif)"
 

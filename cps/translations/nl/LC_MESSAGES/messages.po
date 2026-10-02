@@ -245,6 +245,14 @@ msgstr ""
 "maximaal 80 tekens."
 
 #: cps/admin.py
+msgid "Invalid default body font option"
+msgstr "Ongeldige standaardlettertypeoptie voor tekst"
+
+#: cps/admin.py
+msgid "Invalid default display font option"
+msgstr "Ongeldige standaardlettertypeoptie voor koppen"
+
+#: cps/admin.py
 msgid ""
 "The title-sort rule was saved, but reordering the existing library failed — "
 "books may keep their previous order until you retry or edit them."
@@ -3503,6 +3511,22 @@ msgstr ""
 "Geldt voor accounts die vanaf nu worden aangemaakt. Iedereen kiest zelf "
 "onder Account → Thema."
 
+#: cps/spa_strings.py cps/templates/config_view_edit.html
+msgid "Default UI body font for new users"
+msgstr "Standaardlettertype voor UI-tekst voor nieuwe gebruikers"
+
+#: cps/spa_strings.py cps/templates/config_view_edit.html
+msgid "Default UI display font for new users"
+msgstr "Standaardkoplettertype voor nieuwe gebruikers"
+
+#: cps/spa_strings.py cps/templates/config_view_edit.html
+msgid ""
+"Applies to accounts created from now on. Each user can change these fonts "
+"under Account settings."
+msgstr ""
+"Geldt voor accounts die vanaf nu worden aangemaakt. Elke gebruiker kan deze "
+"lettertypen wijzigen bij Accountinstellingen."
+
 #: cps/spa_strings.py
 msgid "Add a format"
 msgstr "Formaat toevoegen"
@@ -3772,15 +3796,15 @@ msgstr "Standaard (Optima / Sans-Serif)"
 msgid "Default (Bookish Serif)"
 msgstr "Standaard (Bookish Serif)"
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "System Sans-Serif"
 msgstr "Systeem Sans-Serif"
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "Bookish Serif"
 msgstr "Bookish Serif"
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "Monospace"
 msgstr "Monospace"
 
@@ -6079,7 +6103,7 @@ msgstr "Datum toegevoegd"
 msgid "Declined. {name} was not connected."
 msgstr "Geweigerd. {name} is niet gekoppeld."
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "Default (System Sans-Serif)"
 msgstr "Standaard (systeem sans-serif)"
 
