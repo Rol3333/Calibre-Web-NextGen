@@ -1600,6 +1600,12 @@ _("Show {name} the global library again? Their selection is kept but no longer u
 _("Showing the first {count} matches.")
 _("Showing {shown} of {total} annotations.")
 _("Showing {shown} of {total} books from the latest device inventory.")
+_("Minimum books")
+_("Leave blank to show any number of books. The minimum is inclusive.")
+_("Enter a whole number of at least 1.")
+_("Correct the minimum books value to see results.")
+_("No matching {items} for the selected filters.")
+_("Showing {shown} of {total} {items}.")
 _("Shuffle picks")
 _("Sidebar pinned.")
 _("Sidebar unpinned.")
@@ -1924,3 +1930,6 @@ _("← Back to book")
 _("← Back to sign in")
 _("← Library")
 # ==== END AUTOGEN ====
+
+# New-user sync safety (#1057).
+_('New accounts sync only selected shelves. If no books arrive, add books to a shelf and enable its e-reader sync mark. Uncheck this to sync your whole library.')
