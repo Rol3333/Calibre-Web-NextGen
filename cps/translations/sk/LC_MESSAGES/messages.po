@@ -5072,6 +5072,10 @@ msgstr ""
 "čítania Prehliadač."
 
 #: cps/spa_strings.py
+msgid "All catalogs"
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "All shelves"
 msgstr "Všetky police"
 
@@ -5391,6 +5395,10 @@ msgid ""
 msgstr ""
 
 #: cps/spa_strings.py
+msgid "Browse this catalog"
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Browser"
 msgstr "Prehliadač"
 
@@ -5521,6 +5529,11 @@ msgstr "Skontrolovať znova"
 
 #: cps/spa_strings.py
 msgid "Check the address and the sign-in details."
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "Checked {count} catalogs for “{query}”."
 msgstr ""
 
 #: cps/spa_strings.py
@@ -8147,6 +8160,10 @@ msgid "Refresh"
 msgstr "Obnoviť"
 
 #: cps/spa_strings.py
+msgid "Refresh catalogs"
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Registering…"
 msgstr "Registruje sa…"
 
@@ -8367,6 +8384,11 @@ msgid "Restoring…"
 msgstr "Obnovuje sa…"
 
 #: cps/spa_strings.py
+msgid ""
+"Results stay separate by catalog so you can choose the edition and format."
+msgstr ""
+
+#: cps/spa_strings.py
 #, python-brace-format
 msgid "Resume at {percent} from another device"
 msgstr "Pokračovať na {percent} z iného zariadenia"
@@ -8507,8 +8529,16 @@ msgid "Scopes"
 msgstr "Rozsahy"
 
 #: cps/spa_strings.py
+msgid "Search all catalogs"
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Search inside book"
 msgstr "Hľadať v knihe"
+
+#: cps/spa_strings.py
+msgid "Search remaining catalogs"
+msgstr ""
 
 #: cps/spa_strings.py
 msgid "Search sources with different words"
@@ -8536,12 +8566,20 @@ msgid "Search: {query}"
 msgstr ""
 
 #: cps/spa_strings.py
+msgid "Searching catalogs…"
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Searching every source…"
 msgstr "Prehľadávajú sa všetky zdroje…"
 
 #: cps/spa_strings.py
 msgid "Searching this book…"
 msgstr "Prehľadáva sa táto kniha…"
+
+#: cps/spa_strings.py
+msgid "Searching this catalog…"
+msgstr ""
 
 #: cps/spa_strings.py cps/templates/cover_picker.html
 msgid "Searching…"
@@ -9442,6 +9480,12 @@ msgid "This book was already imported."
 msgstr ""
 
 #: cps/spa_strings.py
+msgid ""
+"This catalog could not be searched. Results from other catalogs are still "
+"available."
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "This catalog does not offer search."
 msgstr ""
 
@@ -10165,6 +10209,11 @@ msgstr "{count} kniha"
 #, python-brace-format
 msgid "{count} books"
 msgstr "{count} kníh"
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "{count} catalogs have not been searched yet."
+msgstr ""
 
 #: cps/spa_strings.py
 #, python-brace-format

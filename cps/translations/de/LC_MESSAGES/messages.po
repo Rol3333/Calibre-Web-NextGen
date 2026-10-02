@@ -5013,6 +5013,10 @@ msgid ""
 msgstr ""
 
 #: cps/spa_strings.py
+msgid "All catalogs"
+msgstr "Alle Kataloge"
+
+#: cps/spa_strings.py
 msgid "All shelves"
 msgstr "Alle Regale"
 
@@ -5324,6 +5328,10 @@ msgid ""
 msgstr ""
 
 #: cps/spa_strings.py
+msgid "Browse this catalog"
+msgstr "Diesen Katalog durchsuchen"
+
+#: cps/spa_strings.py
 msgid "Browser"
 msgstr ""
 
@@ -5462,6 +5470,11 @@ msgstr "Erneut prüfen"
 #: cps/spa_strings.py
 msgid "Check the address and the sign-in details."
 msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "Checked {count} catalogs for “{query}”."
+msgstr "{count} Kataloge nach „{query}“ durchsucht."
 
 #: cps/spa_strings.py
 msgid "Checking…"
@@ -8033,6 +8046,10 @@ msgid "Refresh"
 msgstr "Aktualisieren"
 
 #: cps/spa_strings.py
+msgid "Refresh catalogs"
+msgstr "Kataloge aktualisieren"
+
+#: cps/spa_strings.py
 msgid "Registering…"
 msgstr ""
 
@@ -8246,6 +8263,13 @@ msgid "Restoring…"
 msgstr ""
 
 #: cps/spa_strings.py
+msgid ""
+"Results stay separate by catalog so you can choose the edition and format."
+msgstr ""
+"Die Ergebnisse bleiben nach Katalog getrennt, damit Sie Ausgabe und Format "
+"auswählen können."
+
+#: cps/spa_strings.py
 #, python-brace-format
 msgid "Resume at {percent} from another device"
 msgstr "Bei {percent} vom anderen Gerät weiterlesen"
@@ -8384,8 +8408,16 @@ msgid "Scopes"
 msgstr ""
 
 #: cps/spa_strings.py
+msgid "Search all catalogs"
+msgstr "Alle Kataloge durchsuchen"
+
+#: cps/spa_strings.py
 msgid "Search inside book"
 msgstr "Im Buch suchen"
+
+#: cps/spa_strings.py
+msgid "Search remaining catalogs"
+msgstr "Weitere Kataloge durchsuchen"
 
 #: cps/spa_strings.py
 msgid "Search sources with different words"
@@ -8413,12 +8445,20 @@ msgid "Search: {query}"
 msgstr ""
 
 #: cps/spa_strings.py
+msgid "Searching catalogs…"
+msgstr "Kataloge werden durchsucht…"
+
+#: cps/spa_strings.py
 msgid "Searching every source…"
 msgstr "Suche in jeder Quelle…"
 
 #: cps/spa_strings.py
 msgid "Searching this book…"
 msgstr "Suche in diesem Buch…"
+
+#: cps/spa_strings.py
+msgid "Searching this catalog…"
+msgstr "Dieser Katalog wird durchsucht…"
 
 #: cps/spa_strings.py cps/templates/cover_picker.html
 msgid "Searching…"
@@ -9323,6 +9363,14 @@ msgid "This book was already imported."
 msgstr ""
 
 #: cps/spa_strings.py
+msgid ""
+"This catalog could not be searched. Results from other catalogs are still "
+"available."
+msgstr ""
+"Dieser Katalog konnte nicht durchsucht werden. Ergebnisse anderer Kataloge "
+"sind weiterhin verfügbar."
+
+#: cps/spa_strings.py
 msgid "This catalog does not offer search."
 msgstr ""
 
@@ -10015,6 +10063,11 @@ msgstr "{count} Buch"
 #, python-brace-format
 msgid "{count} books"
 msgstr "{count} Bücher"
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "{count} catalogs have not been searched yet."
+msgstr "{count} Kataloge wurden noch nicht durchsucht."
 
 #: cps/spa_strings.py
 #, python-brace-format
@@ -17424,56 +17477,3 @@ msgstr "Zeige Gelesen/Ungelesen-Abschnitt"
 #~ msgstr ""
 #~ "Bücher müssen zuerst archiviert werden und dann mit dem Gerät "
 #~ "synchronisiert werden, bevor ein Buch sicher gelöscht werden kann."
-
-#: cps/spa_strings.py
-msgid "All catalogs"
-msgstr "Alle Kataloge"
-
-#: cps/spa_strings.py
-msgid "Browse this catalog"
-msgstr "Diesen Katalog durchsuchen"
-
-#: cps/spa_strings.py
-#, python-brace-format
-msgid "Checked {count} catalogs for “{query}”."
-msgstr "{count} Kataloge nach „{query}“ durchsucht."
-
-#: cps/spa_strings.py
-msgid ""
-"Results stay separate by catalog so you can choose the edition and format."
-msgstr ""
-"Die Ergebnisse bleiben nach Katalog getrennt, damit Sie Ausgabe und Format "
-"auswählen können."
-
-#: cps/spa_strings.py
-msgid "Search all catalogs"
-msgstr "Alle Kataloge durchsuchen"
-
-#: cps/spa_strings.py
-msgid "Search remaining catalogs"
-msgstr "Weitere Kataloge durchsuchen"
-
-#: cps/spa_strings.py
-msgid "Searching catalogs…"
-msgstr "Kataloge werden durchsucht…"
-
-#: cps/spa_strings.py
-msgid "Searching this catalog…"
-msgstr "Dieser Katalog wird durchsucht…"
-
-#: cps/spa_strings.py
-msgid ""
-"This catalog could not be searched. Results from other catalogs are still "
-"available."
-msgstr ""
-"Dieser Katalog konnte nicht durchsucht werden. Ergebnisse anderer Kataloge "
-"sind weiterhin verfügbar."
-
-#: cps/spa_strings.py
-#, python-brace-format
-msgid "{count} catalogs have not been searched yet."
-msgstr "{count} Kataloge wurden noch nicht durchsucht."
-
-#: cps/spa_strings.py
-msgid "Refresh catalogs"
-msgstr "Kataloge aktualisieren"

@@ -4945,6 +4945,10 @@ msgid ""
 msgstr ""
 
 #: cps/spa_strings.py
+msgid "All catalogs"
+msgstr "Minden katalógus"
+
+#: cps/spa_strings.py
 msgid "All shelves"
 msgstr ""
 
@@ -5256,6 +5260,10 @@ msgid ""
 msgstr ""
 
 #: cps/spa_strings.py
+msgid "Browse this catalog"
+msgstr "Katalógus böngészése"
+
+#: cps/spa_strings.py
 msgid "Browser"
 msgstr ""
 
@@ -5395,6 +5403,11 @@ msgstr ""
 #: cps/spa_strings.py
 msgid "Check the address and the sign-in details."
 msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "Checked {count} catalogs for “{query}”."
+msgstr "{count} katalógus ellenőrizve erre: „{query}”."
 
 #: cps/spa_strings.py
 msgid "Checking…"
@@ -7962,6 +7975,10 @@ msgid "Refresh"
 msgstr "Frissítés"
 
 #: cps/spa_strings.py
+msgid "Refresh catalogs"
+msgstr "Katalógusok frissítése"
+
+#: cps/spa_strings.py
 msgid "Registering…"
 msgstr ""
 
@@ -8175,6 +8192,13 @@ msgid "Restoring…"
 msgstr ""
 
 #: cps/spa_strings.py
+msgid ""
+"Results stay separate by catalog so you can choose the edition and format."
+msgstr ""
+"A találatok katalógusonként külön maradnak, így kiválasztható a kiadás és a "
+"formátum."
+
+#: cps/spa_strings.py
 #, python-brace-format
 msgid "Resume at {percent} from another device"
 msgstr ""
@@ -8311,8 +8335,16 @@ msgid "Scopes"
 msgstr ""
 
 #: cps/spa_strings.py
+msgid "Search all catalogs"
+msgstr "Keresés minden katalógusban"
+
+#: cps/spa_strings.py
 msgid "Search inside book"
 msgstr ""
+
+#: cps/spa_strings.py
+msgid "Search remaining catalogs"
+msgstr "Keresés a többi katalógusban"
 
 #: cps/spa_strings.py
 msgid "Search sources with different words"
@@ -8340,12 +8372,20 @@ msgid "Search: {query}"
 msgstr ""
 
 #: cps/spa_strings.py
+msgid "Searching catalogs…"
+msgstr "Katalógusok keresése…"
+
+#: cps/spa_strings.py
 msgid "Searching every source…"
 msgstr ""
 
 #: cps/spa_strings.py
 msgid "Searching this book…"
 msgstr ""
+
+#: cps/spa_strings.py
+msgid "Searching this catalog…"
+msgstr "Keresés ebben a katalógusban…"
 
 #: cps/spa_strings.py cps/templates/cover_picker.html
 msgid "Searching…"
@@ -9238,6 +9278,14 @@ msgid "This book was already imported."
 msgstr ""
 
 #: cps/spa_strings.py
+msgid ""
+"This catalog could not be searched. Results from other catalogs are still "
+"available."
+msgstr ""
+"Ebben a katalógusban nem sikerült keresni. A többi katalógus találatai "
+"továbbra is elérhetők."
+
+#: cps/spa_strings.py
 msgid "This catalog does not offer search."
 msgstr ""
 
@@ -9927,6 +9975,11 @@ msgstr "{count} könyv"
 #, python-brace-format
 msgid "{count} books"
 msgstr "{count} könyv"
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "{count} catalogs have not been searched yet."
+msgstr "{count} katalógusban még nem történt keresés."
 
 #: cps/spa_strings.py
 #, python-brace-format
@@ -17430,56 +17483,3 @@ msgstr "Olvasott/olvasatlan mutatása"
 #~ msgstr ""
 #~ "A könyvek archiválása és az eszköz szinkronizálása szükséges ahhoz, hogy "
 #~ "egy könyvet biztonságosan törölhessen."
-
-#: cps/spa_strings.py
-msgid "All catalogs"
-msgstr "Minden katalógus"
-
-#: cps/spa_strings.py
-msgid "Browse this catalog"
-msgstr "Katalógus böngészése"
-
-#: cps/spa_strings.py
-#, python-brace-format
-msgid "Checked {count} catalogs for “{query}”."
-msgstr "{count} katalógus ellenőrizve erre: „{query}”."
-
-#: cps/spa_strings.py
-msgid ""
-"Results stay separate by catalog so you can choose the edition and format."
-msgstr ""
-"A találatok katalógusonként külön maradnak, így kiválasztható a kiadás és a "
-"formátum."
-
-#: cps/spa_strings.py
-msgid "Search all catalogs"
-msgstr "Keresés minden katalógusban"
-
-#: cps/spa_strings.py
-msgid "Search remaining catalogs"
-msgstr "Keresés a többi katalógusban"
-
-#: cps/spa_strings.py
-msgid "Searching catalogs…"
-msgstr "Katalógusok keresése…"
-
-#: cps/spa_strings.py
-msgid "Searching this catalog…"
-msgstr "Keresés ebben a katalógusban…"
-
-#: cps/spa_strings.py
-msgid ""
-"This catalog could not be searched. Results from other catalogs are still "
-"available."
-msgstr ""
-"Ebben a katalógusban nem sikerült keresni. A többi katalógus találatai "
-"továbbra is elérhetők."
-
-#: cps/spa_strings.py
-#, python-brace-format
-msgid "{count} catalogs have not been searched yet."
-msgstr "{count} katalógusban még nem történt keresés."
-
-#: cps/spa_strings.py
-msgid "Refresh catalogs"
-msgstr "Katalógusok frissítése"

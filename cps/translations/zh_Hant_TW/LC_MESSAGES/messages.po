@@ -4829,6 +4829,10 @@ msgid ""
 msgstr ""
 
 #: cps/spa_strings.py
+msgid "All catalogs"
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "All shelves"
 msgstr "全部書架"
 
@@ -5140,6 +5144,10 @@ msgid ""
 msgstr ""
 
 #: cps/spa_strings.py
+msgid "Browse this catalog"
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Browser"
 msgstr ""
 
@@ -5270,6 +5278,11 @@ msgstr "再次檢查"
 
 #: cps/spa_strings.py
 msgid "Check the address and the sign-in details."
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "Checked {count} catalogs for “{query}”."
 msgstr ""
 
 #: cps/spa_strings.py
@@ -7818,6 +7831,10 @@ msgid "Refresh"
 msgstr "重新整理"
 
 #: cps/spa_strings.py
+msgid "Refresh catalogs"
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Registering…"
 msgstr "正在註冊…"
 
@@ -8031,6 +8048,11 @@ msgid "Restoring…"
 msgstr "正在還原…"
 
 #: cps/spa_strings.py
+msgid ""
+"Results stay separate by catalog so you can choose the edition and format."
+msgstr ""
+
+#: cps/spa_strings.py
 #, python-brace-format
 msgid "Resume at {percent} from another device"
 msgstr "從另一個裝置以 {percent} 繼續閱讀"
@@ -8167,8 +8189,16 @@ msgid "Scopes"
 msgstr "範圍"
 
 #: cps/spa_strings.py
+msgid "Search all catalogs"
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Search inside book"
 msgstr "搜尋書中內容"
+
+#: cps/spa_strings.py
+msgid "Search remaining catalogs"
+msgstr ""
 
 #: cps/spa_strings.py
 msgid "Search sources with different words"
@@ -8196,12 +8226,20 @@ msgid "Search: {query}"
 msgstr ""
 
 #: cps/spa_strings.py
+msgid "Searching catalogs…"
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Searching every source…"
 msgstr "正在搜尋所有來源…"
 
 #: cps/spa_strings.py
 msgid "Searching this book…"
 msgstr "正在搜尋此書…"
+
+#: cps/spa_strings.py
+msgid "Searching this catalog…"
+msgstr ""
 
 #: cps/spa_strings.py cps/templates/cover_picker.html
 msgid "Searching…"
@@ -9075,6 +9113,12 @@ msgid "This book was already imported."
 msgstr ""
 
 #: cps/spa_strings.py
+msgid ""
+"This catalog could not be searched. Results from other catalogs are still "
+"available."
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "This catalog does not offer search."
 msgstr ""
 
@@ -9749,6 +9793,11 @@ msgstr "{count} 本書"
 #, python-brace-format
 msgid "{count} books"
 msgstr "{count} 本書"
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "{count} catalogs have not been searched yet."
+msgstr ""
 
 #: cps/spa_strings.py
 #, python-brace-format

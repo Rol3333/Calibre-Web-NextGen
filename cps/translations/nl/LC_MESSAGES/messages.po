@@ -5056,6 +5056,10 @@ msgstr ""
 "leesbron Browser."
 
 #: cps/spa_strings.py
+msgid "All catalogs"
+msgstr "Alle catalogi"
+
+#: cps/spa_strings.py
 msgid "All shelves"
 msgstr "Alle boekenplanken"
 
@@ -5387,6 +5391,10 @@ msgstr ""
 "je apparaat gedownload."
 
 #: cps/spa_strings.py
+msgid "Browse this catalog"
+msgstr "Deze catalogus bekijken"
+
+#: cps/spa_strings.py
 msgid "Browser"
 msgstr "Browser"
 
@@ -5525,6 +5533,11 @@ msgstr "Opnieuw controleren"
 #: cps/spa_strings.py
 msgid "Check the address and the sign-in details."
 msgstr "Controleer het adres en de aanmeldgegevens."
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "Checked {count} catalogs for “{query}”."
+msgstr "{count} catalogi doorzocht op “{query}”."
 
 #: cps/spa_strings.py
 msgid "Checking…"
@@ -8190,6 +8203,10 @@ msgid "Refresh"
 msgstr "Verversen"
 
 #: cps/spa_strings.py
+msgid "Refresh catalogs"
+msgstr "Catalogi vernieuwen"
+
+#: cps/spa_strings.py
 msgid "Registering…"
 msgstr "Registreren…"
 
@@ -8410,6 +8427,13 @@ msgid "Restoring…"
 msgstr "Herstellen…"
 
 #: cps/spa_strings.py
+msgid ""
+"Results stay separate by catalog so you can choose the edition and format."
+msgstr ""
+"De resultaten blijven per catalogus gescheiden, zodat je de editie en het "
+"formaat kunt kiezen."
+
+#: cps/spa_strings.py
 #, python-brace-format
 msgid "Resume at {percent} from another device"
 msgstr "Verder lezen bij {percent} vanaf een ander apparaat"
@@ -8553,8 +8577,16 @@ msgid "Scopes"
 msgstr "Scopes"
 
 #: cps/spa_strings.py
+msgid "Search all catalogs"
+msgstr "Alle catalogi doorzoeken"
+
+#: cps/spa_strings.py
 msgid "Search inside book"
 msgstr "Zoeken in het boek"
+
+#: cps/spa_strings.py
+msgid "Search remaining catalogs"
+msgstr "Overige catalogi doorzoeken"
 
 #: cps/spa_strings.py
 msgid "Search sources with different words"
@@ -8582,12 +8614,20 @@ msgid "Search: {query}"
 msgstr "Zoeken: {query}"
 
 #: cps/spa_strings.py
+msgid "Searching catalogs…"
+msgstr "Catalogi doorzoeken…"
+
+#: cps/spa_strings.py
 msgid "Searching every source…"
 msgstr "Elke bron doorzoeken…"
 
 #: cps/spa_strings.py
 msgid "Searching this book…"
 msgstr "Dit boek wordt doorzocht…"
+
+#: cps/spa_strings.py
+msgid "Searching this catalog…"
+msgstr "Deze catalogus doorzoeken…"
 
 #: cps/spa_strings.py cps/templates/cover_picker.html
 msgid "Searching…"
@@ -9541,6 +9581,14 @@ msgid "This book was already imported."
 msgstr "Dit boek is al geïmporteerd."
 
 #: cps/spa_strings.py
+msgid ""
+"This catalog could not be searched. Results from other catalogs are still "
+"available."
+msgstr ""
+"Deze catalogus kon niet worden doorzocht. Resultaten van andere catalogi "
+"blijven beschikbaar."
+
+#: cps/spa_strings.py
 msgid "This catalog does not offer search."
 msgstr "Deze catalogus biedt geen zoekfunctie."
 
@@ -10298,6 +10346,11 @@ msgstr "{count} boek"
 #, python-brace-format
 msgid "{count} books"
 msgstr "{count} boeken"
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "{count} catalogs have not been searched yet."
+msgstr "{count} catalogi zijn nog niet doorzocht."
 
 #: cps/spa_strings.py
 #, python-brace-format
@@ -18008,56 +18061,3 @@ msgstr "Toon gelezen/niet gelezen selectie"
 #~ msgstr ""
 #~ "Boeken moeten eerst worden gearchiveerd en het apparaat moet worden "
 #~ "gesynchroniseerd, voordat een boek veilig kan worden verwijderd."
-
-#: cps/spa_strings.py
-msgid "All catalogs"
-msgstr "Alle catalogi"
-
-#: cps/spa_strings.py
-msgid "Browse this catalog"
-msgstr "Deze catalogus bekijken"
-
-#: cps/spa_strings.py
-#, python-brace-format
-msgid "Checked {count} catalogs for “{query}”."
-msgstr "{count} catalogi doorzocht op “{query}”."
-
-#: cps/spa_strings.py
-msgid ""
-"Results stay separate by catalog so you can choose the edition and format."
-msgstr ""
-"De resultaten blijven per catalogus gescheiden, zodat je de editie en het "
-"formaat kunt kiezen."
-
-#: cps/spa_strings.py
-msgid "Search all catalogs"
-msgstr "Alle catalogi doorzoeken"
-
-#: cps/spa_strings.py
-msgid "Search remaining catalogs"
-msgstr "Overige catalogi doorzoeken"
-
-#: cps/spa_strings.py
-msgid "Searching catalogs…"
-msgstr "Catalogi doorzoeken…"
-
-#: cps/spa_strings.py
-msgid "Searching this catalog…"
-msgstr "Deze catalogus doorzoeken…"
-
-#: cps/spa_strings.py
-msgid ""
-"This catalog could not be searched. Results from other catalogs are still "
-"available."
-msgstr ""
-"Deze catalogus kon niet worden doorzocht. Resultaten van andere catalogi "
-"blijven beschikbaar."
-
-#: cps/spa_strings.py
-#, python-brace-format
-msgid "{count} catalogs have not been searched yet."
-msgstr "{count} catalogi zijn nog niet doorzocht."
-
-#: cps/spa_strings.py
-msgid "Refresh catalogs"
-msgstr "Catalogi vernieuwen"
