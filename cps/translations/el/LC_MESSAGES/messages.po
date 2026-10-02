@@ -12064,6 +12064,19 @@ msgid "Use OAuth"
 msgstr "Χρήση OAuth"
 
 #: cps/templates/config_edit.html
+msgid ""
+"Generic OIDC is managed by the environment. Its settings and secret cannot "
+"be changed here; secret-file rotation takes effect after restart."
+msgstr ""
+
+#: cps/templates/config_edit.html
+#, python-format
+msgid ""
+"Generic OIDC is inactive because its environment configuration is incomplete "
+"or invalid: %(reason)s"
+msgstr ""
+
+#: cps/templates/config_edit.html
 msgid "Server Configuration"
 msgstr "Διαμόρφωση Διακομιστή"
 
@@ -12537,6 +12550,16 @@ msgid "Generic OAuth Provider"
 msgstr ""
 
 #: cps/templates/config_edit.html
+msgid ""
+"Generic OIDC settings are supplied by the environment and are read-only "
+"here. They are not saved to the application database."
+msgstr ""
+
+#: cps/templates/config_edit.html
+msgid "Environment-managed Generic OIDC settings"
+msgstr ""
+
+#: cps/templates/config_edit.html
 msgid "OAuth Metadata URL (for auto-discovery)"
 msgstr ""
 
@@ -12621,6 +12644,16 @@ msgstr "%(provider)s OAuth Ταυτότητα Πελάτη"
 #, fuzzy
 msgid "OAuth Client Secret"
 msgstr "%(provider)s OAuth Μυστικό Πελάτη"
+
+#: cps/templates/config_edit.html
+msgid "Supplied by environment"
+msgstr ""
+
+#: cps/templates/config_edit.html
+msgid ""
+"The secret is never displayed or saved in the application database. Restart "
+"the service after rotating a mounted secret file."
+msgstr ""
 
 #: cps/templates/config_edit.html
 #, fuzzy

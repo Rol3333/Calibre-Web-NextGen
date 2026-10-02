@@ -11967,6 +11967,19 @@ msgid "Use OAuth"
 msgstr "使用 OAuth 认证"
 
 #: cps/templates/config_edit.html
+msgid ""
+"Generic OIDC is managed by the environment. Its settings and secret cannot "
+"be changed here; secret-file rotation takes effect after restart."
+msgstr ""
+
+#: cps/templates/config_edit.html
+#, python-format
+msgid ""
+"Generic OIDC is inactive because its environment configuration is incomplete "
+"or invalid: %(reason)s"
+msgstr ""
+
+#: cps/templates/config_edit.html
 msgid "Server Configuration"
 msgstr "服务器配置"
 
@@ -12442,6 +12455,16 @@ msgid "Generic OAuth Provider"
 msgstr "通用 OAuth 提供商"
 
 #: cps/templates/config_edit.html
+msgid ""
+"Generic OIDC settings are supplied by the environment and are read-only "
+"here. They are not saved to the application database."
+msgstr ""
+
+#: cps/templates/config_edit.html
+msgid "Environment-managed Generic OIDC settings"
+msgstr ""
+
+#: cps/templates/config_edit.html
 msgid "OAuth Metadata URL (for auto-discovery)"
 msgstr "OAuth 元数据 URL (用于自动发现)"
 
@@ -12530,6 +12553,16 @@ msgstr "%(provider)s OAuth 客户端 Id"
 #, fuzzy
 msgid "OAuth Client Secret"
 msgstr "%(provider)s OAuth 客户端 Secret"
+
+#: cps/templates/config_edit.html
+msgid "Supplied by environment"
+msgstr ""
+
+#: cps/templates/config_edit.html
+msgid ""
+"The secret is never displayed or saved in the application database. Restart "
+"the service after rotating a mounted secret file."
+msgstr ""
 
 #: cps/templates/config_edit.html
 #, fuzzy
