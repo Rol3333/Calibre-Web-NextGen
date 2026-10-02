@@ -5669,6 +5669,10 @@ msgid "Could not search this book."
 msgstr "無法搜尋此書。"
 
 #: cps/spa_strings.py
+msgid "Could not select all books. Try again."
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Could not start the duplicate scan."
 msgstr "無法啟動重複掃描。"
 
@@ -8271,6 +8275,17 @@ msgstr "選取群組中所有項目"
 
 #: cps/spa_strings.py
 #, python-brace-format
+msgid ""
+"Select all is limited to {max} books. Narrow the current view and try again."
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "Select all {count} books"
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
 msgid "Select all {n}"
 msgstr "選取所有 {n}"
 
@@ -8289,8 +8304,21 @@ msgid "Select note: {text}"
 msgstr "選取筆記：{text}"
 
 #: cps/spa_strings.py
+#, python-brace-format
+msgid "Selected all {count} books in this view."
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Selected books"
 msgstr "已選取的書籍"
+
+#: cps/spa_strings.py
+msgid "Selecting all books in this view…"
+msgstr ""
+
+#: cps/spa_strings.py
+msgid "Selecting…"
+msgstr ""
 
 #: cps/spa_strings.py cps/templates/detail.html
 msgid "Send"
@@ -9722,6 +9750,11 @@ msgstr "所有規則"
 
 #: cps/spa_strings.py
 msgid "an unknown address"
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "and {count} more"
 msgstr ""
 
 #: cps/spa_strings.py

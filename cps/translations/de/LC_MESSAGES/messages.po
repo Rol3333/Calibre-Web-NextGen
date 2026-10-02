@@ -5863,6 +5863,10 @@ msgid "Could not search this book."
 msgstr ""
 
 #: cps/spa_strings.py
+msgid "Could not select all books. Try again."
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Could not start the duplicate scan."
 msgstr "Duplikatsprüfung konnte nicht gestartet werden."
 
@@ -8490,6 +8494,17 @@ msgstr ""
 
 #: cps/spa_strings.py
 #, python-brace-format
+msgid ""
+"Select all is limited to {max} books. Narrow the current view and try again."
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "Select all {count} books"
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
 msgid "Select all {n}"
 msgstr ""
 
@@ -8508,7 +8523,20 @@ msgid "Select note: {text}"
 msgstr ""
 
 #: cps/spa_strings.py
+#, python-brace-format
+msgid "Selected all {count} books in this view."
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Selected books"
+msgstr ""
+
+#: cps/spa_strings.py
+msgid "Selecting all books in this view…"
+msgstr ""
+
+#: cps/spa_strings.py
+msgid "Selecting…"
 msgstr ""
 
 #: cps/spa_strings.py cps/templates/detail.html
@@ -9992,6 +10020,11 @@ msgstr "alle Regeln"
 
 #: cps/spa_strings.py
 msgid "an unknown address"
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "and {count} more"
 msgstr ""
 
 #: cps/spa_strings.py

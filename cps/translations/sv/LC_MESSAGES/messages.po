@@ -5917,6 +5917,10 @@ msgid "Could not search this book."
 msgstr "Kunde inte söka i den här boken."
 
 #: cps/spa_strings.py
+msgid "Could not select all books. Try again."
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Could not start the duplicate scan."
 msgstr "Kunde inte starta dubblettgenomsökningen."
 
@@ -8581,6 +8585,17 @@ msgstr "Markera alla i gruppen"
 
 #: cps/spa_strings.py
 #, python-brace-format
+msgid ""
+"Select all is limited to {max} books. Narrow the current view and try again."
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "Select all {count} books"
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
 msgid "Select all {n}"
 msgstr "Markera alla {n}"
 
@@ -8599,8 +8614,21 @@ msgid "Select note: {text}"
 msgstr "Markera anteckning: {text}"
 
 #: cps/spa_strings.py
+#, python-brace-format
+msgid "Selected all {count} books in this view."
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Selected books"
 msgstr "Valda böcker"
+
+#: cps/spa_strings.py
+msgid "Selecting all books in this view…"
+msgstr ""
+
+#: cps/spa_strings.py
+msgid "Selecting…"
+msgstr ""
 
 #: cps/spa_strings.py cps/templates/detail.html
 msgid "Send"
@@ -10093,6 +10121,11 @@ msgstr "alla regler"
 
 #: cps/spa_strings.py
 msgid "an unknown address"
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "and {count} more"
 msgstr ""
 
 #: cps/spa_strings.py

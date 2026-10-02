@@ -6058,6 +6058,10 @@ msgid "Could not search this book."
 msgstr "Impossible d’effectuer une recherche dans ce livre."
 
 #: cps/spa_strings.py
+msgid "Could not select all books. Try again."
+msgstr "Impossible de sélectionner tous les livres. Réessayez."
+
+#: cps/spa_strings.py
 msgid "Could not start the duplicate scan."
 msgstr "Impossible de lancer la recherche de doublons."
 
@@ -8810,6 +8814,19 @@ msgstr "Tout sélectionner dans le groupe"
 
 #: cps/spa_strings.py
 #, python-brace-format
+msgid ""
+"Select all is limited to {max} books. Narrow the current view and try again."
+msgstr ""
+"La sélection complète est limitée à {max} livres. Affinez la vue actuelle et "
+"réessayez."
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "Select all {count} books"
+msgstr "Sélectionner les {count} livres"
+
+#: cps/spa_strings.py
+#, python-brace-format
 msgid "Select all {n}"
 msgstr "Tout sélectionner ({n})"
 
@@ -8828,8 +8845,21 @@ msgid "Select note: {text}"
 msgstr "Sélectionner la note : {text}"
 
 #: cps/spa_strings.py
+#, python-brace-format
+msgid "Selected all {count} books in this view."
+msgstr "Les {count} livres de cette vue sont sélectionnés."
+
+#: cps/spa_strings.py
 msgid "Selected books"
 msgstr "Livres sélectionnés"
+
+#: cps/spa_strings.py
+msgid "Selecting all books in this view…"
+msgstr "Sélection de tous les livres de cette vue…"
+
+#: cps/spa_strings.py
+msgid "Selecting…"
+msgstr "Sélection…"
 
 #: cps/spa_strings.py cps/templates/detail.html
 msgid "Send"
@@ -10441,6 +10471,11 @@ msgstr "toutes les règles"
 #: cps/spa_strings.py
 msgid "an unknown address"
 msgstr "une adresse inconnue"
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "and {count} more"
+msgstr "et {count} de plus"
 
 #: cps/spa_strings.py
 msgid "any rule"
@@ -18596,31 +18631,3 @@ msgstr "Afficher la section Lu / Non lu"
 #~ msgstr ""
 #~ "Les livres doivent d'abord être archivés et l'appareil synchronisé avant "
 #~ "qu'un livre puisse être supprimé en tout sécurité."
-
-#: cps/spa_strings.py
-msgid "Could not select all books. Try again."
-msgstr "Impossible de sélectionner tous les livres. Réessayez."
-
-#: cps/spa_strings.py
-msgid "Select all is limited to {max} books. Narrow the current view and try again."
-msgstr "La sélection complète est limitée à {max} livres. Affinez la vue actuelle et réessayez."
-
-#: cps/spa_strings.py
-msgid "Select all {count} books"
-msgstr "Sélectionner les {count} livres"
-
-#: cps/spa_strings.py
-msgid "Selected all {count} books in this view."
-msgstr "Les {count} livres de cette vue sont sélectionnés."
-
-#: cps/spa_strings.py
-msgid "Selecting all books in this view…"
-msgstr "Sélection de tous les livres de cette vue…"
-
-#: cps/spa_strings.py
-msgid "Selecting…"
-msgstr "Sélection…"
-
-#: cps/spa_strings.py
-msgid "and {count} more"
-msgstr "et {count} de plus"

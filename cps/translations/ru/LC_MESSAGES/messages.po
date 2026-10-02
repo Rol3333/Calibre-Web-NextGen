@@ -5960,6 +5960,10 @@ msgid "Could not search this book."
 msgstr "Не удалось выполнить поиск по этой книге."
 
 #: cps/spa_strings.py
+msgid "Could not select all books. Try again."
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Could not start the duplicate scan."
 msgstr "Не удалось запустить поиск дубликатов."
 
@@ -8671,6 +8675,17 @@ msgstr "Выбрать всё в группе"
 
 #: cps/spa_strings.py
 #, python-brace-format
+msgid ""
+"Select all is limited to {max} books. Narrow the current view and try again."
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "Select all {count} books"
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
 msgid "Select all {n}"
 msgstr "Выбрать все {n}"
 
@@ -8689,8 +8704,21 @@ msgid "Select note: {text}"
 msgstr "Выбрать заметку: {text}"
 
 #: cps/spa_strings.py
+#, python-brace-format
+msgid "Selected all {count} books in this view."
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Selected books"
 msgstr "Выбранные книги"
+
+#: cps/spa_strings.py
+msgid "Selecting all books in this view…"
+msgstr ""
+
+#: cps/spa_strings.py
+msgid "Selecting…"
+msgstr ""
 
 #: cps/spa_strings.py cps/templates/detail.html
 msgid "Send"
@@ -10218,6 +10246,11 @@ msgstr "все правила"
 #: cps/spa_strings.py
 msgid "an unknown address"
 msgstr "неизвестный адрес"
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "and {count} more"
+msgstr ""
 
 #: cps/spa_strings.py
 msgid "any rule"

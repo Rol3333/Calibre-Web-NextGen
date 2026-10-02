@@ -5973,6 +5973,10 @@ msgid "Could not search this book."
 msgstr "No se pudo buscar en este libro."
 
 #: cps/spa_strings.py
+msgid "Could not select all books. Try again."
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Could not start the duplicate scan."
 msgstr "No se pudo iniciar el escaneo de duplicados."
 
@@ -8635,6 +8639,17 @@ msgstr "Seleccionar todo en el grupo"
 
 #: cps/spa_strings.py
 #, python-brace-format
+msgid ""
+"Select all is limited to {max} books. Narrow the current view and try again."
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "Select all {count} books"
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
 msgid "Select all {n}"
 msgstr "Seleccionar los {n}"
 
@@ -8653,8 +8668,21 @@ msgid "Select note: {text}"
 msgstr "Seleccionar nota: {text}"
 
 #: cps/spa_strings.py
+#, python-brace-format
+msgid "Selected all {count} books in this view."
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "Selected books"
 msgstr "Libros seleccionados"
+
+#: cps/spa_strings.py
+msgid "Selecting all books in this view…"
+msgstr ""
+
+#: cps/spa_strings.py
+msgid "Selecting…"
+msgstr ""
 
 #: cps/spa_strings.py cps/templates/detail.html
 msgid "Send"
@@ -10150,6 +10178,11 @@ msgstr "todas las reglas"
 
 #: cps/spa_strings.py
 msgid "an unknown address"
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "and {count} more"
 msgstr ""
 
 #: cps/spa_strings.py
