@@ -6132,6 +6132,26 @@ msgstr "Mot de passe actuel"
 msgid "Currently reading"
 msgstr "Lecture en cours"
 
+#: cps/templates/detail.html
+msgid "Open without saving progress"
+msgstr "Ouvrir sans enregistrer la progression"
+
+#: cps/templates/_reader_lookup_banner.html
+msgid "Progress is not being saved."
+msgstr "La progression n’est pas enregistrée."
+
+#: cps/templates/detail.html
+msgid "Remove from Currently Reading"
+msgstr "Retirer de « Lecture en cours »"
+
+#: cps/templates/detail.html
+msgid "Removed from Currently Reading."
+msgstr "Retiré de « Lecture en cours »."
+
+#: cps/templates/detail.html
+msgid "Could not remove this book from Currently Reading."
+msgstr "Impossible de retirer ce livre de « Lecture en cours »."
+
 #: cps/spa_strings.py
 msgid "Custom"
 msgstr "Personnalisé"
@@ -17291,8 +17311,9 @@ msgstr "Afficher la section Lu / Non lu"
 #~ "Aucune étagère pour le moment. Créez-en une ci-dessus pour commencer à "
 #~ "regrouper des livres."
 
-#~ msgid "Public"
-#~ msgstr "Publique"
+#: cps/spa_strings.py
+msgid "Public"
+msgstr "Publique"
 
 #~ msgid "Choose a SABnzbd connection"
 #~ msgstr "Choisir une connexion SABnzbd"
