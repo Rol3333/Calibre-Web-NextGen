@@ -2,7 +2,7 @@ import { Fragment, useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'wouter';
 import {
   Library, Globe, BookCopy, BookPlus,
-  Info, ListChecks, Table2, Wand2, Files, SlidersHorizontal, Check, RotateCcw, X, Pin, PinOff, ChevronDown, Plus,
+  Info, ListChecks, Table2, Wand2, Files, SlidersHorizontal, Check, RotateCcw, X, Pin, PinOff, ChevronDown, Plus, Tag,
 } from 'lucide-react';
 import { useShelves, useMe, useMagicShelves, useUpdateSidebar, useColumns } from '../lib/queries';
 import { useT } from '../lib/i18n';
