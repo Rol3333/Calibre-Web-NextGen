@@ -10213,6 +10213,13 @@ msgstr ""
 msgid "← Library"
 msgstr ""
 
+#: cps/spa_strings.py
+msgid ""
+"New accounts sync only selected shelves. If no books arrive, add books to a "
+"shelf and enable its e-reader sync mark. Uncheck this to sync your whole "
+"library."
+msgstr ""
+
 #: cps/tasks_status.py
 msgid "Waiting"
 msgstr "Várakozás"
@@ -16519,6 +16526,12 @@ msgstr ""
 msgid "Sync only books in selected shelves with Kobo"
 msgstr ""
 "Csak a kiválasztott polcokon lévő könyveket szinkronizálja Kobo eszközzel"
+
+#: cps/templates/user_edit.html
+msgid ""
+"New accounts sync only selected shelves. If no books arrive, add books to a "
+"shelf and enable its Kobo sync mark. Uncheck this to sync your whole library."
+msgstr ""
 
 #: cps/templates/user_edit.html
 msgid ""

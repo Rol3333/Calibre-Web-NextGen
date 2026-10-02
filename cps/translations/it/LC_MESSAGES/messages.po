@@ -10484,6 +10484,13 @@ msgstr "← Torna al login"
 msgid "← Library"
 msgstr "← Biblioteca"
 
+#: cps/spa_strings.py
+msgid ""
+"New accounts sync only selected shelves. If no books arrive, add books to a "
+"shelf and enable its e-reader sync mark. Uncheck this to sync your whole "
+"library."
+msgstr ""
+
 #: cps/tasks_status.py
 msgid "Waiting"
 msgstr "Attendi"
@@ -17094,6 +17101,12 @@ msgstr ""
 #: cps/templates/user_edit.html
 msgid "Sync only books in selected shelves with Kobo"
 msgstr "Sincronizza con Kobo unicamente i libri negli scaffali selezionati"
+
+#: cps/templates/user_edit.html
+msgid ""
+"New accounts sync only selected shelves. If no books arrive, add books to a "
+"shelf and enable its Kobo sync mark. Uncheck this to sync your whole library."
+msgstr ""
 
 #: cps/templates/user_edit.html
 msgid ""
