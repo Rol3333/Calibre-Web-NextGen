@@ -1,14 +1,15 @@
-# Translations template for Calibre-Web-NextGen.
-# Copyright (C) 2026 Calibre-Web-NextGen Contributors
-# This file is distributed under the same license as the Calibre-Web-NextGen
-# project.
+# Translations template for Calibre-Web Automated.
+# Copyright (C) 2026 Calibre-Web Automated Contributors
+# This file is distributed under the same license as the Calibre-Web
+# Automated project.
 # FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
 #
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Calibre-Web-NextGen dev\n"
-"Report-Msgid-Bugs-To: https://github.com/new-usemame/Calibre-Web-NextGen\n"
+"Project-Id-Version: Calibre-Web Automated dev\n"
+"Report-Msgid-Bugs-To: https://github.com/crocodilestick/Calibre-Web-"
+"Automated\n"
 "POT-Creation-Date: 2026-07-17 21:21-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
@@ -209,14 +210,6 @@ msgid "Settings DB is not Writeable"
 msgstr ""
 
 #: cps/admin.py
-msgid "Invalid default body font option"
-msgstr ""
-
-#: cps/admin.py
-msgid "Invalid default display font option"
-msgstr ""
-
-#: cps/admin.py
 msgid ""
 "Cannot select this Boolean column until incompatible global and user "
 "restrictions are corrected or cleared."
@@ -227,6 +220,14 @@ msgid ""
 "Support settings were not saved. Use an HTTP or HTTPS URL without "
 "credentials, with a URL up to 2048 characters and a label up to 80 "
 "characters."
+msgstr ""
+
+#: cps/admin.py
+msgid "Invalid default body font option"
+msgstr ""
+
+#: cps/admin.py
+msgid "Invalid default display font option"
 msgstr ""
 
 #: cps/admin.py

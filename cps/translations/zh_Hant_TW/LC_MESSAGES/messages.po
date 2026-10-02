@@ -224,6 +224,14 @@ msgid ""
 msgstr ""
 
 #: cps/admin.py
+msgid "Invalid default body font option"
+msgstr ""
+
+#: cps/admin.py
+msgid "Invalid default display font option"
+msgstr ""
+
+#: cps/admin.py
 msgid ""
 "The title-sort rule was saved, but reordering the existing library failed — "
 "books may keep their previous order until you retry or edit them."
@@ -3316,6 +3324,20 @@ msgid ""
 "Account → Theme."
 msgstr "適用於從現在開始建立的帳戶。每個人都可以在 帳戶 → 主題 下選擇"
 
+#: cps/spa_strings.py cps/templates/config_view_edit.html
+msgid "Default UI body font for new users"
+msgstr ""
+
+#: cps/spa_strings.py cps/templates/config_view_edit.html
+msgid "Default UI display font for new users"
+msgstr ""
+
+#: cps/spa_strings.py cps/templates/config_view_edit.html
+msgid ""
+"Applies to accounts created from now on. Each user can change these fonts "
+"under Account settings."
+msgstr ""
+
 #: cps/spa_strings.py
 msgid "Add a format"
 msgstr "新增格式"
@@ -3583,15 +3605,15 @@ msgstr "預設 (Optima / Sans-Serif)"
 msgid "Default (Bookish Serif)"
 msgstr "預設 (Bookish Serif)"
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "System Sans-Serif"
 msgstr "System Sans-Serif"
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "Bookish Serif"
 msgstr "Bookish Serif"
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "Monospace"
 msgstr "等寬字體"
 
@@ -5812,7 +5834,7 @@ msgstr "加入日期"
 msgid "Declined. {name} was not connected."
 msgstr ""
 
-#: cps/spa_strings.py
+#: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "Default (System Sans-Serif)"
 msgstr "預設（系統無襯線字體）"
 
