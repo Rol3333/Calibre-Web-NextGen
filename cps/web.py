@@ -54,7 +54,7 @@ from .custom_column_sort import (
     load_configured_columns,
     resolve_magic_shelf_sort,
 )
-from .custom_column_visibility import is_cc_visible, load_browsable_columns, seed_cc_visibility
+from .custom_column_visibility import retryable_column_reads, BROWSABLE_DATATYPES, browsable_columns, is_cc_visible, save_cc_visibility
 from .redirect import get_redirect_location
 from .cw_babel import get_available_locale, get_available_translations, sanitize_locale_for_write
 from .usermanagement import login_required_if_no_ano
@@ -2510,6 +2510,7 @@ def category_list():
 @web.route("/custom_column/<int:column_id>/<path:category_path>",
            strict_slashes=False)
 @login_required_if_no_ano
+@retryable_column_reads
 def cc_category_list(column_id, category_path):
     """Tree/list view for one hierarchical custom column.
 
@@ -2525,8 +2526,8 @@ def cc_category_list(column_id, category_path):
 def browsable_cc_column(col_id):
     """The tag-like custom column ``col_id`` if this library lets it be
     browsed: it exists, is text/enumeration, and is not hidden by the admin."""
-    for col in calibre_db.get_cc_columns(config):
-        if col.id == col_id and col.datatype in ('text', 'enumeration'):
+    for col in browsable_columns(calibre_db.get_cc_columns(config, fail_on_error=True)):
+        if col.id == col_id:
             return col
     return None
 
@@ -2554,16 +2555,16 @@ def render_cc_category(page, col_id, path, order):
     if not current_user.check_visibility(constants.SIDEBAR_CATEGORY):
         abort(404)
     col = browsable_cc_column(col_id)
-    if col is None:
+    if col is None or col_id not in db.cc_classes:
         abort(404)
     # ...and a column the user hid on their profile page is not reachable by
     # URL either. The sidebar omits it, so honouring the toggle only in the
     # navigation would let anyone who knows the URL keep browsing it. The SPA
     # API already 404s here; this is the same contract for the classic route.
-    if not is_cc_visible(current_user, col_id):
+    if not is_cc_visible(current_user, col_id, fail_on_error=True):
         abort(404)
 
-    is_hierarchical = not calibre_db.is_flat_cc_column(col_id)
+    is_hierarchical = not calibre_db.is_flat_cc_column(col_id, fail_on_error=True)
 
     if is_hierarchical:
         # '/' is part of a value ("Sci-Fi/Fantasy"), never a separator.
@@ -2573,7 +2574,7 @@ def render_cc_category(page, col_id, path, order):
         # around one is part of the stored string, so the path is used
         # verbatim. Canonicalising here would turn Dewey '778.3' into
         # something the stored rows never contained.
-        path = (path or '').strip()
+        path = path or ''
 
     try:
         page = int(page)
@@ -2595,7 +2596,7 @@ def render_cc_category(page, col_id, path, order):
 
     if path and is_hierarchical:
         node = hierarchy.get_node_by_path(
-            calibre_db.get_hierarchical_tree(col_id), path)
+            calibre_db.get_hierarchical_tree(col_id, fail_on_error=True), path)
         if node is None:
             abort(404)
         entries, random, pagination = calibre_db.fill_indexpage(
@@ -2610,7 +2611,7 @@ def render_cc_category(page, col_id, path, order):
             # layout.html and index.html print title with |safe; a stored value
             # is text an edit-role user chose, so it is escaped here
             title=_("%(column)s: %(name)s", column=escape(col.name), name=escape(path)),
-            # Sort and paging links route back through books_list's cc_ branch
+            # Sort and paging retain this custom-column path, including slashes.
             page="cc_%d" % col_id, order=order[1],
             breadcrumbs=[[ (col.name, '') ] + hierarchy.breadcrumb_trail(path)],
             subcategories=node['children'], col_id=col_id)
@@ -2632,11 +2633,11 @@ def render_cc_category(page, col_id, path, order):
 
     # Root: a tree of nodes for a hierarchical column, a plain counted list
     # of whole values for a flat one.
-    entries = (calibre_db.get_hierarchical_tree(col_id) if is_hierarchical
-               else calibre_db.get_cc_flat_list(col_id))
+    entries = (calibre_db.get_hierarchical_tree(col_id, fail_on_error=True) if is_hierarchical
+               else calibre_db.get_cc_flat_list(col_id, fail_on_error=True))
     return render_title_template(
         'cc_list.html', entries=entries,
-        title=col.name, page="cclist", col_id=col_id)
+        title=col.name, page="cclist", col_id=col_id, hierarchical=is_hierarchical)
 
 
 # ################################### Download/Send ##################################################################
@@ -2986,14 +2987,6 @@ def register_post():
             content.theme = config_theme_code(getattr(config, 'config_theme', None))
         except Exception:
             pass
-        # Frozen per-column browse visibility, same as the other signup paths.
-        try:
-            _cc_columns = load_browsable_columns()
-            if _cc_columns:
-                seed_cc_visibility(content, _cc_columns, commit=False)
-        except Exception:
-            log.error("Could not seed custom column visibility for the new user",
-                      exc_info=True)
         try:
             ub.session.add(content)
             ub.session.commit()
@@ -3393,10 +3386,7 @@ def change_profile(kobo_support, hardcover_support, local_oauth_check, oauth_sta
         # Per-custom-column sidebar visibility (independent of the built-in
         # section bitflags); stored in User.view_settings as 'cc_sidebar'
         try:
-            for option in get_custom_column_visibility_options():
-                key = 'show_cc_%d' % option['id']
-                current_user.set_view_property('cc_sidebar', key,
-                                               to_save.get(key) == 'on', commit=False)
+            save_cc_visibility(current_user, get_custom_column_visibility_options(), to_save)
         except Exception:
             log.error("Could not save custom column sidebar visibility", exc_info=True)
         # A stored locale is returned verbatim by get_locale() on every later
@@ -4197,6 +4187,9 @@ def show_book(book_id):
                                      show_original_filename=show_original_filename,
                                      cc=cc,
                                      hierarchical_cc_ids=calibre_db.get_hierarchical_column_ids(),
+                                     cc_browse_ids={c.id for c in browsable_columns(cc) if c.datatype in BROWSABLE_DATATYPES
+                                                    and current_user.check_visibility(constants.SIDEBAR_CATEGORY)
+                                                    and is_cc_visible(current_user, c.id)},
                                      is_xhr=request.headers.get('X-Requested-With') == 'XMLHttpRequest',
                                      title=entry.title,
                                      books_shelfs=book_in_shelves,

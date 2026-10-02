@@ -298,7 +298,9 @@ def test_state_owners_read_the_shared_hook():
 
 def test_no_surface_renders_bookcard_without_being_in_the_list():
     """Guards the list above from going stale as new card surfaces are added."""
-    known = {name for _, name in _CARD_SURFACES} | {"BookCard.tsx"}
+    # The new custom-column surface has a real browser preference oracle;
+    # keep it out of the legacy source-text wiring checks above.
+    known = {name for _, name in _CARD_SURFACES} | {"BookCard.tsx", "CcBrowse.tsx"}
     # Test/story files render BookCard as a fixture, not as a user-facing
     # surface, so they must not read as a missed call site.
     renderers = {
