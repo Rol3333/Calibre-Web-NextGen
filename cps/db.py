@@ -2545,22 +2545,46 @@ class CalibreDB:
         if cc is None:
             return []
         rel = getattr(Books, 'custom_column_' + str(col_id))
-        q = (self.session.query(Books.id, cc.value)
+        # A value nobody carries yet ("Create new" makes one deliberately) must
+        # still be listed, or it could not be found again to assign books to.
+        #
+        # This cannot be done with a join. Books.custom_column_<id> is a
+        # RELATIONSHIP, so `select_from(cc).join(rel)` emits
+        # `FROM books JOIN custom_column_<id>` -- the relationship decides the
+        # FROM and silently discards the select_from. A LEFT OUTER JOIN in that
+        # direction is still book-driven, so a bookless value never appears.
+        #
+        # So: two queries, merged here. The value list is unfiltered (a value's
+        # existence is not book data -- filtering it by visible books would drop
+        # every bookless value and re-hide anything carried only by a restricted
+        # shelf); the counts keep the book-side filter, because a count IS a book
+        # count and must not reveal books on a shelf the caller cannot see.
+        book_q = (self.session.query(Books.id, cc.value)
             .select_from(Books)
             .join(rel)
             .distinct())
         if book_filter is not None:
-            q = q.filter(book_filter)
+            book_q = book_q.filter(book_filter)
         elif apply_common_filters:
-            q = q.filter(self.common_filters())
+            book_q = book_q.filter(self.common_filters())
         try:
-            rows = q.all()
+            rows = book_q.all()
+            every_value = [r[0] for r in self.session.query(cc.value).distinct().all()]
         except SQLAlchemyError:
             if fail_on_error:
                 raise
             log.error("Failed to read custom column %s for hierarchy tree", col_id)
             return []
-        return hierarchy.parse_tag_hierarchy([(r[0], r[1]) for r in rows])
+        seen = {value for _, value in rows if value}
+        # A value with no VISIBLE book still belongs in the tree, but must not
+        # inflate a count. parse_tag_hierarchy derives counts from distinct book
+        # keys, so an unmatched value needs a key -- and any key it is given
+        # counts as one book. They are therefore added AFTER parsing, as nodes
+        # with count 0, and their parents' totals are left alone: a subtree
+        # containing nothing visible must not report one visible book.
+        nodes = hierarchy.parse_tag_hierarchy(rows)
+        hierarchy.add_bookless_nodes(nodes, [v for v in every_value if v and v not in seen])
+        return nodes
 
     def get_cc_flat_list(self, col_id, apply_common_filters=True, book_filter=None, fail_on_error=False):
         """Return the distinct ``(value, book_count)`` rows of a flat column.
@@ -2582,24 +2606,34 @@ class CalibreDB:
         if cc is None:
             return []
         rel = getattr(Books, 'custom_column_' + str(col_id))
-        q = (self.session.query(cc.value, func.count(func.distinct(Books.id)))
+        # Same two-query shape as get_hierarchical_tree, and for the same
+        # reason: `rel` is a relationship, so joining from the value side does
+        # not work -- SQLAlchemy puts books in the FROM regardless and a
+        # bookless value disappears. Counts stay book-filtered; the value list
+        # does not, because a value's existence is not book data.
+        count_q = (self.session.query(cc.value, func.count(func.distinct(Books.id)))
             .select_from(Books)
             .join(rel)
             .group_by(cc.value))
         if book_filter is not None:
-            q = q.filter(book_filter)
+            count_q = count_q.filter(book_filter)
         elif apply_common_filters:
-            q = q.filter(self.common_filters())
+            count_q = count_q.filter(self.common_filters())
         try:
-            rows = q.all()
+            counts = dict(count_q.all())
+            every_value = [r[0] for r in self.session.query(cc.value).distinct().all()]
         except SQLAlchemyError:
             if fail_on_error:
                 raise
             log.error("Failed to read custom column %s for flat list", col_id)
             return []
-        entries = [{'name': r[0], 'path': r[0], 'count': r[1],
-                    'total_count': r[1], 'children': []}
-                   for r in rows if r[0] is not None and str(r[0]).strip()]
+        entries = []
+        for value in every_value:
+            if value is None or not str(value).strip():
+                continue
+            count = counts.get(value, 0)
+            entries.append({'name': value, 'path': value, 'count': count,
+                            'total_count': count, 'children': []})
         entries.sort(key=lambda e: e['name'].lower())
         return entries
 

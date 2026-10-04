@@ -114,12 +114,25 @@ def list_columns():
 
 
 def _node_to_json(node):
-    """One node as the SPA's wire shape (recursive)."""
+    """One node as the SPA's wire shape (recursive).
+
+    ``available`` is the point of this field. Whether a value may be deleted or
+    used as a merge source depends only on the value itself, so it is decided
+    ONCE here, by ``hierarchy.node_availability``, and published. The SPA's
+    editor and the classic template then read the same flag instead of each
+    re-deriving "does this node have children?" -- which is how the two
+    interfaces had started to disagree.
+
+    Deliberately absent: whether a value can receive a move, or be a merge
+    destination. Those depend on what the user has currently ticked or cut,
+    which only the client knows, so they cannot be published per node.
+    """
     return {
         "name": node["name"],
         "path": node["path"],
         "count": node["count"],
         "total_count": node["total_count"],
+        "available": hierarchy.node_availability(node),
         "children": [_node_to_json(child) for child in node["children"]],
     }
 

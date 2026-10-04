@@ -4,6 +4,15 @@
   padding: var(--sp-6) var(--sp-5);
 }
 
+/* Edit mode gets the whole viewport width. Value lists are wide (long dotted
+   paths, a checkbox per row) and the 1400px cap left the editor looking like a
+   half-screen panel next to empty space. Only the WIDTH is relaxed; the reading
+   surfaces keep their measure, because a 3,000px-wide book grid reads worse. */
+.containerFull {
+  max-width: none;
+  width: 100%;
+}
+
 .header {
   display: flex;
   align-items: center;
@@ -27,6 +36,15 @@
   align-items: center;
   gap: var(--sp-2);
 }
+
+/* Edit / Done toggle, top-right of the column header. */
+.editToggle {
+  display: inline-flex; align-items: center; gap: var(--sp-1); cursor: pointer;
+  background: var(--surface-2); border: 1px solid var(--border); border-radius: var(--r-sm);
+  color: var(--text); padding: var(--sp-2) var(--sp-3); font-size: var(--fs-sm);
+  white-space: nowrap; min-height: 34px;
+}
+.editToggle:hover { background: var(--surface-3); }
 
 .toolbarLabel {
   color: var(--text-muted);

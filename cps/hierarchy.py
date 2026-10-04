@@ -56,7 +56,16 @@ def parse_tag_hierarchy(values):
     """
     roots = {}
     for index, item in enumerate(values):
-        book, value = item if isinstance(item, tuple) else (('anon', index), item)
+        # Accept any 2-element SEQUENCE, not just tuple. SQLAlchemy 2.x returns
+        # `Row` objects from Query.all(), and `isinstance(row, tuple)` is False
+        # for them -- the check then fell through to the "bare string" branch and
+        # handed the whole Row to split_path, which raised `AttributeError: split`
+        # on every hierarchical column. Callers that build plain tuples still
+        # work; callers that pass query rows now work too.
+        if isinstance(item, (str, bytes)) or not hasattr(item, '__len__'):
+            book, value = ('anon', index), item
+        else:
+            book, value = item[0], item[1]
         if not value:
             continue
         parts = split_path(value)
@@ -123,6 +132,286 @@ def breadcrumb_trail(path):
         acc.append(part)
         trail.append((part, SEPARATOR.join(acc)))
     return trail
+
+
+def add_bookless_nodes(nodes, values):
+    """Insert values no visible book carries, as nodes whose counts are 0.
+
+    A value row exists whether or not any book uses it -- "Create new" makes one
+    deliberately -- but :func:`parse_tag_hierarchy` derives both ``count`` and
+    ``total_count`` from distinct book keys, so a value fed to it has to be
+    attributed to some book. These are therefore merged in afterwards, with
+    empty book sets: the node appears (so it can be found and acted on) and every
+    count stays honest.
+
+    ``total_count`` is deliberately NOT propagated upwards. A subtree containing
+    nothing visible must report 0, not 1.
+
+    Mutates and returns ``nodes``.
+    """
+    for value in values:
+        parts = split_path(value)
+        if not parts:
+            continue
+        siblings = nodes
+        path = ''
+        for i, part in enumerate(parts):
+            path = part if i == 0 else path + SEPARATOR + part
+            existing = None
+            for candidate in siblings:
+                if candidate['name'] == part:
+                    existing = candidate
+                    break
+            if existing is None:
+                existing = {'name': part, 'path': path, 'id': None,
+                            'count': 0, 'children': [],
+                            'books': set(), 'raw_values': {value},
+                            'total_count': 0}
+                siblings.append(existing)
+                siblings.sort(key=lambda n: n['name'].lower())
+            siblings = existing['children']
+    return nodes
+
+
+# --------------------------------------------------------------------------- #
+# Node manipulation rules
+# --------------------------------------------------------------------------- #
+#
+# Everything above answers "what does this tree look like". Everything below
+# answers "what would happen if you renamed/moved/merged this node" -- and
+# answers it with NO database, NO Flask and NO gettext.
+#
+# Why the split matters: the rules used to live inside
+# ``cps/api/cc_values.py``, interleaved with the queries that gather their
+# inputs, which meant (a) the classic Jinja UI had no way to reach them and (b)
+# the React SPA re-implemented the cycle guard in TypeScript, so the two copies
+# could disagree. These functions take the values they need AS ARGUMENTS, so
+# every interface can call the same implementation:
+#
+#     hierarchy.plan_move(path, new_parent, raw_values_under_node)
+#
+# Errors are returned as ``(code, subject)`` tuples rather than as translated
+# sentences, because this module must stay free of flask_babel. The caller
+# translates the code -- that is the only difference between the API's refusal
+# and the classic UI's.
+
+# Refusal codes. Callers map these to a message; they are deliberately
+# separate strings so a caller can localise or re-word without touching the
+# rules themselves.
+ERR_EMPTY_NAME = 'empty-name'
+ERR_EMPTY_VALUE = 'empty-value'
+ERR_INTO_ITSELF = 'into-itself'
+ERR_ALREADY_THERE = 'already-there'
+ERR_MISSING_SOURCE = 'missing-source'
+ERR_SOURCE_HAS_CHILDREN = 'source-has-children'
+ERR_MERGE_INTO_ITSELF = 'merge-into-itself'
+ERR_MERGE_INTO_DESCENDANT = 'merge-into-descendant'
+
+
+def is_descendant(candidate, ancestor):
+    """True when ``candidate`` is ``ancestor`` itself or lives beneath it.
+
+    The empty ``ancestor`` means the top level, which every real path is under.
+    The empty ``candidate`` is the top level itself and is under nothing.
+
+    >>> is_descendant('History.Ancient', 'History')
+    True
+    >>> is_descendant('Historyics', 'History')
+    False
+    """
+    candidate = join_path([candidate]) if candidate else ''
+    ancestor = join_path([ancestor]) if ancestor else ''
+    if not candidate:
+        return False
+    if not ancestor:
+        return True
+    return candidate == ancestor or candidate.startswith(ancestor + SEPARATOR)
+
+
+def can_place_under(path, target_path):
+    """May the node at ``path`` be re-parented onto ``target_path``?
+
+    The cycle rule on its own, with no selection or existence checks: only the
+    node itself and its own descendants are refused, so landing a deep node on
+    its own ancestor stays legal. Mirrors ``canPasteInto`` in the SPA's
+    ``ccPaste.ts``, which exists to disable a button and explain why -- this is
+    the rule it is a copy of.
+    """
+    if not path:
+        return False
+    return not is_descendant(target_path, path)
+
+
+def relocated_path(path, new_parent):
+    """Where ``path`` would land if it were re-parented onto ``new_parent``.
+
+    Only the destination is rebuilt: the node's own name is preserved, so
+    ``History.Ancient.India`` under ``History`` becomes ``History.India``, a
+    sibling of ``Ancient`` rather than a descendant of it.
+
+    >>> relocated_path('History.Ancient.India', 'History')
+    'History.India'
+    >>> relocated_path('History.Ancient.India', '')
+    'India'
+    """
+    path = join_path([path])
+    parent = join_path([new_parent]) if (new_parent or '').strip() else ''
+    parts = split_path(path)
+    if not parts:
+        return ''
+    leaf = parts[-1]
+    return join_path([parent, leaf] if parent else [leaf])
+
+
+def plan_rename(path, new_name, raw_values_under, hierarchical):
+    """Map every stored spelling under ``path`` to its renamed spelling.
+
+    ``raw_values_under`` is the set of raw rows the node counts -- the caller
+    gathers it (``cc_values._raw_values_under`` does, from the tree), because a
+    node can be spelled several ways in the database and all of them must move.
+
+    Returns ``(mapping, error)``. ``mapping`` is ``old -> new``; an interior
+    rename rewrites the prefix on every descendant, so ``Arts`` -> ``Culture``
+    yields ``Arts -> Culture``, ``Arts.Fiction -> Culture.Fiction`` and so on.
+    ``error`` is ``None`` or ``(code, subject)``.
+
+    A flat column has no prefix to rewrite, so its value is simply replaced --
+    the dots inside a Dewey number are part of the value and must survive.
+    """
+    if not hierarchical:
+        new_path = (new_name or '').strip()
+        if not new_path:
+            return {}, (ERR_EMPTY_VALUE, path)
+        return {path: new_path}, None
+
+    new_name = (new_name or '').strip()
+    if not new_name:
+        return {}, (ERR_EMPTY_NAME, path)
+    parent = path.rsplit(SEPARATOR, 1)[0] if SEPARATOR in path else ''
+    new_path = join_path([parent, new_name] if parent else [new_name])
+    if not new_path:
+        return {}, (ERR_EMPTY_NAME, path)
+    # A node may not become its own ancestor: renaming Arts.Fiction to Arts
+    # would put it inside itself, and nothing in the read path prevents that.
+    if new_path == path or new_path.startswith(path + SEPARATOR):
+        return {}, (ERR_INTO_ITSELF, path)
+    return {raw: new_path + raw[len(path):] for raw in raw_values_under}, None
+
+
+def plan_move(path, new_parent, raw_values_under):
+    """Map every stored spelling under ``path`` to its relocated spelling.
+
+    This is deliberately NOT :func:`plan_rename` with the leaf name passed
+    through. That call rebuilds the destination from the CURRENT parent plus
+    that name, which reproduces ``path`` exactly, trips the rename planner's own
+    cycle guard, and yields an empty mapping -- so every move silently rewrote
+    nothing and still answered 200.
+
+    Returns ``(mapping, error, new_path)``. An empty ``mapping`` with no error
+    means the node exists in the tree but owns no stored row.
+
+    >>> plan_move('Arts.Fiction', 'History', {'Arts.Fiction'})
+    ({'Arts.Fiction': 'History.Fiction'}, None, 'History.Fiction')
+    """
+    path = join_path([path])
+    parent = join_path([new_parent]) if (new_parent or '').strip() else ''
+    new_path = relocated_path(path, parent)
+    if new_path == path:
+        return {}, (ERR_ALREADY_THERE, path), new_path
+    if new_path.startswith(path + SEPARATOR):
+        return {}, (ERR_INTO_ITSELF, path), new_path
+    return ({raw: new_path + raw[len(path):] for raw in raw_values_under},
+            None, new_path)
+
+
+def merge_sources(chosen, destination):
+    """The values folded into ``destination`` when a merge is confirmed on it.
+
+    The DESTINATION is the row the button was pressed on, so it is excluded
+    from its own sources. Mirrors ``mergeSourcePaths`` in the SPA's
+    ``ccMerge.ts``.
+    """
+    return [p for p in chosen if p != destination]
+
+
+def plan_merge(sources, into, exists, has_children):
+    """Which ``sources`` may be folded into ``into``.
+
+    Only the SOURCES must be leaves. The destination may have sub-values:
+    folding "Ancient Greece" into "Greece" when "Greece" has a child "Sparta"
+    is well defined -- the source row is repointed at the survivor and the
+    existing children are untouched. Refusing it would block a valid operation
+    the server happily accepts.
+
+    ``exists`` and ``has_children`` are predicates, because the rule is about
+    the sources and each can differ; one boolean would forbid legitimate
+    multi-source merges.
+
+    Returns ``(sources_to_apply, error)``. An empty source list is a legitimate
+    request's opposite: the caller sends at least one source, and the
+    destination itself is never among them.
+    """
+    for path in sources:
+        if not exists(path):
+            return [], (ERR_MISSING_SOURCE, path)
+        if has_children(path):
+            return [], (ERR_SOURCE_HAS_CHILDREN, path)
+        if path == into:
+            return [], (ERR_MERGE_INTO_ITSELF, path)
+        if into.startswith(path + SEPARATOR):
+            return [], (ERR_MERGE_INTO_DESCENDANT, path)
+    return list(sources), None
+
+
+def plan_delete(paths, exists, has_children):
+    """Which ``paths`` may be deleted.
+
+    Leaves only -- a value with children is refused, because deleting it would
+    silently change what its children mean. Delete the leaves, or rename/move
+    the parent.
+
+    Returns ``(paths_to_delete, error)``.
+    """
+    for path in paths:
+        if not exists(path):
+            return [], (ERR_MISSING_SOURCE, path)
+        if has_children(path):
+            return [], (ERR_SOURCE_HAS_CHILDREN, path)
+    return list(paths), None
+
+
+def node_availability(node):
+    """What can be done to this node, WITHOUT knowing what else is selected.
+
+    Returns the wire shape both interfaces read:
+
+        {'can_delete': bool, 'delete_reason': code|None,
+         'can_merge_source': bool, 'merge_reason': code|None}
+
+    These are the rules that depend only on the node itself, so a client never
+    has to re-derive them. They are computed BY the rule functions above rather
+    than by inspecting ``children`` directly, so a flag published here cannot
+    disagree with what the endpoint would decide for the same value -- the test
+    ``test_the_published_flags_are_the_rules_own_verdict`` holds them together.
+
+    What is deliberately NOT here: whether a node may receive a moved value, or
+    whether it may be a merge destination. Both depend on what the user has
+    currently ticked or cut, which only the client knows.
+    """
+    path = node['path']
+    leaf = not node['children']
+    _, delete_error = plan_delete(
+        [path], exists=lambda p: True,
+        has_children=lambda p: not leaf)
+    _, merge_error = plan_merge(
+        [path], '', exists=lambda p: True,
+        has_children=lambda p: not leaf)
+    return {
+        'can_delete': delete_error is None,
+        'delete_reason': None if delete_error is None else delete_error[0],
+        'can_merge_source': merge_error is None,
+        'merge_reason': None if merge_error is None else merge_error[0],
+    }
 
 
 def is_hierarchical_value_set(values):

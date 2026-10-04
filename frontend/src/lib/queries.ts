@@ -21,7 +21,7 @@ import type {
   GlobalLibraryPage, LibraryModePayload, LibraryRemovalImpact, DeliveryDevice,
   DeviceDeliveryResult, MyLibraryIntroState,
   KoboSyncToken, KoreaderPairRequest,
-  CcColumnsPage, CcTree, CcBooksPage,
+  CcColumnsPage, CcTree, CcBooksPage, CcValueWriteResult,
 } from './api';
 
 /** Entity kinds the catalog can be filtered by. Singular here; the browse-list
@@ -470,6 +470,81 @@ export function useCcTree(colId: string | number, enabled = true) {
 
 /** One page of books under a node of a custom column. An empty `path` lists
  *  every book carrying any value in the column. */
+/** Editing a custom column's VALUES (rename/merge/delete/move/create).
+ *
+ *  Every mutation re-reads the tree: a value may change shape (a move can make
+ *  a flat column hierarchical), so the cached node list is the thing most
+ *  likely to be wrong afterwards. Books are invalidated too because a delete
+ *  removes the value from them.
+ *
+ *  `confirm_merges` is only ever sent as literal `true`. The value column is
+ *  UNIQUE, so landing on a taken spelling is a merge, and a merge cannot be
+ *  undone -- the same opt-in rule the tag editor follows. */
+function invalidateCcViews(qc: QueryClient) {
+  void qc.invalidateQueries({ queryKey: ['cc-tree'] });
+  void qc.invalidateQueries({ queryKey: ['cc-books'] });
+  void qc.invalidateQueries({ queryKey: ['cc-columns'] });
+  void qc.invalidateQueries({ queryKey: ['entities'] });
+  void qc.invalidateQueries({ queryKey: ['books'] });
+}
+
+export interface RenameCcValueInput {
+  path: string;
+  newName: string;
+  confirmMerges?: boolean;
+}
+
+export function useRenameCcValue(colId: string | number) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ path, newName, confirmMerges }: RenameCcValueInput) =>
+      apiPost<CcValueWriteResult>(
+        `/api/v1/columns/${colId}/values/rename`,
+        confirmMerges === true
+          ? { path, new_name: newName, confirm_merges: true }
+          : { path, new_name: newName },
+      ),
+    onSuccess: () => invalidateCcViews(qc),
+  });
+}
+
+export function useMergeCcValues(colId: string | number) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ paths, into }: { paths: string[]; into: string }) =>
+      apiPost<CcValueWriteResult>(`/api/v1/columns/${colId}/values/merge`, { paths, into }),
+    onSuccess: () => invalidateCcViews(qc),
+  });
+}
+
+export function useDeleteCcValues(colId: string | number) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (paths: string[]) =>
+      apiPost<CcValueWriteResult>(`/api/v1/columns/${colId}/values/delete`, { paths }),
+    onSuccess: () => invalidateCcViews(qc),
+  });
+}
+
+export function useMoveCcValue(colId: string | number) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ path, newParent }: { path: string; newParent: string }) =>
+      apiPost<CcValueWriteResult>(`/api/v1/columns/${colId}/values/move`,
+        { path, new_parent: newParent }),
+    onSuccess: () => invalidateCcViews(qc),
+  });
+}
+
+export function useCreateCcValue(colId: string | number) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: (path: string) =>
+      apiPost<CcValueWriteResult>(`/api/v1/columns/${colId}/values/create`, { path }),
+    onSuccess: () => invalidateCcViews(qc),
+  });
+}
+
 export function useCcBooks(
   colId: string | number, path: string, page: number, enabled = true,
 ) {

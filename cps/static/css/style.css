@@ -846,6 +846,84 @@ select.cwa-settings-select {
   opacity: .75;
 }
 
+/* --- Classic custom-column value editor (cc_value_editor.html) ---
+   The panel replaces the browse view IN PLACE, inside the SAME `.discover`
+   frame the tree already used -- so edit mode inherits its padding and the page
+   does not appear to jump between modes. Everything below only spaces the rows
+   WITHIN that frame; it deliberately does not re-pad the frame. */
+.cc-values-frame .cc-values-browse,
+.cc-values-frame .cc-values-list {
+  margin-top: .6em;
+}
+
+/* One toolbar row for both modes. Edit values and Done occupy the SAME
+   right-hand slot and swap in place, so the control does not move when the
+   mode changes. */
+.cc-values-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5em;
+  min-height: 31px;
+  margin-bottom: .2em;
+}
+
+.cc-values-toolbar-left {
+  flex: 0 1 auto;
+}
+
+.cc-values-toggle {
+  flex: 0 0 auto;
+}
+
+/* Rows are flex so the value, its count and its actions stay on one line at any
+   width; the actions must never wrap onto a second row, which reads as a
+   separate value. */
+.cc-values-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: .4em;
+  /* Breathing room inside the frame: a checkbox flush against the frame edge
+     looks like it belongs to the page chrome, not to the list. */
+  padding: .3em .5em;
+  border-bottom: 1px solid rgba(128, 128, 128, .18);
+}
+
+.cc-values-check {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  font-weight: normal;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cc-values-name {
+  margin-left: .3em;
+}
+
+/* A value that cannot take a move is marked from the cycle rule ALONE, so the
+   rows that can receive the held value are visible before any is ticked. */
+.cc-values-row.cc-values-target {
+  background-color: rgba(70, 130, 180, .12);
+}
+
+.cc-values-row.cc-values-cut {
+  background-color: rgba(200, 150, 40, .16);
+  font-weight: bold;
+}
+
+.cc-values-actions {
+  flex: 0 0 auto;
+  margin-left: 0 !important;
+}
+
+.cc-values-tag {
+  flex: 0 0 auto;
+}
+
 .hierarchy-subcategories h3 {
   margin-top: .4em;
 }

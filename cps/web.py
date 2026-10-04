@@ -2534,6 +2534,54 @@ def browsable_cc_column(col_id):
     return None
 
 
+def cc_value_edit_rows(entries, is_hierarchical):
+    """Flatten a browse tree into the rows the classic value editor renders.
+
+    One flat list of ``(node, depth)``, in the order the tree is shown, so the
+    editor is a plain table rather than a second nested renderer. Each node
+    carries its ``available`` flags, computed by the SAME
+    ``hierarchy.node_availability`` the JSON tree publishes, so the classic
+    editor and the new interface cannot disagree about which values may be
+    deleted or merged.
+
+    Rendered server-side rather than fetched on toggle: the tree is already in
+    hand here, and an edit mode that has to round-trip before it can draw
+    itself is the "button does nothing" failure this feature already had once.
+    """
+    rows, stack = [], [(node, 0) for node in reversed(entries)]
+    while stack:
+        node, depth = stack.pop()
+        available = hierarchy.node_availability(node)
+        rows.append({
+            'path': node['path'],
+            'name': node['name'],
+            'total_count': node['total_count'],
+            # A flat column has no children, so its values are all leaves and
+            # the depth is always 0 — the same one-level contract the JSON tree
+            # keeps for it.
+            'depth': depth if is_hierarchical else 0,
+            'can_delete': available['can_delete'],
+            'can_merge_source': available['can_merge_source'],
+            'has_children': bool(node['children']),
+        })
+        stack.extend((child, depth + 1) for child in reversed(node['children']))
+    return rows
+
+
+def _may_edit_column_values():
+    """Whether the current account may be offered the value editor.
+
+    Same gate every value-write endpoint enforces through
+    ``_require_metadata_editor``. Hiding the button without this is what caused
+    the original silent failure in the new interface: a working-looking panel
+    whose every action was refused, with the refusal rendered off-screen.
+    """
+    try:
+        return (not current_user.is_anonymous) and current_user.role_edit()
+    except Exception:
+        return False
+
+
 @retryable_column_reads
 def render_cc_category(page, col_id, path, order):
     """Render one custom column's browse view: a tree, a flat list, or the
@@ -2566,6 +2614,10 @@ def render_cc_category(page, col_id, path, order):
     # API already 404s here; this is the same contract for the classic route.
     if not is_cc_visible(current_user, col_id, fail_on_error=True):
         abort(404)
+
+    # The value editor is offered on the ROOT view only: it acts on the whole
+    # vocabulary, and a node's book list has no use for it.
+    may_edit_values = _may_edit_column_values()
 
     is_hierarchical = not calibre_db.is_flat_cc_column(col_id, fail_on_error=True)
 
@@ -2640,7 +2692,9 @@ def render_cc_category(page, col_id, path, order):
                else calibre_db.get_cc_flat_list(col_id, fail_on_error=True))
     return render_title_template(
         'cc_list.html', entries=entries,
-        title=col.name, page="cclist", col_id=col_id, hierarchical=is_hierarchical)
+        title=col.name, page="cclist", col_id=col_id, hierarchical=is_hierarchical,
+        may_edit_values=may_edit_values, edit_rows=(
+            cc_value_edit_rows(entries, is_hierarchical) if may_edit_values else []))
 
 
 # ################################### Download/Send ##################################################################
