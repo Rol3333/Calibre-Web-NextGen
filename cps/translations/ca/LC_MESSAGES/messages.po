@@ -1541,7 +1541,8 @@ msgid "Calibre-Web NextGen Profile Picture Management (WIP)"
 msgstr "Gestió de fotos de perfil de Calibre-Web NextGen (en desenvolupament)"
 
 #: cps/db.py cps/spa_strings.py cps/templates/config_edit.html
-#: cps/templates/config_view_edit.html cps/templates/email_edit.html cps/web.py
+#: cps/templates/config_view_edit.html cps/templates/email_edit.html
+#: cps/templates/tag_tree.html cps/web.py
 msgid "None"
 msgstr "Cap"
 
@@ -2387,7 +2388,8 @@ msgstr "Llibres ordenats per editorial"
 
 #: cps/opds.py cps/render_template.py cps/spa_strings.py
 #: cps/templates/book_edit.html cps/templates/book_table.html
-#: cps/templates/cwa_settings.html cps/templates/search_form.html cps/web.py
+#: cps/templates/cwa_settings.html cps/templates/index.html
+#: cps/templates/search_form.html cps/templates/tag_tree.html cps/web.py
 msgid "Tags"
 msgstr "Etiquetes"
 
@@ -2463,6 +2465,14 @@ msgstr "Llibres de %(name)s"
 #, python-format
 msgid "Books by %(name)s, including every sub-category"
 msgstr "Llibres de %(name)s, incloses totes les subcategories"
+
+#: cps/api/browse.py cps/opds.py cps/web.py
+msgid "Tag hierarchy temporarily unavailable. Please try again."
+msgstr ""
+
+#: cps/opds.py
+msgid "All books in this tag group"
+msgstr ""
 
 #: cps/opds.py
 #, python-brace-format
@@ -11774,6 +11784,14 @@ msgid "This rule cannot be edited here. It will be kept unless you remove it."
 msgstr ""
 "Aquesta regla no es pot editar aquí. Es conservarà tret que l'elimineu."
 
+#: cps/spa_strings.py cps/templates/tag_tree.html
+msgid "All tags"
+msgstr ""
+
+#: cps/spa_strings.py
+msgid "Could not load tags. Please try again."
+msgstr ""
+
 #: cps/spa_strings.py
 msgid "Allow completed DRM-free MOBI 6 books"
 msgstr "Permet llibres MOBI 6 sense DRM procedents de descàrregues completades"
@@ -11888,6 +11906,14 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "Use {series:|(|) }{title} to omit the series prefix when no series is set."
+msgstr ""
+
+#: cps/spa_strings.py cps/templates/tag_tree.html
+msgid "Choose a tag group to browse books from it and its subtags."
+msgstr ""
+
+#: cps/tag_hierarchy.py
+msgid "Unnamed tag"
 msgstr ""
 
 #: cps/tasks_status.py
@@ -17954,6 +17980,14 @@ msgstr "Torna a l'inici"
 #: cps/templates/http_error.html
 msgid "Logout User"
 msgstr "Tanca la sessió de l'usuari"
+
+#: cps/templates/index.html
+msgid "Breadcrumb"
+msgstr ""
+
+#: cps/templates/index.html
+msgid "Subtags"
+msgstr ""
 
 #: cps/templates/index.html
 msgid "Subcategories"

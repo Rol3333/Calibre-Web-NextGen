@@ -1525,7 +1525,8 @@ msgid "Calibre-Web NextGen Profile Picture Management (WIP)"
 msgstr "Gestión de foto de perfil de Calibre-Web NextGen (en desarrollo)"
 
 #: cps/db.py cps/spa_strings.py cps/templates/config_edit.html
-#: cps/templates/config_view_edit.html cps/templates/email_edit.html cps/web.py
+#: cps/templates/config_view_edit.html cps/templates/email_edit.html
+#: cps/templates/tag_tree.html cps/web.py
 msgid "None"
 msgstr "Ninguno"
 
@@ -2369,7 +2370,8 @@ msgstr "Libros ordenados por editor"
 
 #: cps/opds.py cps/render_template.py cps/spa_strings.py
 #: cps/templates/book_edit.html cps/templates/book_table.html
-#: cps/templates/cwa_settings.html cps/templates/search_form.html cps/web.py
+#: cps/templates/cwa_settings.html cps/templates/index.html
+#: cps/templates/search_form.html cps/templates/tag_tree.html cps/web.py
 msgid "Tags"
 msgstr "Etiquetas"
 
@@ -2445,6 +2447,16 @@ msgstr ""
 #, python-format
 msgid "Books by %(name)s, including every sub-category"
 msgstr ""
+
+#: cps/api/browse.py cps/opds.py cps/web.py
+msgid "Tag hierarchy temporarily unavailable. Please try again."
+msgstr ""
+"La jerarquía de etiquetas no está disponible temporalmente. Inténtalo de "
+"nuevo."
+
+#: cps/opds.py
+msgid "All books in this tag group"
+msgstr "Todos los libros de este grupo de etiquetas"
 
 #: cps/opds.py
 #, python-brace-format
@@ -11421,6 +11433,14 @@ msgstr ""
 msgid "This rule cannot be edited here. It will be kept unless you remove it."
 msgstr ""
 
+#: cps/spa_strings.py cps/templates/tag_tree.html
+msgid "All tags"
+msgstr "Todas las etiquetas"
+
+#: cps/spa_strings.py
+msgid "Could not load tags. Please try again."
+msgstr "No se pudieron cargar las etiquetas. Inténtalo de nuevo."
+
 #: cps/spa_strings.py
 msgid "Allow completed DRM-free MOBI 6 books"
 msgstr ""
@@ -11525,6 +11545,16 @@ msgstr ""
 msgid ""
 "Use {series:|(|) }{title} to omit the series prefix when no series is set."
 msgstr ""
+
+#: cps/spa_strings.py cps/templates/tag_tree.html
+msgid "Choose a tag group to browse books from it and its subtags."
+msgstr ""
+"Elige un grupo de etiquetas para explorar los libros del grupo y de sus "
+"subetiquetas."
+
+#: cps/tag_hierarchy.py
+msgid "Unnamed tag"
+msgstr "Etiqueta sin nombre"
 
 #: cps/tasks_status.py
 msgid "Waiting"
@@ -17539,6 +17569,14 @@ msgid "Logout User"
 msgstr "Cerrar sesión"
 
 #: cps/templates/index.html
+msgid "Breadcrumb"
+msgstr "Ruta de navegación"
+
+#: cps/templates/index.html
+msgid "Subtags"
+msgstr "Subetiquetas"
+
+#: cps/templates/index.html
 msgid "Subcategories"
 msgstr ""
 
@@ -19464,35 +19502,3 @@ msgstr "Mostrar Selección Leidos/No Leidos"
 #, python-brace-format
 #~ msgid "More actions for {title}"
 #~ msgstr "Más acciones para {title}"
-
-#: cps/templates/tag_tree.html cps/spa_strings.py
-msgid "All tags"
-msgstr "Todas las etiquetas"
-
-#: cps/spa_strings.py
-msgid "Could not load tags. Please try again."
-msgstr "No se pudieron cargar las etiquetas. Inténtalo de nuevo."
-
-#: cps/tag_hierarchy.py
-msgid "Unnamed tag"
-msgstr "Etiqueta sin nombre"
-
-#: cps/web.py cps/opds.py
-msgid "Tag hierarchy temporarily unavailable. Please try again."
-msgstr "La jerarquía de etiquetas no está disponible temporalmente. Inténtalo de nuevo."
-
-#: cps/opds.py
-msgid "All books in this tag group"
-msgstr "Todos los libros de este grupo de etiquetas"
-
-#: cps/templates/index.html
-msgid "Breadcrumb"
-msgstr "Ruta de navegación"
-
-#: cps/templates/tag_tree.html cps/spa_strings.py
-msgid "Choose a tag group to browse books from it and its subtags."
-msgstr "Elige un grupo de etiquetas para explorar los libros del grupo y de sus subetiquetas."
-
-#: cps/templates/index.html
-msgid "Subtags"
-msgstr "Subetiquetas"

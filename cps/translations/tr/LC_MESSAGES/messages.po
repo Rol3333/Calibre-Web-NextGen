@@ -1424,7 +1424,8 @@ msgid "Calibre-Web NextGen Profile Picture Management (WIP)"
 msgstr ""
 
 #: cps/db.py cps/spa_strings.py cps/templates/config_edit.html
-#: cps/templates/config_view_edit.html cps/templates/email_edit.html cps/web.py
+#: cps/templates/config_view_edit.html cps/templates/email_edit.html
+#: cps/templates/tag_tree.html cps/web.py
 msgid "None"
 msgstr "Hiçbiri"
 
@@ -2220,7 +2221,8 @@ msgstr "Yayınevine göre sıralanmış eKitaplar"
 
 #: cps/opds.py cps/render_template.py cps/spa_strings.py
 #: cps/templates/book_edit.html cps/templates/book_table.html
-#: cps/templates/cwa_settings.html cps/templates/search_form.html cps/web.py
+#: cps/templates/cwa_settings.html cps/templates/index.html
+#: cps/templates/search_form.html cps/templates/tag_tree.html cps/web.py
 msgid "Tags"
 msgstr "Etiketler"
 
@@ -2299,6 +2301,15 @@ msgstr ""
 #, python-format
 msgid "Books by %(name)s, including every sub-category"
 msgstr ""
+
+#: cps/api/browse.py cps/opds.py cps/web.py
+msgid "Tag hierarchy temporarily unavailable. Please try again."
+msgstr ""
+"Etiket hiyerarşisi geçici olarak kullanılamıyor. Lütfen tekrar deneyin."
+
+#: cps/opds.py
+msgid "All books in this tag group"
+msgstr "Bu etiket grubundaki tüm kitaplar"
 
 #: cps/opds.py
 #, python-brace-format
@@ -11035,6 +11046,14 @@ msgstr ""
 msgid "This rule cannot be edited here. It will be kept unless you remove it."
 msgstr ""
 
+#: cps/spa_strings.py cps/templates/tag_tree.html
+msgid "All tags"
+msgstr "Tüm etiketler"
+
+#: cps/spa_strings.py
+msgid "Could not load tags. Please try again."
+msgstr "Etiketler yüklenemedi. Lütfen tekrar deneyin."
+
 #: cps/spa_strings.py
 msgid "Allow completed DRM-free MOBI 6 books"
 msgstr ""
@@ -11139,6 +11158,16 @@ msgstr ""
 msgid ""
 "Use {series:|(|) }{title} to omit the series prefix when no series is set."
 msgstr ""
+
+#: cps/spa_strings.py cps/templates/tag_tree.html
+msgid "Choose a tag group to browse books from it and its subtags."
+msgstr ""
+"Grubun ve alt etiketlerinin kitaplarına göz atmak için bir etiket grubu "
+"seçin."
+
+#: cps/tag_hierarchy.py
+msgid "Unnamed tag"
+msgstr "Adsız etiket"
 
 #: cps/tasks_status.py
 msgid "Waiting"
@@ -16769,6 +16798,14 @@ msgid "Logout User"
 msgstr "Çıkış"
 
 #: cps/templates/index.html
+msgid "Breadcrumb"
+msgstr "Gezinti yolu"
+
+#: cps/templates/index.html
+msgid "Subtags"
+msgstr "Alt etiketler"
+
+#: cps/templates/index.html
 msgid "Subcategories"
 msgstr ""
 
@@ -18608,35 +18645,3 @@ msgstr "Seri seçimini göster"
 
 #~ msgid "Click the cover to load metadata to the form"
 #~ msgstr "Forma metaveri yüklemek için kapağa tıklayın"
-
-#: cps/templates/tag_tree.html cps/spa_strings.py
-msgid "All tags"
-msgstr "Tüm etiketler"
-
-#: cps/spa_strings.py
-msgid "Could not load tags. Please try again."
-msgstr "Etiketler yüklenemedi. Lütfen tekrar deneyin."
-
-#: cps/tag_hierarchy.py
-msgid "Unnamed tag"
-msgstr "Adsız etiket"
-
-#: cps/web.py cps/opds.py
-msgid "Tag hierarchy temporarily unavailable. Please try again."
-msgstr "Etiket hiyerarşisi geçici olarak kullanılamıyor. Lütfen tekrar deneyin."
-
-#: cps/opds.py
-msgid "All books in this tag group"
-msgstr "Bu etiket grubundaki tüm kitaplar"
-
-#: cps/templates/index.html
-msgid "Breadcrumb"
-msgstr "Gezinti yolu"
-
-#: cps/templates/tag_tree.html cps/spa_strings.py
-msgid "Choose a tag group to browse books from it and its subtags."
-msgstr "Grubun ve alt etiketlerinin kitaplarına göz atmak için bir etiket grubu seçin."
-
-#: cps/templates/index.html
-msgid "Subtags"
-msgstr "Alt etiketler"

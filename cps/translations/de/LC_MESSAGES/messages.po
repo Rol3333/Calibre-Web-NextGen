@@ -1494,7 +1494,8 @@ msgid "Calibre-Web NextGen Profile Picture Management (WIP)"
 msgstr "Calibre-Web NextGen Profilbild Management (WIP)"
 
 #: cps/db.py cps/spa_strings.py cps/templates/config_edit.html
-#: cps/templates/config_view_edit.html cps/templates/email_edit.html cps/web.py
+#: cps/templates/config_view_edit.html cps/templates/email_edit.html
+#: cps/templates/tag_tree.html cps/web.py
 msgid "None"
 msgstr "Keine"
 
@@ -2336,7 +2337,8 @@ msgstr "Bücher nach Verleger sortiert"
 
 #: cps/opds.py cps/render_template.py cps/spa_strings.py
 #: cps/templates/book_edit.html cps/templates/book_table.html
-#: cps/templates/cwa_settings.html cps/templates/search_form.html cps/web.py
+#: cps/templates/cwa_settings.html cps/templates/index.html
+#: cps/templates/search_form.html cps/templates/tag_tree.html cps/web.py
 msgid "Tags"
 msgstr "Tags"
 
@@ -2412,6 +2414,16 @@ msgstr ""
 #, python-format
 msgid "Books by %(name)s, including every sub-category"
 msgstr ""
+
+#: cps/api/browse.py cps/opds.py cps/web.py
+msgid "Tag hierarchy temporarily unavailable. Please try again."
+msgstr ""
+"Die Schlagworthierarchie ist vorübergehend nicht verfügbar. Bitte erneut "
+"versuchen."
+
+#: cps/opds.py
+msgid "All books in this tag group"
+msgstr "Alle Bücher in dieser Tag-Gruppe"
 
 #: cps/opds.py
 #, python-brace-format
@@ -11279,6 +11291,14 @@ msgstr ""
 msgid "This rule cannot be edited here. It will be kept unless you remove it."
 msgstr ""
 
+#: cps/spa_strings.py cps/templates/tag_tree.html
+msgid "All tags"
+msgstr "Alle Schlagwörter"
+
+#: cps/spa_strings.py
+msgid "Could not load tags. Please try again."
+msgstr "Schlagwörter konnten nicht geladen werden. Bitte erneut versuchen."
+
 #: cps/spa_strings.py
 msgid "Allow completed DRM-free MOBI 6 books"
 msgstr "Abgeschlossene DRM-freie MOBI-6-Bücher zulassen"
@@ -11387,6 +11407,16 @@ msgstr ""
 msgid ""
 "Use {series:|(|) }{title} to omit the series prefix when no series is set."
 msgstr ""
+
+#: cps/spa_strings.py cps/templates/tag_tree.html
+msgid "Choose a tag group to browse books from it and its subtags."
+msgstr ""
+"Wählen Sie eine Tag-Gruppe, um Bücher aus dieser Gruppe und ihren "
+"untergeordneten Tags zu durchsuchen."
+
+#: cps/tag_hierarchy.py
+msgid "Unnamed tag"
+msgstr "Unbenanntes Schlagwort"
 
 #: cps/tasks_status.py
 msgid "Waiting"
@@ -17111,6 +17141,14 @@ msgid "Logout User"
 msgstr "Benutzer abmelden"
 
 #: cps/templates/index.html
+msgid "Breadcrumb"
+msgstr "Brotkrümelnavigation"
+
+#: cps/templates/index.html
+msgid "Subtags"
+msgstr "Untergeordnete Tags"
+
+#: cps/templates/index.html
 msgid "Subcategories"
 msgstr ""
 
@@ -19540,35 +19578,3 @@ msgstr "Zeige Gelesen/Ungelesen-Abschnitt"
 #~ msgstr ""
 #~ "Bücher müssen zuerst archiviert werden und dann mit dem Gerät "
 #~ "synchronisiert werden, bevor ein Buch sicher gelöscht werden kann."
-
-#: cps/templates/tag_tree.html cps/spa_strings.py
-msgid "All tags"
-msgstr "Alle Schlagwörter"
-
-#: cps/spa_strings.py
-msgid "Could not load tags. Please try again."
-msgstr "Schlagwörter konnten nicht geladen werden. Bitte erneut versuchen."
-
-#: cps/tag_hierarchy.py
-msgid "Unnamed tag"
-msgstr "Unbenanntes Schlagwort"
-
-#: cps/web.py cps/opds.py
-msgid "Tag hierarchy temporarily unavailable. Please try again."
-msgstr "Die Schlagworthierarchie ist vorübergehend nicht verfügbar. Bitte erneut versuchen."
-
-#: cps/opds.py
-msgid "All books in this tag group"
-msgstr "Alle Bücher in dieser Tag-Gruppe"
-
-#: cps/templates/index.html
-msgid "Breadcrumb"
-msgstr "Brotkrümelnavigation"
-
-#: cps/templates/tag_tree.html cps/spa_strings.py
-msgid "Choose a tag group to browse books from it and its subtags."
-msgstr "Wählen Sie eine Tag-Gruppe, um Bücher aus dieser Gruppe und ihren untergeordneten Tags zu durchsuchen."
-
-#: cps/templates/index.html
-msgid "Subtags"
-msgstr "Untergeordnete Tags"

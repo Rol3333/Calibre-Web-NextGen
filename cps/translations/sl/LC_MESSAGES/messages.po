@@ -1492,7 +1492,8 @@ msgid "Calibre-Web NextGen Profile Picture Management (WIP)"
 msgstr ""
 
 #: cps/db.py cps/spa_strings.py cps/templates/config_edit.html
-#: cps/templates/config_view_edit.html cps/templates/email_edit.html cps/web.py
+#: cps/templates/config_view_edit.html cps/templates/email_edit.html
+#: cps/templates/tag_tree.html cps/web.py
 msgid "None"
 msgstr "Nobeno"
 
@@ -2318,7 +2319,8 @@ msgstr "Knjige, razvrščene po založniku"
 
 #: cps/opds.py cps/render_template.py cps/spa_strings.py
 #: cps/templates/book_edit.html cps/templates/book_table.html
-#: cps/templates/cwa_settings.html cps/templates/search_form.html cps/web.py
+#: cps/templates/cwa_settings.html cps/templates/index.html
+#: cps/templates/search_form.html cps/templates/tag_tree.html cps/web.py
 msgid "Tags"
 msgstr "Oznake"
 
@@ -2395,6 +2397,14 @@ msgstr ""
 #, python-format
 msgid "Books by %(name)s, including every sub-category"
 msgstr ""
+
+#: cps/api/browse.py cps/opds.py cps/web.py
+msgid "Tag hierarchy temporarily unavailable. Please try again."
+msgstr "Hierarhija oznak trenutno ni na voljo. Poskusite znova."
+
+#: cps/opds.py
+msgid "All books in this tag group"
+msgstr "Vse knjige v tej skupini oznak"
 
 #: cps/opds.py
 #, python-brace-format
@@ -11118,6 +11128,14 @@ msgstr ""
 msgid "This rule cannot be edited here. It will be kept unless you remove it."
 msgstr ""
 
+#: cps/spa_strings.py cps/templates/tag_tree.html
+msgid "All tags"
+msgstr "Vse oznake"
+
+#: cps/spa_strings.py
+msgid "Could not load tags. Please try again."
+msgstr "Oznak ni bilo mogoče naložiti. Poskusite znova."
+
 #: cps/spa_strings.py
 msgid "Allow completed DRM-free MOBI 6 books"
 msgstr ""
@@ -11222,6 +11240,15 @@ msgstr ""
 msgid ""
 "Use {series:|(|) }{title} to omit the series prefix when no series is set."
 msgstr ""
+
+#: cps/spa_strings.py cps/templates/tag_tree.html
+msgid "Choose a tag group to browse books from it and its subtags."
+msgstr ""
+"Izberite skupino oznak za brskanje po knjigah iz skupine in njenih podoznak."
+
+#: cps/tag_hierarchy.py
+msgid "Unnamed tag"
+msgstr "Oznaka brez imena"
 
 #: cps/tasks_status.py
 msgid "Waiting"
@@ -17017,6 +17044,14 @@ msgid "Logout User"
 msgstr "Odjava uporabnika"
 
 #: cps/templates/index.html
+msgid "Breadcrumb"
+msgstr "Navigacijska pot"
+
+#: cps/templates/index.html
+msgid "Subtags"
+msgstr "Podoznake"
+
+#: cps/templates/index.html
 msgid "Subcategories"
 msgstr ""
 
@@ -19350,35 +19385,3 @@ msgstr "Prikaži razdelek Prebrano/neprebrano"
 #~ msgstr ""
 #~ "Preden lahko knjigo varno izbrišete, jo morate najprej arhivirati in "
 #~ "sinhronizirati napravo."
-
-#: cps/templates/tag_tree.html cps/spa_strings.py
-msgid "All tags"
-msgstr "Vse oznake"
-
-#: cps/spa_strings.py
-msgid "Could not load tags. Please try again."
-msgstr "Oznak ni bilo mogoče naložiti. Poskusite znova."
-
-#: cps/tag_hierarchy.py
-msgid "Unnamed tag"
-msgstr "Oznaka brez imena"
-
-#: cps/web.py cps/opds.py
-msgid "Tag hierarchy temporarily unavailable. Please try again."
-msgstr "Hierarhija oznak trenutno ni na voljo. Poskusite znova."
-
-#: cps/opds.py
-msgid "All books in this tag group"
-msgstr "Vse knjige v tej skupini oznak"
-
-#: cps/templates/index.html
-msgid "Breadcrumb"
-msgstr "Navigacijska pot"
-
-#: cps/templates/tag_tree.html cps/spa_strings.py
-msgid "Choose a tag group to browse books from it and its subtags."
-msgstr "Izberite skupino oznak za brskanje po knjigah iz skupine in njenih podoznak."
-
-#: cps/templates/index.html
-msgid "Subtags"
-msgstr "Podoznake"

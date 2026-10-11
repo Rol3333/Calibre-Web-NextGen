@@ -1429,7 +1429,8 @@ msgid "Calibre-Web NextGen Profile Picture Management (WIP)"
 msgstr ""
 
 #: cps/db.py cps/spa_strings.py cps/templates/config_edit.html
-#: cps/templates/config_view_edit.html cps/templates/email_edit.html cps/web.py
+#: cps/templates/config_view_edit.html cps/templates/email_edit.html
+#: cps/templates/tag_tree.html cps/web.py
 msgid "None"
 msgstr "无"
 
@@ -2223,7 +2224,8 @@ msgstr "书籍按出版社排序"
 
 #: cps/opds.py cps/render_template.py cps/spa_strings.py
 #: cps/templates/book_edit.html cps/templates/book_table.html
-#: cps/templates/cwa_settings.html cps/templates/search_form.html cps/web.py
+#: cps/templates/cwa_settings.html cps/templates/index.html
+#: cps/templates/search_form.html cps/templates/tag_tree.html cps/web.py
 msgid "Tags"
 msgstr "标签"
 
@@ -2300,6 +2302,14 @@ msgstr ""
 #, python-format
 msgid "Books by %(name)s, including every sub-category"
 msgstr ""
+
+#: cps/api/browse.py cps/opds.py cps/web.py
+msgid "Tag hierarchy temporarily unavailable. Please try again."
+msgstr "标签层级暂时不可用。请重试。"
+
+#: cps/opds.py
+msgid "All books in this tag group"
+msgstr "此标签组中的所有书籍"
 
 #: cps/opds.py
 #, python-brace-format
@@ -11023,6 +11033,14 @@ msgstr ""
 msgid "This rule cannot be edited here. It will be kept unless you remove it."
 msgstr ""
 
+#: cps/spa_strings.py cps/templates/tag_tree.html
+msgid "All tags"
+msgstr "所有标签"
+
+#: cps/spa_strings.py
+msgid "Could not load tags. Please try again."
+msgstr "无法加载标签。请重试。"
+
 #: cps/spa_strings.py
 msgid "Allow completed DRM-free MOBI 6 books"
 msgstr ""
@@ -11127,6 +11145,14 @@ msgstr ""
 msgid ""
 "Use {series:|(|) }{title} to omit the series prefix when no series is set."
 msgstr ""
+
+#: cps/spa_strings.py cps/templates/tag_tree.html
+msgid "Choose a tag group to browse books from it and its subtags."
+msgstr "选择一个标签组，浏览该组及其子标签中的书籍。"
+
+#: cps/tag_hierarchy.py
+msgid "Unnamed tag"
+msgstr "未命名标签"
 
 #: cps/tasks_status.py
 msgid "Waiting"
@@ -16831,6 +16857,14 @@ msgid "Logout User"
 msgstr "登出账号"
 
 #: cps/templates/index.html
+msgid "Breadcrumb"
+msgstr "导航路径"
+
+#: cps/templates/index.html
+msgid "Subtags"
+msgstr "子标签"
+
+#: cps/templates/index.html
 msgid "Subcategories"
 msgstr ""
 
@@ -19016,35 +19050,3 @@ msgstr "显示已读、未读栏目"
 #~ "Books must first be archived and the device synced before a book can "
 #~ "safely be deleted."
 #~ msgstr "在安全删除图书之前，必须先将图书归档并与设备同步"
-
-#: cps/templates/tag_tree.html cps/spa_strings.py
-msgid "All tags"
-msgstr "所有标签"
-
-#: cps/spa_strings.py
-msgid "Could not load tags. Please try again."
-msgstr "无法加载标签。请重试。"
-
-#: cps/tag_hierarchy.py
-msgid "Unnamed tag"
-msgstr "未命名标签"
-
-#: cps/web.py cps/opds.py
-msgid "Tag hierarchy temporarily unavailable. Please try again."
-msgstr "标签层级暂时不可用。请重试。"
-
-#: cps/opds.py
-msgid "All books in this tag group"
-msgstr "此标签组中的所有书籍"
-
-#: cps/templates/index.html
-msgid "Breadcrumb"
-msgstr "导航路径"
-
-#: cps/templates/tag_tree.html cps/spa_strings.py
-msgid "Choose a tag group to browse books from it and its subtags."
-msgstr "选择一个标签组，浏览该组及其子标签中的书籍。"
-
-#: cps/templates/index.html
-msgid "Subtags"
-msgstr "子标签"
