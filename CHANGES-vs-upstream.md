@@ -66,6 +66,7 @@ Format: each row is one fork-PR, mapped to its upstream PR or issue (if any), wi
 
 | Fork PR | Upstream | Description | SHA | Release |
 |---|---|---|---|---|
+| [#2470](https://github.com/new-usemame/Calibre-Web-NextGen/pull/2470) | — | #2442 configurable safe Send-to-eReader attachment filenames, separate library paths and matching sync names | TBD | Unreleased |
 | [#2468](https://github.com/new-usemame/Calibre-Web-NextGen/pull/2468) | Fork issue [#2266](https://github.com/new-usemame/Calibre-Web-NextGen/issues/2266) | Table row selection and Shift-click ranges reuse complete-ID selection and the permission-aware bulk bar; failed-ID retries survive membership refresh, keyboard focus returns on clear and refreshed pages retain order. Requested via feedback, range suggestion by @JoschD. | TBD | Unreleased |
 | TBD | Fork-original | Direct paired-topic hybrid magnets on qualified qBittorrent LT2/API preserve exact private original URIs and require both full original hashes plus usable metadata before files, including restart/uncertain/shared recovery; repeated/extra topics and new dual HTTP redirects refuse before submission. | TBD | Unreleased |
 | #2486 | Fork-original | Direct single-topic SHA-256 btmh magnets on qualified qBittorrent LT2 preserve exact offered URIs, verify usable full metadata before files, and recover accepted/uncertain/shared attempts without duplicate submission; dual topics and HTTP-to-v2 redirects remain deferred. | `bc6f96278` | `v4.1.46` |

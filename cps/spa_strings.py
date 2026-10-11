@@ -2163,3 +2163,8 @@ _("Your rating, lowest first")
 _("Your score does not change the Calibre library rating. Sharing is off unless you opt in in your account.")
 _("{rating} out of 5")
 _("Your rating (stars)")
+
+# #2442 Send-to-eReader attachment naming.
+_('eReader attachment filename template')
+_('Leave blank to keep the existing filename. Example: {series} #{series_index} - {title}. Fields include {title}, {authors}, {series} and {series_index}; the file extension is added automatically.')
+_('Use {series:|(|) }{title} to omit the series prefix when no series is set.')
