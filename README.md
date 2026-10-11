@@ -831,6 +831,7 @@ The interface ships with the locales below. Completion is auto-refreshed on ever
 |---|---|---:|---:|
 | English (source) | 100% | source | — |
 | Slovak (`sk`) | `████████████████████` 100% | 4078/4083 | 0 |
+| ca (`ca`) | `████████████████████` 100% | 4078/4083 | 0 |
 | Russian (`ru`) | `██████████████████░░` 91% | 3728/4083 | 0 |
 | French (`fr`) | `█████████████████░░░` 87% | 3549/4083 | 123 |
 | Swedish (`sv`) | `████████████████░░░░` 81% | 3291/4083 | 0 |

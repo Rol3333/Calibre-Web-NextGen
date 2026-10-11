@@ -4,7 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Calibre-Web NextGen\n"
-"Report-Msgid-Bugs-To: https://github.com/new-usemame/Calibre-Web-NextGen/issues\n"
+"Report-Msgid-Bugs-To: https://github.com/crocodilestick/Calibre-Web-"
+"Automated\n"
 "POT-Creation-Date: 2026-07-17 21:21-0400\n"
 "PO-Revision-Date: 2026-10-09 13:49+0200\n"
 "Language-Team: Catalan\n"
@@ -239,8 +240,8 @@ msgid ""
 "credentials, with a URL up to 2048 characters and a label up to 80 "
 "characters."
 msgstr ""
-"La configuració d'assistència no s'ha desat. Feu servir una URL HTTP o HTTPS"
-" sense credencials, de 2.048 caràcters com a màxim, i una etiqueta de 80 "
+"La configuració d'assistència no s'ha desat. Feu servir una URL HTTP o HTTPS "
+"sense credencials, de 2.048 caràcters com a màxim, i una etiqueta de 80 "
 "caràcters com a màxim."
 
 #: cps/admin.py
@@ -266,8 +267,8 @@ msgid ""
 "The title-sort rule was saved, but reordering the existing library failed — "
 "books may keep their previous order until you retry or edit them."
 msgstr ""
-"S'ha desat la regla d'ordenació dels títols, però no s'ha pogut reordenar la"
-" biblioteca. Els llibres poden mantenir l'ordre anterior fins que torneu a "
+"S'ha desat la regla d'ordenació dels títols, però no s'ha pogut reordenar la "
+"biblioteca. Els llibres poden mantenir l'ordre anterior fins que torneu a "
 "provar l'ordenació o els editeu."
 
 #: cps/admin.py
@@ -313,37 +314,34 @@ msgid ""
 "Are you sure you want to change the selected restrictions for the selected "
 "user(s)?"
 msgstr ""
-"Esteu segur que voleu canviar les restriccions seleccionades per als usuaris"
-" seleccionats?"
+"Esteu segur que voleu canviar les restriccions seleccionades per als usuaris "
+"seleccionats?"
 
 #: cps/admin.py
 msgid ""
-"Are you sure you want to change the selected visibility restrictions for the"
-" selected user(s)?"
+"Are you sure you want to change the selected visibility restrictions for the "
+"selected user(s)?"
 msgstr ""
 "Esteu segur que voleu canviar les restriccions de visibilitat seleccionades "
 "per als usuaris seleccionats?"
 
 #: cps/admin.py
 msgid ""
-"Are you sure you want to change shelf sync behavior for the selected "
-"user(s)?"
+"Are you sure you want to change shelf sync behavior for the selected user(s)?"
 msgstr ""
 "Esteu segur que voleu canviar el comportament de sincronització de "
 "prestatges per als usuaris seleccionats?"
 
 #: cps/admin.py
 msgid ""
-"Are you sure you want to change OPDS shelf exposure for the selected "
-"user(s)?"
+"Are you sure you want to change OPDS shelf exposure for the selected user(s)?"
 msgstr ""
 "Esteu segur que voleu canviar la visibilitat dels prestatges a OPDS per als "
 "usuaris seleccionats?"
 
 #: cps/admin.py
 msgid "Are you sure you want to change Calibre library location?"
-msgstr ""
-"Esteu segur que voleu canviar la ubicació de la biblioteca de Calibre?"
+msgstr "Esteu segur que voleu canviar la ubicació de la biblioteca de Calibre?"
 
 #: cps/admin.py
 msgid ""
@@ -358,9 +356,8 @@ msgid ""
 "Are you sure you want delete Calibre-Web NextGen's sync database to force a "
 "full sync with your Kobo Reader?"
 msgstr ""
-"Esteu segur que voleu suprimir la base de dades de sincronització de "
-"Calibre-Web NextGen per forçar una sincronització completa amb el vostre "
-"Kobo Reader?"
+"Esteu segur que voleu suprimir la base de dades de sincronització de Calibre-"
+"Web NextGen per forçar una sincronització completa amb el vostre Kobo Reader?"
 
 #: cps/admin.py cps/spa_strings.py cps/templates/modal_dialogs.html
 #: cps/templates/user_table.html
@@ -393,8 +390,8 @@ msgstr ""
 #: cps/admin.py
 #, python-brace-format
 msgid ""
-"Book {0} was not in the sync record for user {1}; the device will receive it"
-" on next sync"
+"Book {0} was not in the sync record for user {1}; the device will receive it "
+"on next sync"
 msgstr ""
 "El llibre {0} no estava al registre de sincronització de l'usuari {1}; el "
 "dispositiu el rebrà a la propera sincronització"
@@ -513,8 +510,8 @@ msgid ""
 "LDAP CACertificate, Certificate or Key Location is not Valid, Please Enter "
 "Correct Path"
 msgstr ""
-"La ubicació del certificat de CA, el certificat o la clau LDAP no és vàlida."
-" Introduïu el camí correcte."
+"La ubicació del certificat de CA, el certificat o la clau LDAP no és vàlida. "
+"Introduïu el camí correcte."
 
 #: cps/admin.py cps/templates/admin.html
 msgid "Add New User"
@@ -538,14 +535,13 @@ msgstr "Error de la base de dades: %(error)s"
 msgid ""
 "Test e-mail queued for sending to %(email)s, please check Tasks for result"
 msgstr ""
-"El correu electrònic de prova s’ha posat a la cua per a %(email)s. "
-"Comproveu-ne el resultat a Tasques."
+"El correu electrònic de prova s’ha posat a la cua per a %(email)s. Comproveu-"
+"ne el resultat a Tasques."
 
 #: cps/admin.py
 #, python-format
 msgid "There was an error sending the Test e-mail: %(res)s"
-msgstr ""
-"S'ha produït un error en enviar el correu electrònic de prova: %(res)s"
+msgstr "S'ha produït un error en enviar el correu electrònic de prova: %(res)s"
 
 #: cps/admin.py
 msgid "Please configure your e-mail address first..."
@@ -576,8 +572,7 @@ msgstr "Introduïu el cos del missatge per al correu electrònic de l'anunci."
 
 #: cps/admin.py
 msgid "Please set an email address on your own account first..."
-msgstr ""
-"Primer, configureu una adreça de correu electrònic al vostre compte..."
+msgstr "Primer, configureu una adreça de correu electrònic al vostre compte..."
 
 #: cps/admin.py
 msgid "Please select at least one recipient."
@@ -737,8 +732,7 @@ msgstr "Usuaris importats: {}"
 #: cps/admin.py
 msgid "Library maintenance is running; try again when it finishes."
 msgstr ""
-"El manteniment de la biblioteca està en marxa; torneu-ho a provar quan "
-"acabi."
+"El manteniment de la biblioteca està en marxa; torneu-ho a provar quan acabi."
 
 #: cps/admin.py
 msgid "Disable the Calibre content server before enabling split library mode."
@@ -862,8 +856,8 @@ msgstr "La contrasenya ha de tenir entre 1 i 40 caràcters."
 
 #: cps/admin.py
 msgid ""
-"KEPUB conversion was not queued. Check that the preference and Kepubify path"
-" are enabled."
+"KEPUB conversion was not queued. Check that the preference and Kepubify path "
+"are enabled."
 msgstr ""
 "La conversió KEPUB no es va posar a la cua. Comproveu que la preferència i "
 "el camí de Kepubify estiguin habilitats."
@@ -928,8 +922,8 @@ msgstr "S'ha actualitzat l'usuari \"%(nick)s\"."
 msgid ""
 "Connection successful! OIDC discovery endpoint is accessible.%(endpoints)s"
 msgstr ""
-"S'ha establert la connexió. Es pot accedir al punt de descoberta "
-"OIDC.%(endpoints)s"
+"S'ha establert la connexió. Es pot accedir al punt de descoberta OIDC."
+"%(endpoints)s"
 
 #: cps/admin.py
 msgid ""
@@ -957,8 +951,8 @@ msgstr ""
 msgid ""
 "Connection failed: Request timed out. The server may be slow or unreachable."
 msgstr ""
-"S'ha esgotat el temps d'espera de la sol·licitud. El servidor pot ser lent o"
-" inaccessible."
+"S'ha esgotat el temps d'espera de la sol·licitud. El servidor pot ser lent o "
+"inaccessible."
 
 #: cps/admin.py
 msgid ""
@@ -979,8 +973,8 @@ msgid ""
 "Metadata is missing required OIDC fields: %(fields)s. This may not be a "
 "valid OIDC metadata endpoint."
 msgstr ""
-"A les metadades els falten els camps OIDC obligatoris: %(fields)s. Potser no"
-" és un punt de metadades OIDC vàlid."
+"A les metadades els falten els camps OIDC obligatoris: %(fields)s. Potser no "
+"és un punt de metadades OIDC vàlid."
 
 #: cps/admin.py
 #, python-format
@@ -1001,8 +995,7 @@ msgstr ""
 
 #: cps/admin.py
 msgid "Metadata URL not found (404). Please check the URL is correct."
-msgstr ""
-"No s'ha trobat l'URL de metadades (404). Comproveu que sigui correcta."
+msgstr "No s'ha trobat l'URL de metadades (404). Comproveu que sigui correcta."
 
 #: cps/admin.py
 msgid ""
@@ -1419,8 +1412,8 @@ msgstr "Calibre-Web NextGen: historial complet de conversions"
 #: cps/cwa_functions.py
 msgid "Calibre-Web NextGen - Full EPUB Fixer History (w/out Paths & Fixes)"
 msgstr ""
-"Calibre-Web NextGen: historial complet del corrector d'EPUB (sense camins ni"
-" correccions)"
+"Calibre-Web NextGen: historial complet del corrector d'EPUB (sense camins ni "
+"correccions)"
 
 #: cps/cwa_functions.py
 msgid "Calibre-Web NextGen - Full EPUB Fixer History (w/ Paths & Fixes)"
@@ -1548,8 +1541,7 @@ msgid "Calibre-Web NextGen Profile Picture Management (WIP)"
 msgstr "Gestió de fotos de perfil de Calibre-Web NextGen (en desenvolupament)"
 
 #: cps/db.py cps/spa_strings.py cps/templates/config_edit.html
-#: cps/templates/config_view_edit.html cps/templates/email_edit.html
-#: cps/web.py
+#: cps/templates/config_view_edit.html cps/templates/email_edit.html cps/web.py
 msgid "None"
 msgstr "Cap"
 
@@ -1643,8 +1635,8 @@ msgstr " (identificadors dels llibres: %(failed_ids)s)"
 #, python-format
 msgid ""
 "Bulk edit completed with errors: %(success_count)s succeeded and "
-"%(failure_count)s failed%(failed_ids_message)s. One or more failed books may"
-" have had files renamed before the database update failed; their files and "
+"%(failure_count)s failed%(failed_ids_message)s. One or more failed books may "
+"have had files renamed before the database update failed; their files and "
 "database entries may now be inconsistent."
 msgstr ""
 "L'edició massiva s'ha completat amb errors: %(success_count)s llibres "
@@ -1801,8 +1793,8 @@ msgstr "No s'han pogut analitzar les metadades del fitxer %(format)s: %(err)s"
 msgid ""
 "Could not rename the book folder to match the reloaded metadata: %(err)s"
 msgstr ""
-"No s'ha pogut canviar el nom de la carpeta del llibre perquè coincideixi amb"
-" les metadades recarregades: %(err)s"
+"No s'ha pogut canviar el nom de la carpeta del llibre perquè coincideixi amb "
+"les metadades recarregades: %(err)s"
 
 #: cps/editbooks.py
 #, python-format
@@ -1817,16 +1809,16 @@ msgstr "S'han tornat a carregar %(n)d camps del fitxer %(fmt)s del disc."
 #: cps/editbooks.py
 msgid "On-disk metadata matches current — no fields updated"
 msgstr ""
-"Les metadades del disc coincideixen amb les actuals; no s'ha actualitzat cap"
-" camp."
+"Les metadades del disc coincideixen amb les actuals; no s'ha actualitzat cap "
+"camp."
 
 #: cps/gdrive.py
 msgid ""
 "Google Drive setup not completed, try to deactivate and activate Google "
 "Drive again"
 msgstr ""
-"No s'ha completat la configuració de Google Drive. Desactiveu-lo i torneu-lo"
-" a activar."
+"No s'ha completat la configuració de Google Drive. Desactiveu-lo i torneu-lo "
+"a activar."
 
 #: cps/gdrive.py
 msgid ""
@@ -1911,8 +1903,7 @@ msgstr "Enviament de %(book)s al lector electrònic"
 
 #: cps/helper.py
 msgid "The requested file could not be read. Maybe wrong permissions?"
-msgstr ""
-"No s'ha pogut llegir el fitxer sol·licitat. Comproveu-ne els permisos."
+msgstr "No s'ha pogut llegir el fitxer sol·licitat. Comproveu-ne els permisos."
 
 #: cps/helper.py cps/spa_strings.py
 msgid "Invalid reading status"
@@ -1963,8 +1954,7 @@ msgstr "No s'ha trobat el fitxer %(file)s a Google Drive"
 
 #: cps/helper.py
 #, python-format
-msgid ""
-"Rename title from: '%(src)s' to '%(dest)s' failed with error: %(error)s"
+msgid "Rename title from: '%(src)s' to '%(dest)s' failed with error: %(error)s"
 msgstr "No s'ha pogut canviar el títol de «%(src)s» a «%(dest)s»: %(error)s"
 
 #: cps/helper.py
@@ -2026,8 +2016,8 @@ msgid ""
 "Cover could not be stored: the server has no permission to write into the "
 "book folder %(folder)s (folder owner uid %(owner)s, server uid %(uid)s)."
 msgstr ""
-"No s'ha pogut emmagatzemar la coberta: el servidor no té permís per escriure"
-" a la carpeta del llibre %(folder)s (ID del propietari de la carpeta "
+"No s'ha pogut emmagatzemar la coberta: el servidor no té permís per escriure "
+"a la carpeta del llibre %(folder)s (ID del propietari de la carpeta "
 "%(owner)s, ID del servidor %(uid)s)."
 
 #: cps/helper.py
@@ -2144,22 +2134,22 @@ msgid ""
 "contact your administrator."
 msgstr ""
 "No s'ha pogut iniciar la sessió perquè ha fallat la validació del testimoni "
-"OAuth. Pot haver-hi una discrepància entre els àmbits configurats. Comproveu"
-" la configuració dels àmbits d'OAuth o contacteu amb l'administrador."
+"OAuth. Pot haver-hi una discrepància entre els àmbits configurats. Comproveu "
+"la configuració dels àmbits d'OAuth o contacteu amb l'administrador."
 
 #: cps/oauth_bb.py
 msgid "Login failed: OAuth token expired. Please try logging in again."
 msgstr ""
-"L'inici de sessió ha fallat: el testimoni OAuth ha caducat. Proveu d'iniciar"
-" sessió de nou."
+"L'inici de sessió ha fallat: el testimoni OAuth ha caducat. Proveu d'iniciar "
+"sessió de nou."
 
 #: cps/oauth_bb.py
 msgid ""
 "Login failed: Could not connect to the OAuth provider's user info endpoint. "
 "Please try again or contact your administrator."
 msgstr ""
-"No s'ha pogut iniciar la sessió: no es pot connectar al punt d'informació de"
-" l'usuari del proveïdor OAuth. Torneu-ho a provar o contacteu amb "
+"No s'ha pogut iniciar la sessió: no es pot connectar al punt d'informació de "
+"l'usuari del proveïdor OAuth. Torneu-ho a provar o contacteu amb "
 "l'administrador."
 
 #: cps/oauth_bb.py
@@ -2188,8 +2178,8 @@ msgstr "No s'ha pogut enllaçar el compte OAuth. Torneu-ho a provar."
 #: cps/oauth_bb.py
 msgid "Login failed: your account is not allowed to access this application."
 msgstr ""
-"Error d'inici de sessió: el vostre compte no té permís per accedir a aquesta"
-" aplicació."
+"Error d'inici de sessió: el vostre compte no té permís per accedir a aquesta "
+"aplicació."
 
 #: cps/oauth_bb.py
 msgid ""
@@ -2216,8 +2206,8 @@ msgstr "El compte s'ha vinculat a %(oauth)s."
 #: cps/oauth_bb.py
 #, python-format
 msgid ""
-"Login failed: No user account is linked to your %(provider)s account. Please"
-" contact your administrator to create an account or link your existing "
+"Login failed: No user account is linked to your %(provider)s account. Please "
+"contact your administrator to create an account or link your existing "
 "account."
 msgstr ""
 "No s'ha pogut iniciar la sessió: no hi ha cap compte d'usuari vinculat al "
@@ -2225,8 +2215,7 @@ msgstr ""
 "compte o vinculi el que ja teniu."
 
 #: cps/oauth_bb.py
-msgid ""
-"OAuth authentication failed. Please try again or contact administrator."
+msgid "OAuth authentication failed. Please try again or contact administrator."
 msgstr ""
 "L'autenticació OAuth ha fallat. Torneu-ho a provar o poseu-vos en contacte "
 "amb l'administrador."
@@ -2682,16 +2671,15 @@ msgstr ""
 
 #: cps/shelf.py
 msgid ""
-"This book is not in the shelf owner's library. The shelf owner cannot browse"
-" the global library; an administrator must add it to their My Library first."
+"This book is not in the shelf owner's library. The shelf owner cannot browse "
+"the global library; an administrator must add it to their My Library first."
 msgstr ""
-"Aquest llibre no és a la biblioteca del propietari del prestatge, que no pot"
-" consultar la biblioteca global. Un administrador l'ha d'afegir primer a «La"
-" meva biblioteca» d'aquest usuari."
+"Aquest llibre no és a la biblioteca del propietari del prestatge, que no pot "
+"consultar la biblioteca global. Un administrador l'ha d'afegir primer a «La "
+"meva biblioteca» d'aquest usuari."
 
 #: cps/shelf.py
-msgid ""
-"This book cannot be added to this shelf. Ask an administrator for help."
+msgid "This book cannot be added to this shelf. Ask an administrator for help."
 msgstr ""
 "Aquest llibre no es pot afegir a aquest prestatge. Demaneu ajuda a un "
 "administrador."
@@ -2723,8 +2711,8 @@ msgstr "El llibre ja forma part del prestatge: %(shelfname)s"
 
 #: cps/shelf.py
 msgid ""
-"This book is not in your library. Add it to My Library before adding it to a"
-" shelf."
+"This book is not in your library. Add it to My Library before adding it to a "
+"shelf."
 msgstr ""
 "Aquest llibre no es troba a la vostra biblioteca. Afegiu-lo a La meva "
 "biblioteca abans d'afegir-lo a un prestatge."
@@ -3217,8 +3205,8 @@ msgstr ""
 "Voleu treure {n} llibres seleccionats de la vostra biblioteca? També "
 "desapareixeran del canal OPDS i dels prestatges habituals on els hàgiu "
 "afegit. No se suprimirà res de la biblioteca global. Es conservaran els "
-"fragments destacats, les notes, els punts de llibre i el progrés de lectura."
-" Si utilitzeu la sincronització integrada de Kobo, els llibres també "
+"fragments destacats, les notes, els punts de llibre i el progrés de lectura. "
+"Si utilitzeu la sincronització integrada de Kobo, els llibres també "
 "desapareixeran dels dispositius Kobo del vostre compte a la pròxima "
 "sincronització; els altres lectors electrònics conservaran les còpies "
 "baixades."
@@ -3246,8 +3234,8 @@ msgid ""
 "permanently erased for every member. This cannot be undone."
 msgstr ""
 "Voleu suprimir «{title}» de la biblioteca global? El llibre i tots els "
-"fitxers s’esborraran definitivament per a tots els usuaris. Aquesta acció no"
-" es pot desfer."
+"fitxers s’esborraran definitivament per a tots els usuaris. Aquesta acció no "
+"es pot desfer."
 
 #: cps/spa_strings.py
 msgid "Delete from the global library"
@@ -3292,8 +3280,8 @@ msgstr "També es retira d’aquests prestatges: {shelves}."
 #: cps/spa_strings.py
 msgid ""
 "Keep your own selection again? Your library goes back to the books you had "
-"chosen — nothing was lost while you saw everything. At its next update, your"
-" e-reader returns to your selection."
+"chosen — nothing was lost while you saw everything. At its next update, your "
+"e-reader returns to your selection."
 msgstr ""
 "Voleu tornar a la vostra selecció? La biblioteca mostrarà els llibres que "
 "havíeu triat. No se n'ha perdut cap mentre veieu tota la biblioteca. A la "
@@ -3348,11 +3336,11 @@ msgstr "Només els llibres escollits per a aquest compte."
 
 #: cps/spa_strings.py cps/templates/user_edit.html
 msgid ""
-"Only the books you choose. Add them from the global library; remove them any"
-" time."
+"Only the books you choose. Add them from the global library; remove them any "
+"time."
 msgstr ""
-"Només els llibres que trieu. Afegiu-los des de la biblioteca global i "
-"traieu-los quan vulgueu."
+"Només els llibres que trieu. Afegiu-los des de la biblioteca global i traieu-"
+"los quan vulgueu."
 
 #: cps/spa_strings.py
 msgid "Own selection"
@@ -3403,16 +3391,16 @@ msgstr ""
 "Voleu configurar «La meva biblioteca» per a tots els comptes que no siguin "
 "anònims? Cada compte començarà amb tots els llibres que pot veure ara, no "
 "només amb els que ha desat en prestatges, llegit o baixat. Després, els "
-"usuaris podran treure'n els llibres que vulguin. Els comptes que ja estiguin"
-" configurats no es tornaran a omplir."
+"usuaris podran treure'n els llibres que vulguin. Els comptes que ja estiguin "
+"configurats no es tornaran a omplir."
 
 #: cps/spa_strings.py
 msgid ""
-"Set up My Library for every non-anonymous user? Each account switches to its"
-" own selection after it is filled with everything that account can currently"
-" see. Anonymous accounts such as Guest are left unchanged; use their per-"
-"user controls to set up a curated public library. Accounts set up before are"
-" never reseeded."
+"Set up My Library for every non-anonymous user? Each account switches to its "
+"own selection after it is filled with everything that account can currently "
+"see. Anonymous accounts such as Guest are left unchanged; use their per-user "
+"controls to set up a curated public library. Accounts set up before are "
+"never reseeded."
 msgstr ""
 "Voleu configurar «La meva biblioteca» per a tots els usuaris que no siguin "
 "anònims? Cada compte passarà a tenir una selecció pròpia que, al principi, "
@@ -3438,8 +3426,8 @@ msgstr ""
 #: cps/spa_strings.py
 msgid ""
 "Show the whole library again? Your selection is kept exactly as you left it "
-"— switch back any time and it is still there. At its next update, your "
-"e-reader syncs the whole library."
+"— switch back any time and it is still there. At its next update, your e-"
+"reader syncs the whole library."
 msgstr ""
 "Voleu tornar a mostrar tota la biblioteca? La vostra selecció es conservarà "
 "tal com és i la podreu recuperar en qualsevol moment. A la propera "
@@ -3461,8 +3449,8 @@ msgid ""
 "nothing changes until you remove books yourself. Your e-reader keeps the "
 "same books at its next update."
 msgstr ""
-"Voleu crear una selecció pròpia? Al principi inclourà tot el que podeu veure"
-" ara; res no canviarà fins que en tragueu llibres. A la pròxima "
+"Voleu crear una selecció pròpia? Al principi inclourà tot el que podeu veure "
+"ara; res no canviarà fins que en tragueu llibres. A la pròxima "
 "sincronització, el lector electrònic conservarà els mateixos llibres."
 
 #: cps/spa_strings.py
@@ -3476,12 +3464,12 @@ msgstr ""
 #: cps/spa_strings.py
 msgid ""
 "Switching a user to their own selection first fills it with everything they "
-"can see now, so nothing changes for them until they remove books themselves."
-" Switching back keeps the selection intact but unused."
+"can see now, so nothing changes for them until they remove books themselves. "
+"Switching back keeps the selection intact but unused."
 msgstr ""
 "Quan un usuari passa a tenir una selecció pròpia, primer s'omple amb tot el "
-"que pot veure. Res no canvia fins que en treu llibres. Si torna a veure tota"
-" la biblioteca, la seva selecció es conserva, però no es fa servir."
+"que pot veure. Res no canvia fins que en treu llibres. Si torna a veure tota "
+"la biblioteca, la seva selecció es conserva, però no es fa servir."
 
 #: cps/spa_strings.py
 msgid ""
@@ -3489,8 +3477,8 @@ msgid ""
 "selection. Nothing you had is gone. Every book, new arrivals included, is "
 "under Global Library in the menu."
 msgstr ""
-"La biblioteca és compartida i conté una sola còpia de cada llibre; la vostra"
-" selecció indica quins voleu veure. No s'ha perdut cap llibre. Tots els "
+"La biblioteca és compartida i conté una sola còpia de cada llibre; la vostra "
+"selecció indica quins voleu veure. No s'ha perdut cap llibre. Tots els "
 "llibres, incloses les novetats, són a «Biblioteca global», al menú."
 
 #: cps/spa_strings.py
@@ -3499,8 +3487,8 @@ msgid ""
 "selection. Nothing you had is gone. Your administrator manages what enters "
 "your selection."
 msgstr ""
-"La biblioteca és compartida i conté una sola còpia de cada llibre; la vostra"
-" selecció indica quins voleu veure. No s'ha perdut cap llibre. "
+"La biblioteca és compartida i conté una sola còpia de cada llibre; la vostra "
+"selecció indica quins voleu veure. No s'ha perdut cap llibre. "
 "L'administrador decideix quins llibres s'afegeixen a la vostra selecció."
 
 #: cps/spa_strings.py cps/templates/detail.html
@@ -3515,8 +3503,8 @@ msgid ""
 msgstr ""
 "Si utilitzeu la sincronització integrada de Kobo, el llibre també "
 "desapareixerà del Kobo a la pròxima sincronització. Els altres lectors "
-"electrònics conservaran les còpies baixades, i la sincronització del progrés"
-" de KOReader continuarà funcionant."
+"electrònics conservaran les còpies baixades, i la sincronització del progrés "
+"de KOReader continuarà funcionant."
 
 #: cps/spa_strings.py cps/templates/index.html
 msgid "The whole archive. Add books to your library from here."
@@ -3552,9 +3540,8 @@ msgid ""
 "Your administrator chooses which books are in your library. Ask them to add "
 "books, or to let you browse the global library."
 msgstr ""
-"L'administrador decideix quins llibres hi ha a la vostra biblioteca. "
-"Demaneu-li que hi afegeixi llibres o que us permeti consultar la biblioteca "
-"global."
+"L'administrador decideix quins llibres hi ha a la vostra biblioteca. Demaneu-"
+"li que hi afegeixi llibres o que us permeti consultar la biblioteca global."
 
 #: cps/spa_strings.py cps/templates/user_edit.html cps/web.py
 msgid "Your library contents are managed by an administrator."
@@ -3804,8 +3791,8 @@ msgstr ""
 #: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid "Default UI display font for new users"
 msgstr ""
-"Tipus de lletra predeterminat dels elements de la interfície per als usuaris"
-" nous"
+"Tipus de lletra predeterminat dels elements de la interfície per als usuaris "
+"nous"
 
 #: cps/spa_strings.py cps/templates/config_view_edit.html
 msgid ""
@@ -3977,8 +3964,8 @@ msgstr "Suprimeix el llibre"
 #: cps/spa_strings.py
 #, python-brace-format
 msgid ""
-"Delete \"{title}\"? This permanently removes the book and all its files from"
-" your library. This cannot be undone."
+"Delete \"{title}\"? This permanently removes the book and all its files from "
+"your library. This cannot be undone."
 msgstr ""
 "Voleu suprimir «{title}»? El llibre i tots els seus fitxers desapareixeran "
 "definitivament de la biblioteca. Aquesta acció no es pot desfer."
@@ -4417,8 +4404,7 @@ msgstr "S'han suprimit els {n} llibres."
 
 #: cps/spa_strings.py
 #, python-brace-format
-msgid ""
-"{n} book(s) permanently deleted from the global library for every user."
+msgid "{n} book(s) permanently deleted from the global library for every user."
 msgstr ""
 "Els {n} llibres s'han suprimit permanentment de la biblioteca global per a "
 "cada usuari."
@@ -4483,8 +4469,8 @@ msgid ""
 "The interface is translated into your language; these update notes are "
 "written in English."
 msgstr ""
-"La interfície està traduïda al vostre idioma; aquestes notes d'actualització"
-" estan escrites en anglès."
+"La interfície està traduïda al vostre idioma; aquestes notes d'actualització "
+"estan escrites en anglès."
 
 #: cps/spa_strings.py
 msgid "Grid view"
@@ -4667,8 +4653,7 @@ msgstr "S'ha cancel·lat l'edició."
 
 #: cps/spa_strings.py
 msgid ""
-"Drag to reorder. Tap ✕ to hide a section. Arrow keys move the focused "
-"handle."
+"Drag to reorder. Tap ✕ to hide a section. Arrow keys move the focused handle."
 msgstr ""
 "Arrossegueu per canviar l'ordre. Toqueu ✕ per amagar una secció. Feu servir "
 "les tecles de fletxa per moure el control seleccionat."
@@ -4759,8 +4744,7 @@ msgstr ""
 #, python-brace-format
 msgid "Delete “{name}”? It is removed from {count} books, which are kept."
 msgstr ""
-"Voleu suprimir «{name}»? Se suprimirà de {count} llibres, que es "
-"conservaran."
+"Voleu suprimir «{name}»? Se suprimirà de {count} llibres, que es conservaran."
 
 #: cps/spa_strings.py
 msgid "Dismiss Ko-fi support message"
@@ -4841,8 +4825,8 @@ msgid ""
 "These open the full configuration pages. Changes there apply to the whole "
 "server."
 msgstr ""
-"Aquestes opcions obren les pàgines de configuració completes. Els canvis que"
-" hi feu s'apliquen a tot el servidor."
+"Aquestes opcions obren les pàgines de configuració completes. Els canvis que "
+"hi feu s'apliquen a tot el servidor."
 
 #: cps/spa_strings.py
 #, python-brace-format
@@ -5243,15 +5227,14 @@ msgid ""
 "A download redirect tried to send a credential to another origin and was "
 "blocked."
 msgstr ""
-"S'ha bloquejat una redirecció de baixada que intentava enviar una credencial"
-" a un altre origen."
+"S'ha bloquejat una redirecció de baixada que intentava enviar una credencial "
+"a un altre origen."
 
 #: cps/spa_strings.py
 msgid ""
 "A duplicate scan is already running. This list updates when it finishes."
 msgstr ""
-"Ja hi ha una cerca de duplicats en curs. La llista s'actualitzarà quan "
-"acabi."
+"Ja hi ha una cerca de duplicats en curs. La llista s'actualitzarà quan acabi."
 
 #: cps/spa_strings.py
 msgid "A few random picks from your library"
@@ -5270,8 +5253,8 @@ msgstr "Una nota sobre el llibre, no lligada a un passatge"
 
 #: cps/spa_strings.py
 msgid ""
-"A one-time full duplicate scan is needed. Use “Scan for duplicates” above to"
-" run it."
+"A one-time full duplicate scan is needed. Use “Scan for duplicates” above to "
+"run it."
 msgstr ""
 "Cal fer una cerca completa de duplicats una sola vegada. Feu servir «Cerca "
 "duplicats», a la part superior, per iniciar-la."
@@ -5303,8 +5286,7 @@ msgstr "Compte: {name}"
 
 #: cps/spa_strings.py
 msgid ""
-"Acquisition is not ready right now. Ask an administrator to check its "
-"status."
+"Acquisition is not ready right now. Ask an administrator to check its status."
 msgstr ""
 "L'adquisició no està disponible ara mateix. Demaneu a un administrador que "
 "en comprovi l'estat."
@@ -5449,8 +5431,8 @@ msgstr "També a {names}"
 #: cps/spa_strings.py
 msgid "An administrator has not added a book source, or none is switched on."
 msgstr ""
-"Cap administrador no ha afegit cap font de llibres, o bé totes les fonts són"
-" desactivades."
+"Cap administrador no ha afegit cap font de llibres, o bé totes les fonts són "
+"desactivades."
 
 #: cps/spa_strings.py
 msgid ""
@@ -5648,8 +5630,8 @@ msgid ""
 "Between {min} and {max} px. Locked to 2:3, the ratio every cover frame in "
 "the app uses."
 msgstr ""
-"Entre {min} i {max} px. La relació d'aspecte és fixa, de 2:3, com la de tots"
-" els marcs de coberta de l'aplicació."
+"Entre {min} i {max} px. La relació d'aspecte és fixa, de 2:3, com la de tots "
+"els marcs de coberta de l'aplicació."
 
 #: cps/spa_strings.py cps/templates/read.html
 msgid "Black"
@@ -5716,8 +5698,7 @@ msgstr "Llibres"
 
 #: cps/spa_strings.py
 msgid "Books assigned a value in this column will appear here."
-msgstr ""
-"Els llibres amb un valor assignat en aquesta columna apareixeran aquí."
+msgstr "Els llibres amb un valor assignat en aquesta columna apareixeran aquí."
 
 #: cps/spa_strings.py
 msgid "Books awaiting authority"
@@ -5812,8 +5793,8 @@ msgstr ""
 
 #: cps/spa_strings.py
 msgid ""
-"CWNG copies completed books allowed by this connection and the server format"
-" settings. It does not move files, delete client jobs, or change seeding "
+"CWNG copies completed books allowed by this connection and the server format "
+"settings. It does not move files, delete client jobs, or change seeding "
 "limits. NZBGet needs credentials that can read configuration, queue and "
 "history. qBittorrent needs an existing category. Transmission uses the "
 "configured folder and label."
@@ -5837,13 +5818,13 @@ msgstr "Pot penjar llibres"
 #: cps/templates/book_review.html cps/templates/book_table.html
 #: cps/templates/config_db.html cps/templates/config_edit.html
 #: cps/templates/config_view_edit.html cps/templates/cover_picker.html
-#: cps/templates/cwa_convert_library.html
-#: cps/templates/cwa_cover_enforcer.html cps/templates/cwa_epub_fixer.html
-#: cps/templates/detail.html cps/templates/duplicates.html
-#: cps/templates/layout.html cps/templates/modal_dialogs.html
-#: cps/templates/read.html cps/templates/schedule_edit.html
-#: cps/templates/shelf.html cps/templates/shelf_edit.html
-#: cps/templates/tasks.html cps/templates/user_edit.html
+#: cps/templates/cwa_convert_library.html cps/templates/cwa_cover_enforcer.html
+#: cps/templates/cwa_epub_fixer.html cps/templates/detail.html
+#: cps/templates/duplicates.html cps/templates/layout.html
+#: cps/templates/modal_dialogs.html cps/templates/read.html
+#: cps/templates/schedule_edit.html cps/templates/shelf.html
+#: cps/templates/shelf_edit.html cps/templates/tasks.html
+#: cps/templates/user_edit.html
 msgid "Cancel"
 msgstr "Cancel·la"
 
@@ -6002,8 +5983,8 @@ msgid ""
 "Collect books in shelves. Use settings to rename, share or choose device "
 "visibility."
 msgstr ""
-"Organitzeu els llibres en prestatges. Feu servir la configuració per "
-"canviar-los de nom, compartir-los o triar si seran visibles als dispositius."
+"Organitzeu els llibres en prestatges. Feu servir la configuració per canviar-"
+"los de nom, compartir-los o triar si seran visibles als dispositius."
 
 #: cps/spa_strings.py
 msgid "Colour scheme"
@@ -6051,8 +6032,8 @@ msgid ""
 "Connect the Kobo to a computer and open .kobo/Kobo/Kobo eReader.conf in a "
 "text editor."
 msgstr ""
-"Connecteu el Kobo a un ordinador i obriu .kobo/Kobo/Kobo eReader.conf amb un"
-" editor de text."
+"Connecteu el Kobo a un ordinador i obriu .kobo/Kobo/Kobo eReader.conf amb un "
+"editor de text."
 
 #: cps/spa_strings.py
 msgid ""
@@ -6384,8 +6365,8 @@ msgid ""
 "scope selected above."
 msgstr ""
 "Les fonts d'imatges de coberta i les claus d'API són del servidor i no "
-"depenen de l'opció de coberta que trieu. Serveixen per cercar imatges; si en"
-" trieu una aquí, només es desarà a l'àmbit seleccionat més amunt."
+"depenen de l'opció de coberta que trieu. Serveixen per cercar imatges; si en "
+"trieu una aquí, només es desarà a l'àmbit seleccionat més amunt."
 
 #: cps/spa_strings.py
 msgid "Cover updated from the selected result."
@@ -6545,16 +6526,16 @@ msgstr "Suprimeix l'etiqueta {name}"
 #: cps/spa_strings.py
 #, python-brace-format
 msgid ""
-"Delete the {fmt} file? The book record, metadata, shelves, and reading state"
-" stay available."
+"Delete the {fmt} file? The book record, metadata, shelves, and reading state "
+"stay available."
 msgstr ""
 "Voleu suprimir el fitxer {fmt}? El registre del llibre, les metadades, els "
 "prestatges i l'estat de lectura romanen disponibles."
 
 #: cps/spa_strings.py
 msgid ""
-"Delete this Kobo sync URL? The current URL will stop working on every paired"
-" Kobo."
+"Delete this Kobo sync URL? The current URL will stop working on every paired "
+"Kobo."
 msgstr ""
 "Voleu suprimir aquesta URL de sincronització de Kobo? L'URL actual deixarà "
 "de funcionar en tots els Kobo vinculats."
@@ -6767,8 +6748,8 @@ msgstr "Descarrega {format}"
 #: cps/spa_strings.py
 #, python-brace-format
 msgid ""
-"Downloaded {file}. It holds a password for this account: delete the zip once"
-" the plugin is on the e-reader."
+"Downloaded {file}. It holds a password for this account: delete the zip once "
+"the plugin is on the e-reader."
 msgstr ""
 "S'ha baixat {file}. Conté una contrasenya d'aquest compte; suprimiu el "
 "fitxer ZIP quan hàgiu instal·lat el connector al lector electrònic."
@@ -6973,16 +6954,14 @@ msgid "Enter the address as http://host:port or https://host."
 msgstr "Introduïu l'adreça com a http://host:port o https://host."
 
 #: cps/spa_strings.py
-msgid ""
-"Enter the code the e-reader shows, or scan its QR code with your phone."
+msgid "Enter the code the e-reader shows, or scan its QR code with your phone."
 msgstr ""
 "Introduïu el codi que mostra el lector electrònic o escanegeu-ne el codi QR "
 "amb el telèfon."
 
 #: cps/spa_strings.py
 msgid ""
-"Every book syncs as it becomes ready. You can exclude individual books "
-"below."
+"Every book syncs as it becomes ready. You can exclude individual books below."
 msgstr ""
 "Cada llibre es sincronitza a mesura que està llest. Podeu excloure llibres "
 "individuals a continuació."
@@ -7220,8 +7199,8 @@ msgstr "Doneu un nom al vostre prestatge intel·ligent."
 #: cps/spa_strings.py
 #, python-brace-format
 msgid ""
-"Give {name} My Library? It starts as a copy of everything they can see now —"
-" nothing changes for them yet."
+"Give {name} My Library? It starts as a copy of everything they can see now — "
+"nothing changes for them yet."
 msgstr ""
 "Voleu activar La meva biblioteca per a {name}? Inicialment copiarà tots els "
 "llibres que pot veure ara; de moment, no li canviarà res."
@@ -7241,8 +7220,7 @@ msgstr "Ves a la biblioteca"
 #: cps/spa_strings.py cps/templates/config_edit.html
 #: cps/templates/cover_picker.html
 msgid "Gradient — palette-matched top/bottom blend"
-msgstr ""
-"Degradat: fusió dels colors de la paleta a la part superior i inferior"
+msgstr "Degradat: fusió dels colors de la paleta a la part superior i inferior"
 
 #: cps/spa_strings.py
 msgid "Grey"
@@ -7493,8 +7471,7 @@ msgstr "Emissor / URL de base"
 
 #: cps/spa_strings.py
 msgid "It may have moved, or it might still live in the classic interface."
-msgstr ""
-"Potser aquesta funció s'ha mogut o encara és a la interfície clàssica."
+msgstr "Potser aquesta funció s'ha mogut o encara és a la interfície clàssica."
 
 #: cps/spa_strings.py
 msgid "Italic"
@@ -7626,8 +7603,8 @@ msgstr "Esquerra"
 msgid ""
 "Legacy acquisition permissions need review before a catalog can be added."
 msgstr ""
-"Els permisos d'adquisició heretats necessiten una revisió abans que es pugui"
-" afegir un catàleg."
+"Els permisos d'adquisició heretats necessiten una revisió abans que es pugui "
+"afegir un catàleg."
 
 #: cps/spa_strings.py
 msgid ""
@@ -7649,8 +7626,8 @@ msgid ""
 "download client. A requested book is imported into this library through the "
 "normal ingest path, credited to the account that asked for it."
 msgstr ""
-"Permet sol·licitar llibres d'un catàleg OPDS o d'un indexador connectat a un"
-" client de descàrrega. Els llibres sol·licitats s'importen a aquesta "
+"Permet sol·licitar llibres d'un catàleg OPDS o d'un indexador connectat a un "
+"client de descàrrega. Els llibres sol·licitats s'importen a aquesta "
 "biblioteca pel procediment habitual i s'atribueixen al compte que els ha "
 "demanat."
 
@@ -7958,8 +7935,8 @@ msgstr "Funció nova!"
 
 #: cps/spa_strings.py
 msgid ""
-"New authors, tags, publishers, and languages will be added after each book's"
-" existing values. Filled single-value fields will be replaced."
+"New authors, tags, publishers, and languages will be added after each book's "
+"existing values. Filled single-value fields will be replaced."
 msgstr ""
 "Els autors, les etiquetes, les editorials i els idiomes nous s'afegiran "
 "després dels valors que ja té cada llibre. Els camps emplenats que només "
@@ -8082,8 +8059,8 @@ msgstr "No s'han trobat grups duplicats."
 
 #: cps/spa_strings.py
 msgid ""
-"No e-reader is waiting with this code. Check it, or get a new code on the "
-"e-reader."
+"No e-reader is waiting with this code. Check it, or get a new code on the e-"
+"reader."
 msgstr ""
 "No hi ha cap lector electrònic esperant amb aquest codi. Comproveu-lo o "
 "obteniu-ne un de nou al lector."
@@ -8095,8 +8072,8 @@ msgstr "No hi ha etiquetes excloses"
 #: cps/spa_strings.py
 msgid "No highlights yet. Select text in the book to make one."
 msgstr ""
-"Encara no hi ha fragments destacats. Seleccioneu text del llibre per a "
-"crear-ne un."
+"Encara no hi ha fragments destacats. Seleccioneu text del llibre per a crear-"
+"ne un."
 
 #: cps/spa_strings.py
 msgid "No matches found in this book."
@@ -8242,8 +8219,8 @@ msgstr "Res d'aquesta columna no coincideix amb el valor seleccionat."
 
 #: cps/spa_strings.py cps/templates/index.html
 msgid ""
-"Nothing is missing — the global library is still on the server. What you see"
-" here is your selection in My Library. Add books from the global library; "
+"Nothing is missing — the global library is still on the server. What you see "
+"here is your selection in My Library. Add books from the global library; "
 "they appear here and on your e-reader."
 msgstr ""
 "No hi falta res: la biblioteca global encara està al servidor. El que veieu "
@@ -8297,8 +8274,8 @@ msgstr "Data de publicació més antiga"
 
 #: cps/spa_strings.py
 msgid ""
-"On another device where you’re already signed in, scan this code or open the"
-" link below to authorise this device."
+"On another device where you’re already signed in, scan this code or open the "
+"link below to authorise this device."
 msgstr ""
 "En un altre dispositiu on ja tingueu la sessió iniciada, escanegeu aquest "
 "codi o obriu l'enllaç següent per autoritzar aquest dispositiu."
@@ -8334,8 +8311,8 @@ msgstr "Una columna"
 
 #: cps/spa_strings.py
 msgid ""
-"Only the books you pick below sync. Switching here starts from none picked —"
-" you choose each book yourself."
+"Only the books you pick below sync. Switching here starts from none picked — "
+"you choose each book yourself."
 msgstr ""
 "Només se sincronitzen els llibres que trieu a continuació. En canviar a "
 "aquesta opció, no n’hi ha cap de seleccionat; heu de triar cada llibre."
@@ -8423,8 +8400,8 @@ msgid ""
 "Opting in does not sync a book straight away. Each book is set up and "
 "checked first — its real state is shown here."
 msgstr ""
-"L'activació no sincronitza un llibre immediatament. Cada llibre es configura"
-" i es verifica primer; aquí es mostra el seu estat real."
+"L'activació no sincronitza un llibre immediatament. Cada llibre es configura "
+"i es verifica primer; aquí es mostra el seu estat real."
 
 #: cps/spa_strings.py
 msgid ""
@@ -8749,8 +8726,8 @@ msgstr "Torna a carregar"
 #, python-brace-format
 msgid ""
 "Reload metadata for \"{title}\" from the file on disk? Any title, author or "
-"series you edited here is replaced by what the file contains. This cannot be"
-" undone."
+"series you edited here is replaced by what the file contains. This cannot be "
+"undone."
 msgstr ""
 "Voleu tornar a carregar les metadades de «{title}» del fitxer del disc? Els "
 "canvis que hàgiu fet aquí al títol, l’autor o la sèrie se substituiran per "
@@ -8933,8 +8910,8 @@ msgid ""
 "Reset password for {name}? Their current password will stop working and a "
 "replacement will be emailed."
 msgstr ""
-"Voleu restablir la contrasenya de {name}? L’actual deixarà de funcionar i se"
-" n’enviarà una de nova per correu electrònic."
+"Voleu restablir la contrasenya de {name}? L’actual deixarà de funcionar i se "
+"n’enviarà una de nova per correu electrònic."
 
 #: cps/spa_strings.py
 msgid "Reset to defaults"
@@ -8972,8 +8949,8 @@ msgstr "Torna-ho a provar"
 
 #: cps/spa_strings.py
 msgid ""
-"Retry finishes the remaining accounts without changing completed selections."
-" Undo restores the settings from before setup began."
+"Retry finishes the remaining accounts without changing completed selections. "
+"Undo restores the settings from before setup began."
 msgstr ""
 "«Torna-ho a provar» acaba de configurar els comptes pendents sense canviar "
 "les seleccions completades. «Desfés» restaura la configuració anterior a "
@@ -9034,12 +9011,12 @@ msgstr "STARTTLS"
 msgid "Same completed folder inside CWNG"
 msgstr "La mateixa carpeta de descàrregues completades dins de CWNG"
 
-#: cps/spa_strings.py cps/templates/book_edit.html
-#: cps/templates/config_db.html cps/templates/config_edit.html
-#: cps/templates/config_view_edit.html cps/templates/cwa_settings.html
-#: cps/templates/email_edit.html cps/templates/read.html
-#: cps/templates/schedule_edit.html cps/templates/shelf_edit.html
-#: cps/templates/shelf_reorder.html cps/templates/user_edit.html
+#: cps/spa_strings.py cps/templates/book_edit.html cps/templates/config_db.html
+#: cps/templates/config_edit.html cps/templates/config_view_edit.html
+#: cps/templates/cwa_settings.html cps/templates/email_edit.html
+#: cps/templates/read.html cps/templates/schedule_edit.html
+#: cps/templates/shelf_edit.html cps/templates/shelf_reorder.html
+#: cps/templates/user_edit.html
 msgid "Save"
 msgstr "Desa"
 
@@ -9272,8 +9249,8 @@ msgstr "Envia"
 
 #: cps/spa_strings.py
 msgid ""
-"Send every book to your Kobo again on its next sync? Books already on it are"
-" sent again too."
+"Send every book to your Kobo again on its next sync? Books already on it are "
+"sent again too."
 msgstr ""
 "Voleu tornar a enviar tots els llibres al vostre Kobo a la propera "
 "sincronització? També s'envien de nou els llibres que ja hi ha."
@@ -9485,9 +9462,9 @@ msgstr "Mostra els controls per arrossegar els prestatges"
 
 #: cps/spa_strings.py
 msgid ""
-"Show the global library again? Your selection is kept exactly as you left it"
-" — switch back any time and it is still there. At its next update, your "
-"e-reader syncs the global library."
+"Show the global library again? Your selection is kept exactly as you left it "
+"— switch back any time and it is still there. At its next update, your e-"
+"reader syncs the global library."
 msgstr ""
 "Voleu tornar a mostrar la biblioteca global? La vostra selecció es "
 "conservarà tal com és i la podreu recuperar en qualsevol moment. A la "
@@ -9648,8 +9625,8 @@ msgid ""
 "at its next update."
 msgstr ""
 "Voleu activar «La meva biblioteca»? Al principi inclourà tots els llibres "
-"que podeu veure ara; res no canviarà fins que en tragueu algun. A la pròxima"
-" sincronització, el lector electrònic conservarà els mateixos llibres."
+"que podeu veure ara; res no canviarà fins que en tragueu algun. A la pròxima "
+"sincronització, el lector electrònic conservarà els mateixos llibres."
 
 #: cps/spa_strings.py
 msgid "Start the only OAuth provider automatically"
@@ -9699,8 +9676,8 @@ msgstr "Suport a Ko-fi →"
 #: cps/spa_strings.py
 msgid ""
 "Switch back to My Library? Your library goes back to the books you had "
-"chosen — nothing was lost while you saw everything. At its next update, your"
-" e-reader returns to your selection."
+"chosen — nothing was lost while you saw everything. At its next update, your "
+"e-reader returns to your selection."
 msgstr ""
 "Voleu tornar a «La meva biblioteca»? Es tornaran a mostrar els llibres que "
 "havíeu triat. No se n'ha perdut cap mentre veieu tota la biblioteca. A la "
@@ -9821,9 +9798,8 @@ msgid ""
 "That address cannot be reached on a local network. Loopback, link-local and "
 "cloud metadata addresses are never allowed."
 msgstr ""
-"No es pot accedir a aquesta adreça des de la xarxa local. No es permeten les"
-" adreces de bucle local, d'enllaç local ni de metadades dels serveis al "
-"núvol."
+"No es pot accedir a aquesta adreça des de la xarxa local. No es permeten les "
+"adreces de bucle local, d'enllaç local ni de metadades dels serveis al núvol."
 
 #: cps/spa_strings.py
 msgid "That catalog no longer exists."
@@ -9837,8 +9813,7 @@ msgstr ""
 
 #: cps/spa_strings.py
 msgid "That page expired. Go back to the top and try again."
-msgstr ""
-"Aquesta pàgina ha caducat. Torneu al començament i torneu-ho a provar."
+msgstr "Aquesta pàgina ha caducat. Torneu al començament i torneu-ho a provar."
 
 #: cps/spa_strings.py
 msgid ""
@@ -10108,9 +10083,9 @@ msgstr "No s'ha pogut canviar la configuració."
 
 #: cps/spa_strings.py cps/templates/index.html
 msgid ""
-"The shared library holds every book once — My Library is your own selection."
-" Nothing is gone: every book, new arrivals included, is under Global Library"
-" in the menu."
+"The shared library holds every book once — My Library is your own selection. "
+"Nothing is gone: every book, new arrivals included, is under Global Library "
+"in the menu."
 msgstr ""
 "La biblioteca compartida conté cada llibre una sola vegada. «La meva "
 "biblioteca» és la vostra selecció. No s'ha perdut res: tots els llibres, "
@@ -10118,8 +10093,8 @@ msgstr ""
 
 #: cps/spa_strings.py cps/templates/index.html
 msgid ""
-"The shared library holds every book once — My Library is your own selection."
-" Nothing is gone: your administrator manages what enters it."
+"The shared library holds every book once — My Library is your own selection. "
+"Nothing is gone: your administrator manages what enters it."
 msgstr ""
 "La biblioteca compartida conté cada llibre una sola vegada. «La meva "
 "biblioteca» és la vostra selecció. No s'ha perdut res: l'administrador "
@@ -10135,8 +10110,8 @@ msgstr "La font no va respondre amb un catàleg que podem llegir."
 
 #: cps/spa_strings.py
 msgid ""
-"The source or download client rejected its credentials. Ask an administrator"
-" to check the credential."
+"The source or download client rejected its credentials. Ask an administrator "
+"to check the credential."
 msgstr ""
 "La font o el client de descàrrega ha rebutjat les credencials. Demaneu a un "
 "administrador que les comprovi."
@@ -10194,8 +10169,7 @@ msgstr ""
 #: cps/spa_strings.py
 msgid "This account cannot use book sources, or the feature is switched off."
 msgstr ""
-"Aquest compte no pot utilitzar fonts de llibres o la funció està "
-"desactivada."
+"Aquest compte no pot utilitzar fonts de llibres o la funció està desactivada."
 
 #: cps/spa_strings.py
 msgid "This account is no longer an administrator."
@@ -10227,8 +10201,8 @@ msgstr "Aquesta categoria no existeix al client de descàrrega."
 
 #: cps/spa_strings.py
 msgid ""
-"This changes only your view of this book and copies delivered to your "
-"e-readers. The shared book cover and everyone else’s view stay unchanged."
+"This changes only your view of this book and copies delivered to your e-"
+"readers. The shared book cover and everyone else’s view stay unchanged."
 msgstr ""
 "Això només canvia la vostra vista del llibre i les còpies enviades als "
 "vostres lectors electrònics. La coberta compartida i la vista de la resta "
@@ -10252,11 +10226,11 @@ msgstr "Aquesta connexió es troba a la meva xarxa domèstica o local"
 
 #: cps/spa_strings.py
 msgid ""
-"This database carries permissions from the old experimental Store. They need"
-" review before book sources can be switched on."
+"This database carries permissions from the old experimental Store. They need "
+"review before book sources can be switched on."
 msgstr ""
-"Aquesta base de dades conserva permisos de l'antiga botiga experimental. Cal"
-" revisar-los abans d'activar les fonts de llibres."
+"Aquesta base de dades conserva permisos de l'antiga botiga experimental. Cal "
+"revisar-los abans d'activar les fonts de llibres."
 
 #: cps/spa_strings.py
 msgid "This device has not reported its inventory yet."
@@ -10271,8 +10245,8 @@ msgid ""
 "This download client API version is not supported. Check the documented "
 "supported versions."
 msgstr ""
-"Aquesta versió de l'API del client de descàrrega no és compatible. Consulteu"
-" la documentació per veure quines versions s'admeten."
+"Aquesta versió de l'API del client de descàrrega no és compatible. Consulteu "
+"la documentació per veure quines versions s'admeten."
 
 #: cps/spa_strings.py
 msgid "This e-reader is unavailable or belongs to another account."
@@ -10301,12 +10275,12 @@ msgstr ""
 
 #: cps/spa_strings.py
 msgid ""
-"This is this computer's own address, which the e-reader cannot reach. Choose"
-" Change and enter the address the e-reader can use, such as "
+"This is this computer's own address, which the e-reader cannot reach. Choose "
+"Change and enter the address the e-reader can use, such as "
 "http://192.168.1.20:8083."
 msgstr ""
-"Aquesta és l'adreça de l'ordinador mateix, a la qual el lector electrònic no"
-" pot accedir. Trieu «Canvia» i introduïu una adreça accessible des del "
+"Aquesta és l'adreça de l'ordinador mateix, a la qual el lector electrònic no "
+"pot accedir. Trieu «Canvia» i introduïu una adreça accessible des del "
 "lector, com ara http://192.168.1.20:8083."
 
 #: cps/spa_strings.py
@@ -10320,8 +10294,8 @@ msgstr ""
 #: cps/spa_strings.py
 msgid "This magic link can’t be checked. Generate a new one to try again."
 msgstr ""
-"No s'ha pogut verificar aquest enllaç d'accés. Genereu-ne un de nou i "
-"torneu-ho a provar."
+"No s'ha pogut verificar aquest enllaç d'accés. Genereu-ne un de nou i torneu-"
+"ho a provar."
 
 #: cps/spa_strings.py
 msgid "This magic link expired. Generate a new one to try again."
@@ -10335,8 +10309,8 @@ msgstr "Aquest apartat té menys pàgines que el que estàveu llegint."
 #: cps/spa_strings.py
 msgid "This page could not be refreshed, so what is shown may be out of date."
 msgstr ""
-"Aquesta pàgina no s'ha pogut actualitzar, de manera que el que es mostra pot"
-" estar desactualitzat."
+"Aquesta pàgina no s'ha pogut actualitzar, de manera que el que es mostra pot "
+"estar desactualitzat."
 
 #: cps/spa_strings.py
 msgid "This page doesn't exist here."
@@ -10348,8 +10322,8 @@ msgstr "Aquesta pàgina no està disponible per a aquest compte."
 
 #: cps/spa_strings.py
 msgid ""
-"This page ran into an error and could not be displayed. Your library is fine"
-" — reloading usually fixes it."
+"This page ran into an error and could not be displayed. Your library is fine "
+"— reloading usually fixes it."
 msgstr ""
 "Aquesta pàgina ha tingut un error i no s'ha pogut mostrar. La biblioteca no "
 "s'ha vist afectada; normalment n'hi ha prou de tornar-la a carregar."
@@ -10369,8 +10343,7 @@ msgstr ""
 
 #: cps/spa_strings.py
 msgid "This request needs an administrator to approve it again."
-msgstr ""
-"Aquesta sol·licitud necessita que un administrador la torni a aprovar."
+msgstr "Aquesta sol·licitud necessita que un administrador la torni a aprovar."
 
 #: cps/spa_strings.py
 msgid "This shelf is empty. Add books from any book's page."
@@ -10388,8 +10361,7 @@ msgstr ""
 
 #: cps/spa_strings.py
 msgid ""
-"This torrent uses a tracker outside the origins allowed by the "
-"administrator."
+"This torrent uses a tracker outside the origins allowed by the administrator."
 msgstr ""
 "Aquest torrent utilitza un rastrejador fora dels orígens permesos per "
 "l'administrador."
@@ -10488,14 +10460,14 @@ msgstr "Activeu la funció per concedir l'accés."
 #: cps/spa_strings.py
 msgid ""
 "Turn this on for a connection running on your own network, such as a "
-"catalog, indexer or download client on a 192.168 or 10.x address. It applies"
-" to this connection only. Loopback, link-local and cloud metadata addresses "
+"catalog, indexer or download client on a 192.168 or 10.x address. It applies "
+"to this connection only. Loopback, link-local and cloud metadata addresses "
 "are never allowed."
 msgstr ""
 "Activeu aquesta opció si la connexió funciona a la vostra xarxa, com ara un "
-"catàleg, un indexador o un client de descàrrega amb una adreça 192.168 o "
-"10.x. Només s'aplica a aquesta connexió. Les adreces de bucle local, "
-"d'enllaç local i de metadades dels serveis al núvol no es permeten mai."
+"catàleg, un indexador o un client de descàrrega amb una adreça 192.168 o 10."
+"x. Només s'aplica a aquesta connexió. Les adreces de bucle local, d'enllaç "
+"local i de metadades dels serveis al núvol no es permeten mai."
 
 #: cps/spa_strings.py cps/templates/read.html
 msgid "Two columns"
@@ -10503,8 +10475,8 @@ msgstr "Dues columnes"
 
 #: cps/spa_strings.py
 msgid ""
-"Two ways to connect. Each gives the e-reader its own app password, which you"
-" can revoke on your account page."
+"Two ways to connect. Each gives the e-reader its own app password, which you "
+"can revoke on your account page."
 msgstr ""
 "Hi ha dues maneres de connectar-se. Cadascuna dona al lector electrònic una "
 "contrasenya d'aplicació pròpia, que podeu revocar des de la pàgina del "
@@ -10520,8 +10492,8 @@ msgstr "S'ha desat la preferència de sincronització bidireccional."
 
 #: cps/spa_strings.py
 msgid ""
-"Type the address above, then this account's username and its password or one"
-" of its app passwords."
+"Type the address above, then this account's username and its password or one "
+"of its app passwords."
 msgstr ""
 "Escriviu l'adreça més amunt, després el nom d'usuari d'aquest compte i la "
 "seva contrasenya o una de les contrasenyes de l'aplicació."
@@ -10593,11 +10565,11 @@ msgstr "Enllaç sense títol"
 
 #: cps/spa_strings.py
 msgid ""
-"Unzip the download and copy the cwngsync.koplugin folder into "
-"koreader/plugins on the e-reader (on a Kobo, .adds/koreader/plugins)."
+"Unzip the download and copy the cwngsync.koplugin folder into koreader/"
+"plugins on the e-reader (on a Kobo, .adds/koreader/plugins)."
 msgstr ""
-"Descomprimiu la descàrrega i copieu la carpeta cwngsync.koplugin a "
-"koreader/plugins del lector electrònic (en un Kobo, .adds/koreader/plugins)."
+"Descomprimiu la descàrrega i copieu la carpeta cwngsync.koplugin a koreader/"
+"plugins del lector electrònic (en un Kobo, .adds/koreader/plugins)."
 
 #: cps/spa_strings.py
 msgid "Update failed."
@@ -10642,8 +10614,8 @@ msgid ""
 "Use these to connect OPDS readers or KOReader sync without your main "
 "password."
 msgstr ""
-"Utilitzeu-los per connectar els lectors OPDS o la sincronització de KOReader"
-" sense la vostra contrasenya principal."
+"Utilitzeu-los per connectar els lectors OPDS o la sincronització de KOReader "
+"sense la vostra contrasenya principal."
 
 #: cps/spa_strings.py cps/templates/cover_picker.html
 msgid "Use this cover"
@@ -10693,8 +10665,8 @@ msgstr "Usuaris"
 
 #: cps/spa_strings.py cps/templates/book_edit.html
 msgid ""
-"Using a suggestion replaces only ISBN identifiers in this form. Save changes"
-" to keep it."
+"Using a suggestion replaces only ISBN identifiers in this form. Save changes "
+"to keep it."
 msgstr ""
 "Si feu servir un suggeriment, només se substituiran els identificadors ISBN "
 "d'aquest formulari. Deseu els canvis per conservar-lo."
@@ -10756,8 +10728,8 @@ msgstr ""
 #: cps/spa_strings.py
 msgid ""
 "We repaired this book for your Kobo. If you were having trouble "
-"highlighting, try after sync — and if it still doesn’t work, remove the book"
-" from your Kobo and let it download again."
+"highlighting, try after sync — and if it still doesn’t work, remove the book "
+"from your Kobo and let it download again."
 msgstr ""
 "Hem reparat aquest llibre per al Kobo. Si teníeu problemes per destacar "
 "fragments, torneu-ho a provar després de sincronitzar. Si encara no "
@@ -10766,8 +10738,8 @@ msgstr ""
 #: cps/spa_strings.py
 msgid ""
 "We repaired this book for your Kobo. If you were having trouble "
-"highlighting, try after sync — and if it still doesn’t work, remove the book"
-" from your Kobo and let it download again. If you read it some other way, "
+"highlighting, try after sync — and if it still doesn’t work, remove the book "
+"from your Kobo and let it download again. If you read it some other way, "
 "download it again to get the repaired copy."
 msgstr ""
 "Hem reparat aquest llibre per al Kobo. Si teníeu problemes per destacar "
@@ -10818,14 +10790,14 @@ msgstr "Amplada (px)"
 
 #: cps/spa_strings.py
 msgid ""
-"With automatic start on, the login page goes straight to the provider. Add "
-"?local=1 to the login URL to reach the password form, which keeps working as"
-" long as standard password login is left enabled."
+"With automatic start on, the login page goes straight to the provider. Add ?"
+"local=1 to the login URL to reach the password form, which keeps working as "
+"long as standard password login is left enabled."
 msgstr ""
 "Si l'inici automàtic és activat, la pàgina d'accés us porta directament al "
 "proveïdor. Afegiu ?local=1 a l'URL d'inici de sessió per accedir al "
-"formulari de contrasenya, que continuarà funcionant mentre l'inici de sessió"
-" amb contrasenya habitual sigui activat."
+"formulari de contrasenya, que continuarà funcionant mentre l'inici de sessió "
+"amb contrasenya habitual sigui activat."
 
 #: cps/spa_strings.py
 msgid "Write a note"
@@ -10844,8 +10816,8 @@ msgid ""
 "You're probably a long time user of calibre-web. Please let us know your "
 "feedback on this, why or why not this works with your flow."
 msgstr ""
-"És probable que feu servir calibre-web des de fa temps. Expliqueu-nos què us"
-" sembla aquesta funció i si encaixa amb la vostra manera de treballar."
+"És probable que feu servir calibre-web des de fa temps. Expliqueu-nos què us "
+"sembla aquesta funció i si encaixa amb la vostra manera de treballar."
 
 #: cps/spa_strings.py
 msgid ""
@@ -10863,12 +10835,12 @@ msgstr "La vostra biblioteca"
 
 #: cps/spa_strings.py
 msgid ""
-"Your OPDS feed includes all visible shelves. Enable selected shelves only in"
-" your account settings to choose individual shelves."
+"Your OPDS feed includes all visible shelves. Enable selected shelves only in "
+"your account settings to choose individual shelves."
 msgstr ""
 "El canal OPDS inclou tots els prestatges visibles. Per triar-los "
-"individualment, activeu l'opció de mostrar només els prestatges seleccionats"
-" a la configuració del compte."
+"individualment, activeu l'opció de mostrar només els prestatges seleccionats "
+"a la configuració del compte."
 
 #: cps/spa_strings.py
 msgid ""
@@ -10912,9 +10884,9 @@ msgid ""
 "Your own cover is private to you and your e-reader deliveries. The library "
 "cover stays unchanged for everyone else."
 msgstr ""
-"La coberta que trieu només la veureu vós i s'inclourà en les còpies enviades"
-" als vostres lectors electrònics. La coberta de la biblioteca no canviarà "
-"per als altres usuaris."
+"La coberta que trieu només la veureu vós i s'inclourà en les còpies enviades "
+"als vostres lectors electrònics. La coberta de la biblioteca no canviarà per "
+"als altres usuaris."
 
 #: cps/spa_strings.py
 msgid "Your personal digital library"
@@ -10931,8 +10903,8 @@ msgstr "No s'han pogut carregar les vostres sol·licituds. No s'han perdut."
 #: cps/spa_strings.py
 msgid "Your saved e-reader address is shown — change it for this send only."
 msgstr ""
-"Es mostra la vostra adreça de lector electrònic desada; canvieu-la només per"
-" a aquest enviament."
+"Es mostra la vostra adreça de lector electrònic desada; canvieu-la només per "
+"a aquest enviament."
 
 #: cps/spa_strings.py
 msgid "all rules"
@@ -11132,11 +11104,11 @@ msgstr "{n} anotacions d’aquesta font"
 #: cps/spa_strings.py
 #, python-brace-format
 msgid ""
-"{n} annotations were made on this source. They are not deleted. Their origin"
-" history is kept."
+"{n} annotations were made on this source. They are not deleted. Their origin "
+"history is kept."
 msgstr ""
-"S'han fet {n} anotacions en aquesta font. No se suprimiran i se'n conservarà"
-" l'origen."
+"S'han fet {n} anotacions en aquesta font. No se suprimiran i se'n conservarà "
+"l'origen."
 
 #: cps/spa_strings.py
 #, python-brace-format
@@ -11273,8 +11245,8 @@ msgstr "Favorit"
 
 #: cps/spa_strings.py
 msgid ""
-"Choose fonts you are allowed to share with this server’s readers. Files stay"
-" in the configuration volume across upgrades."
+"Choose fonts you are allowed to share with this server’s readers. Files stay "
+"in the configuration volume across upgrades."
 msgstr ""
 "Trieu els tipus de lletra que teniu permís per compartir amb els lectors "
 "d'aquest servidor. Els fitxers es conserven al volum de configuració durant "
@@ -11347,8 +11319,8 @@ msgstr "Penja un tipus de lletra"
 
 #: cps/spa_strings.py
 msgid ""
-"Upload fonts once for everyone using the EPUB readers. Existing font choices"
-" stay available."
+"Upload fonts once for everyone using the EPUB readers. Existing font choices "
+"stay available."
 msgstr ""
 "Pengeu tipus de lletra una vegada per a tothom amb els lectors EPUB. Les "
 "opcions de tipus de lletra existents continuen disponibles."
@@ -11455,9 +11427,9 @@ msgid ""
 "Add ingest subfolder names to book tags or an existing custom column. "
 "Existing values are kept; files in the ingest root add no labels."
 msgstr ""
-"Afegiu els noms de les subcarpetes d'importació a les etiquetes dels llibres"
-" o a una columna personalitzada existent. Es conservaran els valors actuals;"
-" els fitxers de l'arrel d'importació no afegiran cap etiqueta."
+"Afegiu els noms de les subcarpetes d'importació a les etiquetes dels llibres "
+"o a una columna personalitzada existent. Es conservaran els valors actuals; "
+"els fitxers de l'arrel d'importació no afegiran cap etiqueta."
 
 #: cps/spa_strings.py cps/templates/cwa_settings.html
 msgid ""
@@ -11539,6 +11511,10 @@ msgstr "Font no disponible"
 msgid "Save Discover source"
 msgstr "Desa la font de «Descobreix»"
 
+#: cps/spa_strings.py
+msgid "Change Discover source"
+msgstr ""
+
 #: cps/spa_strings.py cps/web.py
 msgid "Discover source saved."
 msgstr "S'ha desat la font de «Descobreix»."
@@ -11562,8 +11538,8 @@ msgstr "No hi ha llibres sense llegir en aquesta font de «Descobreix»."
 #: cps/spa_strings.py cps/templates/index.html
 msgid "Only Discover picks change; books remain in your library."
 msgstr ""
-"Només canviaran les seleccions de «Descobreix»; els llibres continuaran a la"
-" biblioteca."
+"Només canviaran les seleccions de «Descobreix»; els llibres continuaran a la "
+"biblioteca."
 
 #: cps/spa_strings.py
 msgid "A few random picks from your Discover source"
@@ -11620,8 +11596,8 @@ msgid ""
 "{succeeded} added to {shelf}; {failed} failed. Failed books remain selected "
 "for retry."
 msgstr ""
-"Afegits a {shelf}: {succeeded}; no s’han pogut afegir: {failed}. Els llibres"
-" afectats continuen seleccionats."
+"Afegits a {shelf}: {succeeded}; no s’han pogut afegir: {failed}. Els llibres "
+"afectats continuen seleccionats."
 
 #: cps/spa_strings.py
 msgid "Could not add books to the shelf. Please try again."
@@ -11704,8 +11680,7 @@ msgstr ""
 "actualitzar. Torneu-ho a provar."
 
 #: cps/spa_strings.py
-msgid ""
-"That book choice was out of date. The list was refreshed; choose again."
+msgid "That book choice was out of date. The list was refreshed; choose again."
 msgstr ""
 "La selecció del llibre havia caducat. S'ha actualitzat la llista; torneu a "
 "triar-lo."
@@ -11768,8 +11743,8 @@ msgstr "Sol·licitat"
 
 #: cps/spa_strings.py
 msgid ""
-"The chosen book is no longer in the completed download. Restore its original"
-" file before trying again."
+"The chosen book is no longer in the completed download. Restore its original "
+"file before trying again."
 msgstr ""
 "El llibre triat ja no és a la descàrrega completada. Restaureu-ne el fitxer "
 "original abans de tornar-ho a provar."
@@ -11801,8 +11776,7 @@ msgstr ""
 
 #: cps/spa_strings.py
 msgid "Allow completed DRM-free MOBI 6 books"
-msgstr ""
-"Permet llibres MOBI 6 sense DRM procedents de descàrregues completades"
+msgstr "Permet llibres MOBI 6 sense DRM procedents de descàrregues completades"
 
 #: cps/spa_strings.py
 msgid ""
@@ -11839,9 +11813,8 @@ msgid ""
 "score."
 msgstr ""
 "Està desactivat per defecte. Només compten les valoracions de les persones "
-"que han activat l'opció, i mai se'n mostren els noms. Si sou l'única persona"
-" que comparteix la valoració d'un llibre, la mitjana serà la vostra "
-"puntuació."
+"que han activat l'opció, i mai se'n mostren els noms. Si sou l'única persona "
+"que comparteix la valoració d'un llibre, la mitjana serà la vostra puntuació."
 
 #: cps/spa_strings.py cps/templates/personal_rating.html
 msgid "Save rating"
@@ -11858,8 +11831,8 @@ msgstr "Mostra la valoració de la biblioteca"
 #: cps/spa_strings.py
 msgid "Show the labelled Calibre score alongside your own rating."
 msgstr ""
-"Mostra la puntuació de Calibre identificada com a tal al costat de la vostra"
-" valoració."
+"Mostra la puntuació de Calibre identificada com a tal al costat de la vostra "
+"valoració."
 
 #: cps/api/browse.py cps/spa_strings.py cps/templates/personal_rating.html
 #: cps/web.py
@@ -11884,11 +11857,11 @@ msgstr "Les vostres valoracions, de més baixa a més alta"
 
 #: cps/spa_strings.py cps/templates/personal_rating.html
 msgid ""
-"Your score does not change the Calibre library rating. Sharing is off unless"
-" you opt in in your account."
+"Your score does not change the Calibre library rating. Sharing is off unless "
+"you opt in in your account."
 msgstr ""
-"La vostra puntuació no modifica la valoració de la biblioteca de Calibre. No"
-" es comparteix si no activeu aquesta opció al vostre compte."
+"La vostra puntuació no modifica la valoració de la biblioteca de Calibre. No "
+"es comparteix si no activeu aquesta opció al vostre compte."
 
 #: cps/spa_strings.py
 #, python-brace-format
@@ -11898,6 +11871,24 @@ msgstr "{rating} de 5"
 #: cps/spa_strings.py
 msgid "Your rating (stars)"
 msgstr "La vostra valoració (estrelles)"
+
+#: cps/spa_strings.py cps/templates/email_edit.html
+msgid "eReader attachment filename template"
+msgstr ""
+
+#: cps/spa_strings.py cps/templates/email_edit.html
+#, python-brace-format
+msgid ""
+"Leave blank to keep the existing filename. Example: {series} #{series_index} "
+"- {title}. Fields include {title}, {authors}, {series} and {series_index}; "
+"the file extension is added automatically."
+msgstr ""
+
+#: cps/spa_strings.py cps/templates/email_edit.html
+#, python-brace-format
+msgid ""
+"Use {series:|(|) }{title} to omit the series prefix when no series is set."
+msgstr ""
 
 #: cps/tasks_status.py
 msgid "Waiting"
@@ -11926,13 +11917,12 @@ msgstr "Dades inesperades durant la lectura de la informació d'actualització"
 #: cps/updater.py
 msgid "No update available. You already have the latest version installed"
 msgstr ""
-"No hi ha cap actualització disponible. Ja teniu instal·lada la darrera "
-"versió"
+"No hi ha cap actualització disponible. Ja teniu instal·lada la darrera versió"
 
 #: cps/updater.py
 msgid ""
-"A new update is available. Click on the button below to update to the latest"
-" version."
+"A new update is available. Click on the button below to update to the latest "
+"version."
 msgstr ""
 "Hi ha disponible una nova actualització. Feu clic al botó següent per "
 "actualitzar a la darrera versió."
@@ -12116,10 +12106,8 @@ msgstr "S'ha produït un error en suprimir el prestatge"
 
 #: cps/api/magicshelves.py cps/web.py
 msgid ""
-"You cannot hide your own shelves. Delete them instead if you don't want "
-"them."
-msgstr ""
-"No podeu amagar els vostres prestatges. Si no els voleu, suprimiu-los."
+"You cannot hide your own shelves. Delete them instead if you don't want them."
+msgstr "No podeu amagar els vostres prestatges. Si no els voleu, suprimiu-los."
 
 #: cps/web.py
 msgid "Shelf already hidden"
@@ -12223,16 +12211,16 @@ msgid ""
 "Authentication loop detected. If you're experiencing login issues, please "
 "contact your administrator."
 msgstr ""
-"S'ha detectat un bucle d'autenticació. Si teniu problemes d'inici de sessió,"
-" poseu-vos en contacte amb el vostre administrador."
+"S'ha detectat un bucle d'autenticació. Si teniu problemes d'inici de sessió, "
+"poseu-vos en contacte amb el vostre administrador."
 
 #: cps/web.py
 msgid ""
 "OAuth authentication is not properly configured. Please contact "
 "administrator."
 msgstr ""
-"L'autenticació OAuth no està configurada correctament. Poseu-vos en contacte"
-" amb l'administrador."
+"L'autenticació OAuth no està configurada correctament. Poseu-vos en contacte "
+"amb l'administrador."
 
 #: cps/web.py
 msgid "Cannot activate LDAP authentication"
@@ -12261,8 +12249,8 @@ msgid ""
 "Welcome! Your account has been automatically created. You are now logged in "
 "as: '%(nickname)s'"
 msgstr ""
-"Us donem la benvinguda. El compte s'ha creat automàticament i heu iniciat la"
-" sessió com a «%(nickname)s»."
+"Us donem la benvinguda. El compte s'ha creat automàticament i heu iniciat la "
+"sessió com a «%(nickname)s»."
 
 #: cps/web.py
 msgid ""
@@ -12374,8 +12362,7 @@ msgstr ""
 "dispositiu."
 
 #: cps/progress_syncing/protocols/kosync_library.py
-msgid ""
-"Connect to Wi-Fi and open it from your library: it downloads by itself."
+msgid "Connect to Wi-Fi and open it from your library: it downloads by itself."
 msgstr ""
 "Connecteu-vos a la Wi-Fi i obriu-lo des de la vostra biblioteca: es baixa "
 "per si mateix."
@@ -12406,6 +12393,11 @@ msgstr ""
 msgid "Found no valid gmail.json file with OAuth information"
 msgstr "No s'ha trobat cap fitxer gmail.json vàlid amb informació d'OAuth"
 
+#: cps/services/mail_filename.py
+msgid ""
+"Use a valid attachment filename template with supported metadata fields."
+msgstr ""
+
 #: cps/services/opds_filename.py
 msgid "Conditional text needs both prefix and suffix separators."
 msgstr "El text condicional necessita separadors de prefix i sufix."
@@ -12435,8 +12427,8 @@ msgstr ""
 #: cps/services/opds_filename.py
 msgid "Use string padding such as 0>3s, with a maximum width of 128."
 msgstr ""
-"Feu servir l'emplenament de cadenes, com ara 0>3s, amb una amplada màxima de"
-" 128."
+"Feu servir l'emplenament de cadenes, com ara 0>3s, amb una amplada màxima de "
+"128."
 
 #: cps/services/opds_filename.py
 msgid "Use explicit alignment for zero padding, such as 0>3s."
@@ -12583,8 +12575,7 @@ msgstr "Cerca de duplicats completada: %(count)s grups resolts automàticament"
 
 #: cps/tasks/hardcover_sync.py
 msgid "Syncing shelf additions to Hardcover"
-msgstr ""
-"S'estan sincronitzant amb Hardcover els llibres afegits als prestatges"
+msgstr "S'estan sincronitzant amb Hardcover els llibres afegits als prestatges"
 
 #: cps/tasks/hardcover_sync.py
 msgid "Hardcover Sync"
@@ -12638,8 +12629,7 @@ msgstr ""
 #: cps/tasks/kepub_backfill.py
 #, python-format
 msgid "KEPUB backfill finished with failures; %(status)s"
-msgstr ""
-"El processament retrospectiu de KEPUB ha acabat amb errors; %(status)s"
+msgstr "El processament retrospectiu de KEPUB ha acabat amb errors; %(status)s"
 
 #: cps/tasks/kepub_package_repair.py
 msgid "Repair existing KEPUB packages"
@@ -13111,8 +13101,8 @@ msgid ""
 msgstr ""
 "Pengeu el fitxer %(filename)s del dispositiu Kobo per importar tots els "
 "fragments destacats i les notes. Les anotacions dels llibres que hi ha en "
-"aquesta biblioteca s'afegiran al vostre compte; les dels llibres incorporats"
-" al Kobo per altres mitjans, si no són a la biblioteca, s'ometran."
+"aquesta biblioteca s'afegiran al vostre compte; les dels llibres incorporats "
+"al Kobo per altres mitjans, si no són a la biblioteca, s'ometran."
 
 #: cps/templates/annotations_import.html
 msgid ""
@@ -13230,8 +13220,8 @@ msgstr "mitjançant"
 msgid "In Library"
 msgstr "A la biblioteca"
 
-#: cps/templates/author.html cps/templates/index.html
-#: cps/templates/search.html cps/templates/shelf.html
+#: cps/templates/author.html cps/templates/index.html cps/templates/search.html
+#: cps/templates/shelf.html
 msgid "reduce"
 msgstr "Reduir"
 
@@ -13310,16 +13300,15 @@ msgid ""
 "Pick a cover from any source, paste a URL, upload a file, or use the "
 "embedded cover."
 msgstr ""
-"Trieu una coberta de qualsevol font, enganxeu-hi una URL, pengeu un fitxer o"
-" feu servir la coberta incrustada."
+"Trieu una coberta de qualsevol font, enganxeu-hi una URL, pengeu un fitxer o "
+"feu servir la coberta incrustada."
 
 #: cps/templates/book_edit.html
 msgid ""
-"Fetch Cover from URL (JPEG - Image will be downloaded and stored in "
-"database)"
+"Fetch Cover from URL (JPEG - Image will be downloaded and stored in database)"
 msgstr ""
-"Obtén la coberta d'una URL (JPEG; la imatge es baixarà i es desarà a la base"
-" de dades)"
+"Obtén la coberta d'una URL (JPEG; la imatge es baixarà i es desarà a la base "
+"de dades)"
 
 #: cps/templates/book_edit.html
 msgid "Upload Cover from Local Disk"
@@ -13368,8 +13357,8 @@ msgid ""
 "quality and unblocks rate-limited services. Keys are stored once for the "
 "whole instance — admins only."
 msgstr ""
-"Algunes fonts de metadades necessiten una clau d'API. Si n'afegiu una, podeu"
-" obtenir cobertes de més qualitat i accedir a serveis amb un límit de "
+"Algunes fonts de metadades necessiten una clau d'API. Si n'afegiu una, podeu "
+"obtenir cobertes de més qualitat i accedir a serveis amb un límit de "
 "sol·licituds. Les claus es desen una sola vegada per a tota la instància i "
 "només les poden gestionar els administradors."
 
@@ -13550,8 +13539,8 @@ msgstr "— Tria un prestatge —"
 msgid ""
 "The email server is not configured yet, so announcements cannot be sent."
 msgstr ""
-"El servidor de correu electrònic encara no està configurat, de manera que no"
-" es poden enviar anuncis."
+"El servidor de correu electrònic encara no està configurat, de manera que no "
+"es poden enviar anuncis."
 
 #: cps/templates/broadcast_email.html
 msgid ""
@@ -13598,8 +13587,8 @@ msgstr "Selecciona tots els usuaris amb una adreça de correu electrònic"
 #: cps/templates/broadcast_email.html
 msgid "No users have an email address set, so there is no one to send to yet."
 msgstr ""
-"Cap usuari no té una adreça electrònica configurada; encara no es pot enviar"
-" l'anunci."
+"Cap usuari no té una adreça electrònica configurada; encara no es pot enviar "
+"l'anunci."
 
 #: cps/templates/broadcast_email.html
 msgid "Send announcement"
@@ -13652,8 +13641,8 @@ msgid ""
 "%(network_share_mode)s enabled in your Docker Compose configuration."
 msgstr ""
 "NextGen, o algun dels seus components, s'executa en un recurs compartit de "
-"xarxa sense tenir %(network_share_mode)s activat a la configuració de Docker"
-" Compose."
+"xarxa sense tenir %(network_share_mode)s activat a la configuració de Docker "
+"Compose."
 
 #: cps/templates/config_db.html
 #, python-format
@@ -13701,8 +13690,7 @@ msgstr ""
 
 #: cps/templates/config_db.html
 msgid ""
-"The Calibre Database path (metadata.db) is correct and accessible to "
-"NextGen."
+"The Calibre Database path (metadata.db) is correct and accessible to NextGen."
 msgstr ""
 "El camí de la base de dades de Calibre (metadata.db) és correcte i NextGen "
 "hi pot accedir."
@@ -13722,8 +13710,8 @@ msgstr ""
 
 #: cps/templates/config_db.html
 msgid ""
-"If the problem remains after checking all of the above, restore your Calibre"
-" Database from a backup or create a new one."
+"If the problem remains after checking all of the above, restore your Calibre "
+"Database from a backup or create a new one."
 msgstr ""
 "Si el problema continua després de comprovar tot l'anterior, restaureu la "
 "vostra base de dades Calibre des d'una còpia de seguretat o creeu-ne una de "
@@ -13744,17 +13732,30 @@ msgstr "Ubicació de la base de dades Calibre (fitxer metadata.db)"
 
 #: cps/templates/config_db.html
 msgid ""
-"NextGen is configured so that your Calibre Database (<code>metadata.db</code> file) should always be somewhere in <code>/calibre-library</code>.\n"
-"        NextGen automatically searches whatever directory you've bound to <code>/calibre-library</code> in your docker-compose file for existing Calibre\n"
-"        Libraries/metadata.db files on start up. If it finds just one existing library, it mounts it automatically, if it find multiple, by default\n"
-"        it will mount the largest one automatically and if it doesn't find any, it will automatically create and mount a new one. For more details,\n"
-"        <a href=\"https://github.com/crocodilestick/Calibre-Web-Automated/wiki/Configuration#database-configuration\">see here</a>!"
+"NextGen is configured so that your Calibre Database (<code>metadata.db</"
+"code> file) should always be somewhere in <code>/calibre-library</code>.\n"
+"        NextGen automatically searches whatever directory you've bound to "
+"<code>/calibre-library</code> in your docker-compose file for existing "
+"Calibre\n"
+"        Libraries/metadata.db files on start up. If it finds just one "
+"existing library, it mounts it automatically, if it find multiple, by "
+"default\n"
+"        it will mount the largest one automatically and if it doesn't find "
+"any, it will automatically create and mount a new one. For more details,\n"
+"        <a href=\"https://github.com/crocodilestick/Calibre-Web-Automated/"
+"wiki/Configuration#database-configuration\">see here</a>!"
 msgstr ""
-"NextGen està configurat perquè la base de dades de Calibre (el fitxer <code>metadata.db</code>) sigui dins de <code>/calibre-library</code>.\n"
-"        En iniciar-se, cerca automàticament fitxers metadata.db de biblioteques de Calibre al directori que hàgiu muntat a <code>/calibre-library</code>\n"
-"        mitjançant docker-compose. Si només hi troba una biblioteca, la munta automàticament. Si n'hi troba diverses, per defecte munta\n"
-"        la més gran. Si no en troba cap, crea i munta una biblioteca nova. Per a més informació,\n"
-"        <a href=\"https://github.com/crocodilestick/Calibre-Web-Automated/wiki/Configuration#database-configuration\">consulteu aquesta pàgina</a>."
+"NextGen està configurat perquè la base de dades de Calibre (el fitxer "
+"<code>metadata.db</code>) sigui dins de <code>/calibre-library</code>.\n"
+"        En iniciar-se, cerca automàticament fitxers metadata.db de "
+"biblioteques de Calibre al directori que hàgiu muntat a <code>/calibre-"
+"library</code>\n"
+"        mitjançant docker-compose. Si només hi troba una biblioteca, la "
+"munta automàticament. Si n'hi troba diverses, per defecte munta\n"
+"        la més gran. Si no en troba cap, crea i munta una biblioteca nova. "
+"Per a més informació,\n"
+"        <a href=\"https://github.com/crocodilestick/Calibre-Web-Automated/"
+"wiki/Configuration#database-configuration\">consulteu aquesta pàgina</a>."
 
 #: cps/templates/config_db.html
 msgid ""
@@ -13766,23 +13767,37 @@ msgstr ""
 
 #: cps/templates/config_db.html
 msgid ""
-"These paths are internal to NextGen only, you can change what they're bind to to your heart's content on the left-hand side but there's no reason to\n"
-"        change the paths on the right-hand side.<br><br>If you would like your <code>metadata.db</code> file in a different location to the rest of your\n"
-"        library, use the <b>Separate Book Files from Library Option below and there, enter the path to the rest of the library</b>"
+"These paths are internal to NextGen only, you can change what they're bind "
+"to to your heart's content on the left-hand side but there's no reason to\n"
+"        change the paths on the right-hand side.<br><br>If you would like "
+"your <code>metadata.db</code> file in a different location to the rest of "
+"your\n"
+"        library, use the <b>Separate Book Files from Library Option below "
+"and there, enter the path to the rest of the library</b>"
 msgstr ""
-"Aquestes rutes només són internes a NextGen. Podeu canviar lliurement les vinculacions de l’esquerra, però no cal\n"
-"        canviar les rutes de la dreta.<br><br>Si voleu desar <code>metadata.db</code> en una ubicació diferent de la resta de la\n"
-"        biblioteca, activeu l’opció <b>Separa els fitxers dels llibres de la biblioteca i introduïu-hi la ruta de la resta de la biblioteca</b>."
+"Aquestes rutes només són internes a NextGen. Podeu canviar lliurement les "
+"vinculacions de l’esquerra, però no cal\n"
+"        canviar les rutes de la dreta.<br><br>Si voleu desar <code>metadata."
+"db</code> en una ubicació diferent de la resta de la\n"
+"        biblioteca, activeu l’opció <b>Separa els fitxers dels llibres de la "
+"biblioteca i introduïu-hi la ruta de la resta de la biblioteca</b>."
 
 #: cps/templates/config_db.html
 msgid ""
-"E.g. As long as your library's <code>metadata.db</code> file is bound somewhere within <code>/calibre-library</code>, you could bind the dir\n"
-"        containing the corresponding book files ect. to something like <code>/books</code> and enter <code>/books</code> in the field that pops up below\n"
-"        once you've checked the <b>Separate Book Files from Library</b> option."
+"E.g. As long as your library's <code>metadata.db</code> file is bound "
+"somewhere within <code>/calibre-library</code>, you could bind the dir\n"
+"        containing the corresponding book files ect. to something like "
+"<code>/books</code> and enter <code>/books</code> in the field that pops up "
+"below\n"
+"        once you've checked the <b>Separate Book Files from Library</b> "
+"option."
 msgstr ""
-"Per exemple, si <code>metadata.db</code> està vinculat dins de <code>/calibre-library</code>, podeu vincular el directori\n"
-"        que conté els fitxers dels llibres a <code>/books</code> i introduir <code>/books</code> al camp que apareix més avall\n"
-"        en activar l’opció <b>Separa els fitxers dels llibres de la biblioteca</b>."
+"Per exemple, si <code>metadata.db</code> està vinculat dins de <code>/"
+"calibre-library</code>, podeu vincular el directori\n"
+"        que conté els fitxers dels llibres a <code>/books</code> i introduir "
+"<code>/books</code> al camp que apareix més avall\n"
+"        en activar l’opció <b>Separa els fitxers dels llibres de la "
+"biblioteca</b>."
 
 #: cps/templates/config_db.html
 msgid "Split Library Functionality"
@@ -13825,13 +13840,13 @@ msgstr "Últim recurs: restaura la base de dades de Calibre (experimental)"
 #: cps/templates/config_db.html
 msgid ""
 "If your Calibre library is corrupted and cannot be opened, you can attempt "
-"to restore it from the OPF files in your library. This will <b>erase all "
-"per-book data</b> (reading progress, bookmarks, shelf links, downloads, "
-"etc.) in the app database, but will not affect user accounts or settings."
+"to restore it from the OPF files in your library. This will <b>erase all per-"
+"book data</b> (reading progress, bookmarks, shelf links, downloads, etc.) in "
+"the app database, but will not affect user accounts or settings."
 msgstr ""
 "Si la biblioteca de Calibre està malmesa i no es pot obrir, podeu intentar "
-"restaurar-la a partir dels fitxers OPF. Això <b>esborrarà totes les dades de"
-" cada llibre</b> (progrés de lectura, punts de llibre, vincles amb "
+"restaurar-la a partir dels fitxers OPF. Això <b>esborrarà totes les dades de "
+"cada llibre</b> (progrés de lectura, punts de llibre, vincles amb "
 "prestatges, baixades, etc.) de la base de dades de l'aplicació, però no "
 "afectarà els comptes d'usuari ni la configuració."
 
@@ -13886,8 +13901,8 @@ msgstr ""
 #: cps/templates/config_edit.html
 #, python-format
 msgid ""
-"Generic OIDC is inactive because its environment configuration is incomplete"
-" or invalid: %(reason)s"
+"Generic OIDC is inactive because its environment configuration is incomplete "
+"or invalid: %(reason)s"
 msgstr ""
 "L'OIDC genèric està inactiu perquè la configuració d'entorn és incompleta o "
 "no és vàlida: %(reason)s"
@@ -13903,8 +13918,8 @@ msgstr "Port del servidor"
 #: cps/templates/config_edit.html
 msgid "SSL certfile location (leave it empty for non-SSL Servers)"
 msgstr ""
-"Ubicació del fitxer de certificat SSL (deixeu-lo buit per a servidors que no"
-" siguin SSL)"
+"Ubicació del fitxer de certificat SSL (deixeu-lo buit per a servidors que no "
+"siguin SSL)"
 
 #: cps/templates/config_edit.html
 msgid "SSL Keyfile location (leave it empty for non-SSL Servers)"
@@ -13950,16 +13965,14 @@ msgid "Feature Configuration"
 msgstr "Configuració de funcions"
 
 #: cps/templates/config_edit.html
-msgid ""
-"Convert non-English characters in title and author while saving to disk"
+msgid "Convert non-English characters in title and author while saving to disk"
 msgstr ""
-"Converteix els caràcters no anglesos del títol i l'autor en desar-los al "
-"disc"
+"Converteix els caràcters no anglesos del títol i l'autor en desar-los al disc"
 
 #: cps/templates/config_edit.html
 msgid ""
-"Embed Metadata to Ebook File on Download/Conversion/e-mail (needs "
-"Calibre/Kepubify binaries)"
+"Embed Metadata to Ebook File on Download/Conversion/e-mail (needs Calibre/"
+"Kepubify binaries)"
 msgstr ""
 "Insereix les metadades al fitxer del llibre electrònic en baixar-lo, "
 "convertir-lo o enviar-lo per correu (requereix els executables de Calibre i "
@@ -13986,8 +13999,8 @@ msgid ""
 "The design the cover designer opens on, and the one used for covers "
 "generated automatically."
 msgstr ""
-"Disseny que s’obre per defecte a l’editor de cobertes i que s’utilitza per a"
-" generar cobertes automàticament."
+"Disseny que s’obre per defecte a l’editor de cobertes i que s’utilitza per a "
+"generar cobertes automàticament."
 
 #: cps/templates/config_edit.html
 msgid "Design a cover for books that arrive without one"
@@ -14039,8 +14052,8 @@ msgid ""
 "affecting other users. Recovery is via the profile page (Hidden Books link)."
 msgstr ""
 "L'opció és activada per defecte en les instal·lacions noves; les "
-"preferències existents es conserven en actualitzar. Cada usuari disposa d'un"
-" botó a la pàgina del llibre per amagar-lo de la seva llista, les cerques i "
+"preferències existents es conserven en actualitzar. Cada usuari disposa d'un "
+"botó a la pàgina del llibre per amagar-lo de la seva llista, les cerques i "
 "el canal OPDS, sense afectar els altres usuaris. Es pot recuperar des de "
 "l'enllaç «Llibres ocults» de la pàgina de perfil."
 
@@ -14050,8 +14063,8 @@ msgstr "Permet la sincronització d'anotacions bidireccionals de Kobo"
 
 #: cps/templates/config_edit.html
 msgid ""
-"Stage 0 records exact Kobo annotation evidence only. Device responses remain"
-" unchanged. This opt-in defaults off and must also be enabled for each user "
+"Stage 0 records exact Kobo annotation evidence only. Device responses remain "
+"unchanged. This opt-in defaults off and must also be enabled for each user "
 "before a later rollout stage can use local authority."
 msgstr ""
 "La fase 0 només registra les dades exactes de les anotacions de Kobo. Les "
@@ -14080,8 +14093,8 @@ msgid ""
 "Kepubify was not found. Set its path under External binaries before this "
 "preference can convert books."
 msgstr ""
-"No s'ha trobat Kepubify. Configureu-ne el camí a «Executables externs» abans"
-" que aquesta opció pugui convertir llibres."
+"No s'ha trobat Kepubify. Configureu-ne el camí a «Executables externs» abans "
+"que aquesta opció pugui convertir llibres."
 
 #: cps/templates/config_edit.html
 msgid ""
@@ -14116,8 +14129,8 @@ msgstr "Port extern del servidor (per a trucades d'API reenviades per port)"
 #: cps/templates/config_edit.html
 msgid "Sync Kobo annotations to Hardcover (Requires API key per user)"
 msgstr ""
-"Sincronitza les anotacions de Kobo amb Hardcover (requereix una clau API per"
-" usuari)"
+"Sincronitza les anotacions de Kobo amb Hardcover (requereix una clau API per "
+"usuari)"
 
 #: cps/templates/config_edit.html
 msgid "Pad book covers to Kobo screen aspect ratio"
@@ -14186,8 +14199,8 @@ msgid ""
 "another container or host."
 msgstr ""
 "L'adreça 127.0.0.1 només permet accedir al servidor de contingut des "
-"d'aquest equip. Introduïu 0.0.0.0 per fer-lo accessible des de la xarxa, com"
-" cal per accedir-hi des d'un altre contenidor o equip."
+"d'aquest equip. Introduïu 0.0.0.0 per fer-lo accessible des de la xarxa, com "
+"cal per accedir-hi des d'un altre contenidor o equip."
 
 #: cps/templates/config_edit.html
 msgid "Allow Anonymous Writes (no username or password required)"
@@ -14195,14 +14208,14 @@ msgstr "Permet escriptures anònimes (no cal nom d'usuari ni contrasenya)"
 
 #: cps/templates/config_edit.html
 msgid ""
-"Without a username and password, anyone who can reach the listen address can"
-" read the whole library. Behind Docker port mapping or a reverse proxy on "
+"Without a username and password, anyone who can reach the listen address can "
+"read the whole library. Behind Docker port mapping or a reverse proxy on "
 "this machine, every client appears to come from the same address, so "
 "allowing that address lets everyone write."
 msgstr ""
 "Sense nom d'usuari i contrasenya, qualsevol persona que pugui arribar a "
-"l'adreça d'escolta pot llegir tota la biblioteca. Darrere de l'assignació de"
-" ports de Docker o d'un servidor intermediari invers en aquesta màquina, "
+"l'adreça d'escolta pot llegir tota la biblioteca. Darrere de l'assignació de "
+"ports de Docker o d'un servidor intermediari invers en aquesta màquina, "
 "sembla que tots els clients provenen de la mateixa adreça, de manera que "
 "permetre aquesta adreça permet que tothom escrigui."
 
@@ -14261,8 +14274,8 @@ msgstr ""
 
 #: cps/templates/config_edit.html
 msgid ""
-"Managed by HARDCOVER_SYNC_ENABLED; change the environment variable to enable"
-" or disable Hardcover sync."
+"Managed by HARDCOVER_SYNC_ENABLED; change the environment variable to enable "
+"or disable Hardcover sync."
 msgstr ""
 "Aquesta opció es gestiona amb HARDCOVER_SYNC_ENABLED. Canvieu la variable "
 "d'entorn per activar o desactivar la sincronització amb Hardcover."
@@ -14325,8 +14338,8 @@ msgstr "Clau de l'API de Google Books"
 msgid ""
 "Optional. Without a key, Google Books is rate-limited to ~1,000 requests / "
 "IP / day, which is easily exhausted on shared servers (HTTP 429). Free key "
-"at https://console.cloud.google.com — enable the \"Books API\" and create an"
-" API key."
+"at https://console.cloud.google.com — enable the \"Books API\" and create an "
+"API key."
 msgstr ""
 "Opcional. Sense clau, Google Books limita les sol·licituds a unes 1.000 per "
 "IP i dia; en servidors compartits és fàcil arribar-hi (HTTP 429). Podeu "
@@ -14398,8 +14411,8 @@ msgstr "Xifratge LDAP"
 msgid ""
 "LDAP CACertificate Path (Only needed for Client Certificate Authentication)"
 msgstr ""
-"Camí del certificat de CA LDAP (només per a l’autenticació amb certificat de"
-" client)"
+"Camí del certificat de CA LDAP (només per a l’autenticació amb certificat de "
+"client)"
 
 #: cps/templates/config_edit.html
 msgid ""
@@ -14448,8 +14461,8 @@ msgstr "Crea usuaris automàticament des de LDAP"
 
 #: cps/templates/config_edit.html
 msgid ""
-"Automatically create user accounts when LDAP authentication succeeds for new"
-" users. Recommended for enterprise environments."
+"Automatically create user accounts when LDAP authentication succeeds for new "
+"users. Recommended for enterprise environments."
 msgstr ""
 "Crea comptes d'usuari automàticament quan un usuari nou s'autentica "
 "correctament amb LDAP. Recomanat per a entorns empresarials."
@@ -14534,8 +14547,8 @@ msgstr ""
 
 #: cps/templates/config_edit.html
 msgid ""
-"Check this to manually configure individual OAuth endpoints instead of using"
-" auto-discovery"
+"Check this to manually configure individual OAuth endpoints instead of using "
+"auto-discovery"
 msgstr ""
 "Marqueu aquesta opció per configurar manualment els punts de connexió OAuth "
 "en lloc de fer servir la descoberta automàtica."
@@ -14677,9 +14690,9 @@ msgstr "Grup OAuth d'administradors"
 
 #: cps/templates/config_edit.html
 msgid ""
-"Name of the OAuth group that grants admin privileges. Leave empty to disable"
-" group-based admin management, or use the global setting in Security "
-"Settings for more control."
+"Name of the OAuth group that grants admin privileges. Leave empty to disable "
+"group-based admin management, or use the global setting in Security Settings "
+"for more control."
 msgstr ""
 "Nom del grup OAuth que concedeix permisos d'administrador. Deixeu-lo en "
 "blanc per desactivar la gestió per grups o feu servir la configuració "
@@ -14726,8 +14739,8 @@ msgstr "Permet editar prestatges públics"
 #: cps/templates/config_edit.html
 msgid ""
 "These permissions are applied only when a new user is created via Generic "
-"OAuth. Admin group membership still grants admin privileges when OAuth "
-"group-based admin management is enabled. Existing users are not changed."
+"OAuth. Admin group membership still grants admin privileges when OAuth group-"
+"based admin management is enabled. Existing users are not changed."
 msgstr ""
 "Aquests permisos només s'apliquen quan es crea un usuari nou amb OAuth "
 "genèric. Si la gestió del rol d'administrador per grups OAuth és activada, "
@@ -14787,8 +14800,8 @@ msgid ""
 "you have a working alternative login method before enabling."
 msgstr ""
 "Oculta el formulari d'inici de sessió estàndard. Els usuaris han d'iniciar "
-"sessió mitjançant OAuth o LDAP. Assegureu-vos que teniu un mètode d'inici de"
-" sessió alternatiu que funcioni abans d'activar-lo."
+"sessió mitjançant OAuth o LDAP. Assegureu-vos que teniu un mètode d'inici de "
+"sessió alternatiu que funcioni abans d'activar-lo."
 
 #: cps/templates/config_edit.html
 msgid "Automatically forward to the only OAuth provider"
@@ -14802,8 +14815,8 @@ msgid ""
 "only while the setting above is left off."
 msgstr ""
 "Si aquesta opció és activada i només hi ha un proveïdor OAuth actiu, en "
-"obrir la pàgina d'inici de sessió se n'inicia l'autenticació automàticament."
-" Afegiu ?local=1 a l'URL d'inici de sessió per obrir la pàgina habitual. "
+"obrir la pàgina d'inici de sessió se n'inicia l'autenticació automàticament. "
+"Afegiu ?local=1 a l'URL d'inici de sessió per obrir la pàgina habitual. "
 "Aquesta només admet el nom d'usuari i la contrasenya si l'opció anterior és "
 "desactivada."
 
@@ -14813,8 +14826,8 @@ msgstr "Activa la gestió de rols d'administrador basada en grups d'OAuth"
 
 #: cps/templates/config_edit.html
 msgid ""
-"When enabled, admin privileges are automatically granted or revoked based on"
-" OAuth group membership. Disable this to manually manage admin roles in the "
+"When enabled, admin privileges are automatically granted or revoked based on "
+"OAuth group membership. Disable this to manually manage admin roles in the "
 "user management panel, preventing OAuth logins from overriding local role "
 "assignments."
 msgstr ""
@@ -14876,8 +14889,8 @@ msgstr "Exigeix lletres majúscules"
 #: cps/templates/config_edit.html
 msgid "Enforce characters (needed For Chinese/Japanese/Korean Characters)"
 msgstr ""
-"Exigeix caràcters addicionals (necessaris per a lletres xineses, japoneses o"
-" coreanes)"
+"Exigeix caràcters addicionals (necessaris per a lletres xineses, japoneses o "
+"coreanes)"
 
 #: cps/templates/config_edit.html
 msgid "Enforce special characters"
@@ -14904,8 +14917,7 @@ msgstr "Nombre de llibres aleatoris per mostrar"
 
 #: cps/templates/config_view_edit.html
 msgid "Number of random books shown on the home page (1-30)."
-msgstr ""
-"Nombre de llibres aleatoris que es mostren a la pàgina d'inici (1-30)."
+msgstr "Nombre de llibres aleatoris que es mostren a la pàgina d'inici (1-30)."
 
 #: cps/templates/config_view_edit.html
 msgid "No. of Authors to Display Before Hiding (0=Disable Hiding)"
@@ -14933,8 +14945,8 @@ msgid ""
 "Default theme for new users and anonymous browsing. Users can select their "
 "own preferred theme in their profile."
 msgstr ""
-"Tema predeterminat per a usuaris nous i navegació anònima. Els usuaris poden"
-" seleccionar el seu propi tema preferit al seu perfil."
+"Tema predeterminat per a usuaris nous i navegació anònima. Els usuaris poden "
+"seleccionar el seu propi tema preferit al seu perfil."
 
 #: cps/templates/config_view_edit.html
 msgid "Regular Expression for Ignoring Columns"
@@ -14943,8 +14955,8 @@ msgstr "Expressió regular per ignorar columnes"
 #: cps/templates/config_view_edit.html
 msgid "Regex pattern to hide custom columns from being displayed in the UI."
 msgstr ""
-"Patró d'expressió regular per ocultar les columnes personalitzades perquè no"
-" es mostrin a la interfície d'usuari."
+"Patró d'expressió regular per ocultar les columnes personalitzades perquè no "
+"es mostrin a la interfície d'usuari."
 
 #: cps/templates/config_view_edit.html cps/templates/shelf_reorder.html
 msgid "Sort by"
@@ -15037,8 +15049,8 @@ msgid ""
 "Leave blank to hide the banner. Shown at the top of every page until each "
 "user dismisses it."
 msgstr ""
-"Deixeu el camp en blanc per amagar el bàner. Es mostra a la part superior de"
-" cada pàgina fins que cada usuari el descarta."
+"Deixeu el camp en blanc per amagar el bàner. Es mostra a la part superior de "
+"cada pàgina fins que cada usuari el descarta."
 
 #: cps/templates/config_view_edit.html
 msgid ""
@@ -15063,8 +15075,8 @@ msgid ""
 "Injected into every page as the last stylesheet, so it overrides the built-"
 "in themes. Applies to all users. Leave blank to disable."
 msgstr ""
-"S'injecta a cada pàgina com a darrer full d'estil, de manera que anul·la els"
-" temes integrats. S'aplica a tots els usuaris. Deixeu el camp en blanc per "
+"S'injecta a cada pàgina com a darrer full d'estil, de manera que anul·la els "
+"temes integrats. S'aplica a tots els usuaris. Deixeu el camp en blanc per "
 "desactivar."
 
 #: cps/templates/config_view_edit.html
@@ -15121,8 +15133,8 @@ msgid ""
 msgstr ""
 "Es fa servir en les respostes del canal OPDS per a usuaris anònims quan el "
 "client no envia la capçalera Accept-Language i la sol·licitud no inclou el "
-"paràmetre ?lang=. Els usuaris autenticats conserven la configuració regional"
-" que han triat."
+"paràmetre ?lang=. Els usuaris autenticats conserven la configuració regional "
+"que han triat."
 
 #: cps/templates/config_view_edit.html
 msgid "OPDS Downloads"
@@ -15156,8 +15168,8 @@ msgid ""
 "Pick a cover from any source we support, paste a URL, upload a file, or use "
 "the cover embedded in the book itself."
 msgstr ""
-"Trieu una coberta d'una font admesa, enganxeu-hi una URL, pengeu un fitxer o"
-" feu servir la coberta incrustada al llibre."
+"Trieu una coberta d'una font admesa, enganxeu-hi una URL, pengeu un fitxer o "
+"feu servir la coberta incrustada al llibre."
 
 #: cps/templates/cover_picker.html
 msgid "Use a URL"
@@ -15173,8 +15185,8 @@ msgid ""
 "quality and unblocks rate-limited services. Keys are stored once for the "
 "whole instance — admins only."
 msgstr ""
-"Algunes fonts de metadades necessiten una clau d'API. Si n'afegiu una, podeu"
-" obtenir cobertes de més qualitat i accedir a serveis amb un límit de "
+"Algunes fonts de metadades necessiten una clau d'API. Si n'afegiu una, podeu "
+"obtenir cobertes de més qualitat i accedir a serveis amb un límit de "
 "sol·licituds. Les claus es desen una sola vegada per a tota la instància i "
 "només les poden gestionar els administradors."
 
@@ -15326,20 +15338,18 @@ msgstr "Seleccioneu la data d’inici i la de finalització"
 msgid "Show Real Data"
 msgstr "Mostra dades reals"
 
-#: cps/templates/cwa_convert_library.html
-#: cps/templates/cwa_cover_enforcer.html cps/templates/cwa_epub_fixer.html
+#: cps/templates/cwa_convert_library.html cps/templates/cwa_cover_enforcer.html
+#: cps/templates/cwa_epub_fixer.html
 msgid "Run Archive"
 msgstr "Executa l’arxivament"
 
-#: cps/templates/cwa_convert_library.html
-#: cps/templates/cwa_cover_enforcer.html cps/templates/cwa_epub_fixer.html
-#: cps/templates/cwa_read_log.html
+#: cps/templates/cwa_convert_library.html cps/templates/cwa_cover_enforcer.html
+#: cps/templates/cwa_epub_fixer.html cps/templates/cwa_read_log.html
 msgid "Download Log"
 msgstr "Descarrega el registre"
 
-#: cps/templates/cwa_convert_library.html
-#: cps/templates/cwa_cover_enforcer.html cps/templates/cwa_epub_fixer.html
-#: cps/templates/index.xml
+#: cps/templates/cwa_convert_library.html cps/templates/cwa_cover_enforcer.html
+#: cps/templates/cwa_epub_fixer.html cps/templates/index.xml
 msgid "Start"
 msgstr "Comença"
 
@@ -15359,16 +15369,16 @@ msgstr "S'ha programat correctament la conversió de la biblioteca"
 msgid "Error scheduling Convert Library"
 msgstr "Error en programar la conversió de la biblioteca"
 
-#: cps/templates/cwa_convert_library.html
-#: cps/templates/cwa_cover_enforcer.html cps/templates/cwa_epub_fixer.html
+#: cps/templates/cwa_convert_library.html cps/templates/cwa_cover_enforcer.html
+#: cps/templates/cwa_epub_fixer.html
 msgid "Lost contact with the server, retrying..."
 msgstr "S'ha perdut la connexió amb el servidor. S'està tornant a provar…"
 
 #: cps/templates/cwa_cover_enforcer.html
 msgid ""
 "This service rewrites the covers and metadata stored inside the ebook files "
-"themselves for every book in your library, so the files on disk always match"
-" what you see in Calibre-Web. It is the library-wide version of the on-edit "
+"themselves for every book in your library, so the files on disk always match "
+"what you see in Calibre-Web. It is the library-wide version of the on-edit "
 "NextGen Automatic Cover & Metadata Enforcement Service toggled in CWA "
 "Settings."
 msgstr ""
@@ -15390,8 +15400,8 @@ msgstr ""
 
 #: cps/templates/cwa_cover_enforcer.html
 msgid ""
-"Once you start a run, you are free to leave the page and return whenever you"
-" want to check on the run's progress. If you wish to cancel a run that is "
+"Once you start a run, you are free to leave the page and return whenever you "
+"want to check on the run's progress. If you wish to cancel a run that is "
 "still in progress, simply press the Cancel button above and the run will "
 "terminate ASAP."
 msgstr ""
@@ -15661,11 +15671,16 @@ msgstr "Activa la conversió automàtica NextGen"
 
 #: cps/templates/cwa_settings.html
 msgid ""
-"On by default, when active all ingested books will automatically be converted to the target format specified below (epub by default) \n"
-"        <em>EXCEPT</em> those you have specifically told NextGen to ignore below."
+"On by default, when active all ingested books will automatically be "
+"converted to the target format specified below (epub by default) \n"
+"        <em>EXCEPT</em> those you have specifically told NextGen to ignore "
+"below."
 msgstr ""
-"Activada per defecte. Quan és activa, converteix automàticament tots els llibres importats al format de destinació indicat més avall (EPUB per defecte),\n"
-"        <em>EXCEPTE</em> els formats que hàgiu indicat expressament que NextGen ha d'ignorar."
+"Activada per defecte. Quan és activa, converteix automàticament tots els "
+"llibres importats al format de destinació indicat més avall (EPUB per "
+"defecte),\n"
+"        <em>EXCEPTE</em> els formats que hàgiu indicat expressament que "
+"NextGen ha d'ignorar."
 
 #: cps/templates/cwa_settings.html
 msgid "Enable NextGen Automatic Cover & Metadata Enforcement Service"
@@ -15674,14 +15689,20 @@ msgstr ""
 
 #: cps/templates/cwa_settings.html
 msgid ""
-"On by default, when active, whenever the Metadata and/or Cover Image is edited in the Web UI, the NextGen Metadata Enforcement service \n"
-"        will then apply those changes the ebook files themselves. Normally in Stock CW or when this setting is disabled, the changes made \n"
-"        are only applied to what you see in the Web UI, not the ebook files themselves. This feature currently only supports files in EPUB \n"
+"On by default, when active, whenever the Metadata and/or Cover Image is "
+"edited in the Web UI, the NextGen Metadata Enforcement service \n"
+"        will then apply those changes the ebook files themselves. Normally "
+"in Stock CW or when this setting is disabled, the changes made \n"
+"        are only applied to what you see in the Web UI, not the ebook files "
+"themselves. This feature currently only supports files in EPUB \n"
 "        or AZW3 format."
 msgstr ""
-"Activat per defecte. Quan és actiu, si editeu les metadades o la coberta des de la interfície web, el servei d'aplicació de metadades de NextGen\n"
-"        també aplicarà els canvis als fitxers dels llibres electrònics. A Calibre-Web estàndard, o amb aquesta opció desactivada, els canvis\n"
-"        només es mostren a la interfície web i no es fan als fitxers. Actualment, aquesta funció només admet fitxers EPUB\n"
+"Activat per defecte. Quan és actiu, si editeu les metadades o la coberta des "
+"de la interfície web, el servei d'aplicació de metadades de NextGen\n"
+"        també aplicarà els canvis als fitxers dels llibres electrònics. A "
+"Calibre-Web estàndard, o amb aquesta opció desactivada, els canvis\n"
+"        només es mostren a la interfície web i no es fan als fitxers. "
+"Actualment, aquesta funció només admet fitxers EPUB\n"
 "        i AZW3."
 
 #: cps/templates/cwa_settings.html
@@ -15690,23 +15711,29 @@ msgstr "Activa el corrector d'EPUB per a Kindle de NextGen"
 
 #: cps/templates/cwa_settings.html
 msgid ""
-"When active, the encoding among other attributes of all EPUB files processed by NextGen will be checked and fixed to ensure maximum \n"
-"        compatibility with Amazon's Send-to-Kindle Service. This feature is particularly useful for users who frequently send EPUB files to their Kindle devices and have experienced issues with \n"
+"When active, the encoding among other attributes of all EPUB files processed "
+"by NextGen will be checked and fixed to ensure maximum \n"
+"        compatibility with Amazon's Send-to-Kindle Service. This feature is "
+"particularly useful for users who frequently send EPUB files to their Kindle "
+"devices and have experienced issues with \n"
 "        file rejections or formatting problems."
 msgstr ""
-"Quan s'activa, NextGen comprova i corregeix la codificació i altres característiques dels fitxers EPUB que processa per millorar-ne la\n"
-"        compatibilitat amb el servei Send to Kindle d'Amazon. És especialment útil si envieu sovint fitxers EPUB al Kindle i heu tingut problemes de\n"
+"Quan s'activa, NextGen comprova i corregeix la codificació i altres "
+"característiques dels fitxers EPUB que processa per millorar-ne la\n"
+"        compatibilitat amb el servei Send to Kindle d'Amazon. És "
+"especialment útil si envieu sovint fitxers EPUB al Kindle i heu tingut "
+"problemes de\n"
 "        rebuig de fitxers o de format."
 
 #: cps/templates/cwa_settings.html
 msgid ""
-"This tool was adapted from the <a href=\"https://kindle-epub-"
-"fix.netlify.app/\">kindle-epub-fix.netlify.app</a> tool made by <a "
-"href=\"https://github.com/innocenat\">innocenat</a>."
+"This tool was adapted from the <a href=\"https://kindle-epub-fix.netlify.app/"
+"\">kindle-epub-fix.netlify.app</a> tool made by <a href=\"https://github.com/"
+"innocenat\">innocenat</a>."
 msgstr ""
-"Aquesta eina s'ha adaptat de <a href=\"https://kindle-epub-"
-"fix.netlify.app/\">kindle-epub-fix.netlify.app</a>, creada per <a "
-"href=\"https://github.com/innocenat\">innocenat</a>."
+"Aquesta eina s'ha adaptat de <a href=\"https://kindle-epub-fix.netlify.app/"
+"\">kindle-epub-fix.netlify.app</a>, creada per <a href=\"https://github.com/"
+"innocenat\">innocenat</a>."
 
 #: cps/templates/cwa_settings.html
 msgid "Enable KOReader Sync (NextGen Plugin)"
@@ -15718,8 +15745,8 @@ msgid ""
 "compatible checksums in metadata.db for progress syncing. Requires the "
 "KOReader plugin on your device."
 msgstr ""
-"Quan està activat, NextGen exposa els punts finals /kosync i emmagatzema les"
-" sumes de comprovació compatibles amb KOReader a metadata.db per a la "
+"Quan està activat, NextGen exposa els punts finals /kosync i emmagatzema les "
+"sumes de comprovació compatibles amb KOReader a metadata.db per a la "
 "sincronització del progrés. Requereix el connector KOReader al vostre "
 "dispositiu."
 
@@ -15741,11 +15768,10 @@ msgstr "Activa el mode de reparació EPUB agressiu (més arriscat)"
 #: cps/templates/cwa_settings.html
 msgid ""
 "Aggressive mode applies more invasive fixes and will attempt lower-"
-"confidence encoding conversions. Safe mode is recommended for most "
-"libraries."
+"confidence encoding conversions. Safe mode is recommended for most libraries."
 msgstr ""
-"El mode agressiu aplica correccions més invasives i intentarà conversions de"
-" codificació de confiança més baixa. Es recomana el mode segur per a la "
+"El mode agressiu aplica correccions més invasives i intentarà conversions de "
+"codificació de confiança més baixa. Es recomana el mode segur per a la "
 "majoria de biblioteques."
 
 #: cps/templates/cwa_settings.html
@@ -15761,9 +15787,9 @@ msgid ""
 "title/series/author/publisher never get picked up. When enabled, ingest "
 "rewrites a copy of the archive with ComicInfo.xml moved to the root before "
 "it's imported — only when it's present but misplaced, never touching an "
-"already-correct file. Zip-based archives (.cbz) only; .cbr/.cb7/.cbt are not"
-" zip containers and are left as-is. Your original download is never "
-"modified, only the copy that gets imported."
+"already-correct file. Zip-based archives (.cbz) only; .cbr/.cb7/.cbt are not "
+"zip containers and are left as-is. Your original download is never modified, "
+"only the copy that gets imported."
 msgstr ""
 "L'estàndard ComicInfo.xml exigeix que aquest fitxer sigui a l'arrel de "
 "l'arxiu; comicapi, com els altres lectors coneguts, només el cerca allà. "
@@ -15771,8 +15797,8 @@ msgstr ""
 "detecten el títol, la sèrie, l'autor ni l'editorial. Si activeu aquesta "
 "opció, abans d'importar un arxiu amb ComicInfo.xml fora de lloc se'n crearà "
 "una còpia amb el fitxer traslladat a l'arrel. No es modificaran els arxius "
-"que ja siguin correctes. Només s'admeten els arxius ZIP (.cbz); els formats "
-".cbr, .cb7 i .cbt no es modifiquen. La baixada original tampoc no es "
+"que ja siguin correctes. Només s'admeten els arxius ZIP (.cbz); els formats ."
+"cbr, .cb7 i .cbt no es modifiquen. La baixada original tampoc no es "
 "modifica, només la còpia importada."
 
 #: cps/templates/cwa_settings.html
@@ -15784,9 +15810,9 @@ msgid ""
 "Removes stale archived book references in app.db when the book no longer "
 "exists in the Calibre library. Helps keep archived counts accurate."
 msgstr ""
-"Elimina les referències obsoletes a llibres arxivats d'app.db quan el llibre"
-" ja no és a la biblioteca de Calibre. Així el recompte de llibres arxivats "
-"és més precís."
+"Elimina les referències obsoletes a llibres arxivats d'app.db quan el llibre "
+"ja no és a la biblioteca de Calibre. Així el recompte de llibres arxivats és "
+"més precís."
 
 #: cps/templates/cwa_settings.html
 msgid "Cleanup Schedule:"
@@ -15900,8 +15926,8 @@ msgstr "Activa l'obtenció automàtica de metadades per a llibres nous"
 #: cps/templates/cwa_settings.html
 msgid ""
 "When active, NextGen will automatically attempt to fetch and apply metadata "
-"(title, author, description, cover, etc.) for newly ingested books using the"
-" configured metadata provider hierarchy. This helps improve the quality of "
+"(title, author, description, cover, etc.) for newly ingested books using the "
+"configured metadata provider hierarchy. This helps improve the quality of "
 "book information, especially for books with poor or missing metadata."
 msgstr ""
 "Si s'activa, NextGen intenta obtenir i aplicar automàticament les metadades "
@@ -15915,14 +15941,14 @@ msgstr "Activa l'aplicació de metadades intel·ligents"
 
 #: cps/templates/cwa_settings.html
 msgid ""
-"When enabled, fetched metadata will only replace existing data if it appears"
-" to be better quality (e.g., longer descriptions, higher resolution covers)."
-" When disabled, fetched metadata will replace existing data as-is from the "
+"When enabled, fetched metadata will only replace existing data if it appears "
+"to be better quality (e.g., longer descriptions, higher resolution covers). "
+"When disabled, fetched metadata will replace existing data as-is from the "
 "preferred provider."
 msgstr ""
 "Si s'activa, les metadades obtingudes només substituiran les actuals quan "
-"semblin de més qualitat (p. ex., descripcions més llargues o cobertes de més"
-" resolució). Si es desactiva, les metadades del proveïdor preferit "
+"semblin de més qualitat (p. ex., descripcions més llargues o cobertes de més "
+"resolució). Si es desactiva, les metadades del proveïdor preferit "
 "substituiran directament les actuals."
 
 #: cps/templates/cwa_settings.html
@@ -15931,13 +15957,13 @@ msgstr "Camps de metadades per actualitzar"
 
 #: cps/templates/cwa_settings.html
 msgid ""
-"Select which metadata fields should be updated when auto-fetching. Unchecked"
-" fields will never be modified during automatic metadata fetching, "
-"preserving your existing data."
+"Select which metadata fields should be updated when auto-fetching. Unchecked "
+"fields will never be modified during automatic metadata fetching, preserving "
+"your existing data."
 msgstr ""
 "Seleccioneu quins camps de metadades s'han d'actualitzar quan s'obté "
-"automàticament. Els camps no marcats no es modificaran mai durant l'obtenció"
-" automàtica de metadades, conservant les vostres dades existents."
+"automàticament. Els camps no marcats no es modificaran mai durant l'obtenció "
+"automàtica de metadades, conservant les vostres dades existents."
 
 #: cps/templates/cwa_settings.html
 msgid "Tags/Genres"
@@ -15962,8 +15988,8 @@ msgid ""
 "while Direct mode will replace all selected fields with provider data."
 msgstr ""
 "Els camps que trieu s'apliquen tant al mode de substitució intel·ligent com "
-"al directe. El mode intel·ligent també comprova la qualitat de cada camp; el"
-" directe substitueix tots els camps triats amb les dades del proveïdor."
+"al directe. El mode intel·ligent també comprova la qualitat de cada camp; el "
+"directe substitueix tots els camps triats amb les dades del proveïdor."
 
 #: cps/templates/cwa_settings.html
 msgid "Cover File Max Size (MB):"
@@ -15978,8 +16004,8 @@ msgid ""
 "Limits the maximum size of cover images downloaded from metadata providers "
 "or URLs to prevent slow or stalled saves."
 msgstr ""
-"Limita la mida de les cobertes baixades dels proveïdors de metadades o d'una"
-" URL per evitar que desar-les trigui massa o s'encalli."
+"Limita la mida de les cobertes baixades dels proveïdors de metadades o d'una "
+"URL per evitar que desar-les trigui massa o s'encalli."
 
 #: cps/templates/cwa_settings.html
 msgid "Ingest Processing Timeout"
@@ -15991,8 +16017,8 @@ msgid ""
 "timing out. Files that timeout are moved to the failed backup folder for "
 "investigation."
 msgstr ""
-"Temps màxim, en minuts, per processar cada llibre. Si s'esgota, el fitxer es"
-" mou a la carpeta de còpies de seguretat d'importacions fallides perquè el "
+"Temps màxim, en minuts, per processar cada llibre. Si s'esgota, el fitxer es "
+"mou a la carpeta de còpies de seguretat d'importacions fallides perquè el "
 "pugueu examinar."
 
 #: cps/templates/cwa_settings.html
@@ -16015,8 +16041,8 @@ msgid ""
 msgstr ""
 "Els fitxers temporals de pujada que s'hagin ignorat (.uploading, .part, "
 "etc.) es poden suprimir quan tinguin l'antiguitat indicada. El valor 0 en "
-"qualsevol dels dos camps desactiva la neteja. Els canvis s'apliquen al cicle"
-" de neteja següent."
+"qualsevol dels dos camps desactiva la neteja. Els canvis s'apliquen al cicle "
+"de neteja següent."
 
 #: cps/templates/cwa_settings.html
 msgid "Stale temp age (minutes):"
@@ -16042,13 +16068,13 @@ msgstr "Retard d'enviament automàtic per a llibres nous"
 msgid ""
 "Delay (in minutes) before automatically sending newly ingested books to "
 "eReaders. This allows time for metadata fetching and other processing to "
-"complete before sending. Only applies to users who have enabled auto-send in"
-" their profile."
+"complete before sending. Only applies to users who have enabled auto-send in "
+"their profile."
 msgstr ""
-"Temps d’espera (en minuts) abans d’enviar automàticament els llibres acabats"
-" d’importar als lectors electrònics. Això dona temps a obtenir les metadades"
-" i a completar altres processaments. Només afecta els usuaris que han "
-"activat l’enviament automàtic al perfil."
+"Temps d’espera (en minuts) abans d’enviar automàticament els llibres acabats "
+"d’importar als lectors electrònics. Això dona temps a obtenir les metadades "
+"i a completar altres processaments. Només afecta els usuaris que han activat "
+"l’enviament automàtic al perfil."
 
 #: cps/templates/cwa_settings.html
 msgid "Delay (minutes):"
@@ -16096,8 +16122,8 @@ msgid ""
 "Hardcover IDs enable reading progress sync and annotation sync with "
 "Hardcover.app when using compatible eReaders."
 msgstr ""
-"Cerca i assigna automàticament identificadors de Hardcover als llibres de la"
-" vostra biblioteca. Aquests identificadors permeten sincronitzar el progrés "
+"Cerca i assigna automàticament identificadors de Hardcover als llibres de la "
+"vostra biblioteca. Aquests identificadors permeten sincronitzar el progrés "
 "de lectura i les anotacions amb Hardcover.app quan feu servir lectors "
 "electrònics compatibles."
 
@@ -16107,8 +16133,8 @@ msgstr "Es requereix un testimoni de Hardcover"
 
 #: cps/templates/cwa_settings.html
 msgid ""
-"To enable Hardcover auto-fetch, you must set a valid HARDCOVER_TOKEN in your"
-" docker-compose environment variables or configure a global token in Basic "
+"To enable Hardcover auto-fetch, you must set a valid HARDCOVER_TOKEN in your "
+"docker-compose environment variables or configure a global token in Basic "
 "Configuration. Without a valid token, this feature will remain disabled."
 msgstr ""
 "Per activar l'obtenció automàtica de dades de Hardcover, configureu un "
@@ -16126,8 +16152,7 @@ msgstr ""
 
 #: cps/templates/cwa_settings.html
 msgid ""
-"Hardcover sync is enabled. The schedule below controls automatic ID "
-"fetching."
+"Hardcover sync is enabled. The schedule below controls automatic ID fetching."
 msgstr ""
 "La sincronització de Hardcover està activada. La programació següent "
 "controla l'obtenció automàtica d'identificadors."
@@ -16205,8 +16230,8 @@ msgstr "Interval: entre 10 i 200 llibres per execució (per defecte, 50)"
 
 #: cps/templates/cwa_settings.html
 msgid ""
-"Number of books to process in each scheduled run. Smaller batches reduce API"
-" load; larger batches process your library faster."
+"Number of books to process in each scheduled run. Smaller batches reduce API "
+"load; larger batches process your library faster."
 msgstr ""
 "Nombre de llibres processats en cada execució programada. Els lots petits "
 "redueixen la càrrega de l'API; els grans processen la biblioteca més de "
@@ -16222,8 +16247,8 @@ msgstr "Interval: 0-60 segons (per defecte: 5,0)"
 
 #: cps/templates/cwa_settings.html
 msgid ""
-"Delay between API requests to Hardcover. Prevents rate limiting and protects"
-" your API key. Uses exponential backoff on errors."
+"Delay between API requests to Hardcover. Prevents rate limiting and protects "
+"your API key. Uses exponential backoff on errors."
 msgstr ""
 "Retard entre sol·licituds a l'API de Hardcover. Evita superar-ne el límit i "
 "protegeix la clau d'API. En cas d'error, el retard augmenta exponencialment."
@@ -16234,8 +16259,8 @@ msgid ""
 "at any time. Check the NextGen Stats page to see progress and review queued "
 "matches that need manual approval."
 msgstr ""
-"Podeu iniciar manualment l'obtenció automàtica de dades de Hardcover des del"
-" tauler d'administració. A la pàgina d'estadístiques de NextGen podeu "
+"Podeu iniciar manualment l'obtenció automàtica de dades de Hardcover des del "
+"tauler d'administració. A la pàgina d'estadístiques de NextGen podeu "
 "consultar-ne el progrés i revisar les coincidències pendents d'aprovació "
 "manual."
 
@@ -16249,8 +16274,8 @@ msgstr "Activa les notificacions d'actualització NextGen"
 
 #: cps/templates/cwa_settings.html
 msgid ""
-"When active, you will receive notifications in the Web UI when a new version"
-" of NextGen is released"
+"When active, you will receive notifications in the Web UI when a new version "
+"of NextGen is released"
 msgstr ""
 "Si s'activa, rebreu notificacions a la interfície web quan es publiqui una "
 "versió nova de NextGen."
@@ -16263,14 +16288,13 @@ msgstr "Actualitzacions automàtiques"
 msgid ""
 "New versions ship regularly — often weekly. Calibre-Web NextGen cannot "
 "update itself from inside its container (nothing running inside a container "
-"can), so a small companion called Watchtower does it for you: it watches for"
-" a new image and swaps NextGen in safely, leaving your other containers "
-"alone."
+"can), so a small companion called Watchtower does it for you: it watches for "
+"a new image and swaps NextGen in safely, leaving your other containers alone."
 msgstr ""
 "Sovint es publica una versió nova cada setmana. Calibre-Web NextGen no pot "
 "actualitzar-se des de dins del contenidor. Un servei complementari, "
-"Watchtower, detecta les imatges noves i actualitza NextGen sense afectar els"
-" altres contenidors."
+"Watchtower, detecta les imatges noves i actualitza NextGen sense afectar els "
+"altres contenidors."
 
 #: cps/templates/cwa_settings.html
 msgid ""
@@ -16278,8 +16302,7 @@ msgid ""
 "up -d\". After that you stay up to date automatically — no button to press."
 msgstr ""
 "Afegiu aquests dos serveis al fitxer docker-compose i executeu «docker "
-"compose up -d». A partir d'aleshores, les actualitzacions seran "
-"automàtiques."
+"compose up -d». A partir d'aleshores, les actualitzacions seran automàtiques."
 
 #: cps/templates/cwa_settings.html cps/templates/update_now_modal.html
 #: cps/templates/user_edit.html
@@ -16363,8 +16386,8 @@ msgstr "Activa la còpia de seguretat automàtica de conversió NextGen"
 
 #: cps/templates/cwa_settings.html
 msgid ""
-"When active, the originals of ingested files that undergo conversion will be"
-" stored in"
+"When active, the originals of ingested files that undergo conversion will be "
+"stored in"
 msgstr ""
 "Si s'activa, els fitxers originals que s'importin i es converteixin es "
 "desaran a"
@@ -16379,8 +16402,8 @@ msgid ""
 "When active, the originals of EPUBs processed by the NextGen Kindle EPUB "
 "Fixer service will be stored in"
 msgstr ""
-"Si s'activa, els EPUB originals processats pel corrector d'EPUB per a Kindle"
-" de NextGen es desaran a"
+"Si s'activa, els EPUB originals processats pel corrector d'EPUB per a Kindle "
+"de NextGen es desaran a"
 
 #: cps/templates/cwa_settings.html
 msgid "Enable NextGen Auto-Zip Backups"
@@ -16388,9 +16411,9 @@ msgstr "Activa la compressió automàtica de les còpies de seguretat de NextGen
 
 #: cps/templates/cwa_settings.html
 msgid ""
-"When active, just before midnight each day, the cwa-auto-zipper service will"
-" make zip archives of all the backed up converted, imported and failed files"
-" from that day. This helps keep the backup subdirectories organised and "
+"When active, just before midnight each day, the cwa-auto-zipper service will "
+"make zip archives of all the backed up converted, imported and failed files "
+"from that day. This helps keep the backup subdirectories organised and "
 "minimises disk space usage."
 msgstr ""
 "Si s'activa, cada dia, poc abans de mitjanit, el servei cwa-auto-zipper "
@@ -16409,8 +16432,8 @@ msgid ""
 "selected in the ignore list below)"
 msgstr ""
 "Quan la funció de conversió automàtica està activa, tots els llibres "
-"importats es convertiran automàticament al format escollit aquí (excepte els"
-" formats seleccionats a la llista d'ignorar a continuació)"
+"importats es convertiran automàticament al format escollit aquí (excepte els "
+"formats seleccionats a la llista d'ignorar a continuació)"
 
 #: cps/templates/cwa_settings.html
 msgid "Choose a target format:"
@@ -16418,8 +16441,8 @@ msgstr "Trieu un format de destinació:"
 
 #: cps/templates/cwa_settings.html
 msgid ""
-"Note: NextGen's Metadata Enforcement service can currently only support file"
-" in either EPUB and AZW3 format. Files in other formats will simply be "
+"Note: NextGen's Metadata Enforcement service can currently only support file "
+"in either EPUB and AZW3 format. Files in other formats will simply be "
 "ignored by the service"
 msgstr ""
 "Nota: el servei d'aplicació de metadades de NextGen només admet actualment "
@@ -16445,8 +16468,8 @@ msgstr "Conversió automàtica de NextGen: formats conservats"
 msgid ""
 "The formats selected here will always be added to the library, even after "
 "they have been converted to the target format. However, if the format is in "
-"the \"NextGen Auto-Ingest - Ignored Formats\" list, it will not be imported."
-" Note that the target format is always retained."
+"the \"NextGen Auto-Ingest - Ignored Formats\" list, it will not be imported. "
+"Note that the target format is always retained."
 msgstr ""
 "Els formats triats aquí s'afegiran sempre a la biblioteca, fins i tot "
 "després de convertir-los al format de destinació. Si un format és a la "
@@ -16458,8 +16481,7 @@ msgid "NextGen Auto-Ingest Automerge"
 msgstr "NextGen Auto-Ingest Automerge"
 
 #: cps/templates/cwa_settings.html
-msgid ""
-"Calibre can detect Duplicate Book Titles on Import and depending on the"
+msgid "Calibre can detect Duplicate Book Titles on Import and depending on the"
 msgstr ""
 "Calibre pot detectar títols duplicats en importar llibres. Segons l'opció de"
 
@@ -16499,8 +16521,8 @@ msgid ""
 "during the ingest process"
 msgstr ""
 "La importació automàtica de NextGen ignorarà els formats seleccionats aquí. "
-"Per tant, els fitxers d'aquests formats no s'afegiran a la biblioteca durant"
-" la importació."
+"Per tant, els fitxers d'aquests formats no s'afegiran a la biblioteca durant "
+"la importació."
 
 #: cps/templates/cwa_settings.html
 msgid "NextGen Duplicate Detection System"
@@ -16545,8 +16567,8 @@ msgid ""
 "Hybrid mode uses a fast SQL pre-filter to narrow candidates, then applies "
 "the robust Python logic for final results."
 msgstr ""
-"El mode híbrid primer redueix la llista de candidats amb un filtre SQL ràpid"
-" i després comprova els resultats amb la lògica de Python."
+"El mode híbrid primer redueix la llista de candidats amb un filtre SQL ràpid "
+"i després comprova els resultats amb la lògica de Python."
 
 #: cps/templates/cwa_settings.html
 msgid "Automatic Duplicate Scanning"
@@ -16585,8 +16607,8 @@ msgid ""
 "Wait this many seconds after the last import before starting a background "
 "scan."
 msgstr ""
-"Nombre de segons que s'espera després de l'última importació abans d'iniciar"
-" una cerca en segon pla."
+"Nombre de segons que s'espera després de l'última importació abans d'iniciar "
+"una cerca en segon pla."
 
 #: cps/templates/cwa_settings.html
 msgid "Scheduled scans (cron expression)"
@@ -16603,8 +16625,8 @@ msgid ""
 "only” to disable after-import scans while keeping cron schedules."
 msgstr ""
 "Si s’activa, es poden fer cerques després d’importar llibres i segons el "
-"calendari cron. Trieu «Només manual» per desactivar les cerques posteriors a"
-" la importació sense afectar les programades."
+"calendari cron. Trieu «Només manual» per desactivar les cerques posteriors a "
+"la importació sense afectar les programades."
 
 #: cps/templates/cwa_settings.html cps/templates/duplicates.html
 msgid "Next scheduled scan:"
@@ -16650,8 +16672,8 @@ msgstr "Té en compte el format del fitxer en detectar duplicats"
 
 #: cps/templates/cwa_settings.html
 msgid ""
-"At least one criterion must be selected. Title and Author are recommended as"
-" core criteria."
+"At least one criterion must be selected. Title and Author are recommended as "
+"core criteria."
 msgstr ""
 "S'ha de seleccionar almenys un criteri. El títol i l'autor es recomanen com "
 "a criteris bàsics."
@@ -16702,12 +16724,12 @@ msgstr "Activa els avisos de duplicats"
 
 #: cps/templates/cwa_settings.html
 msgid ""
-"Show popup notifications when unresolved duplicates are detected. Admins and"
-" users with edit rights will see a badge on the Duplicates sidebar button "
-"and a notification popup when they login."
+"Show popup notifications when unresolved duplicates are detected. Admins and "
+"users with edit rights will see a badge on the Duplicates sidebar button and "
+"a notification popup when they login."
 msgstr ""
-"Mostra avisos emergents quan es detecten duplicats pendents de resoldre. Els"
-" administradors i els usuaris amb permisos d'edició veuran un indicador al "
+"Mostra avisos emergents quan es detecten duplicats pendents de resoldre. Els "
+"administradors i els usuaris amb permisos d'edició veuran un indicador al "
 "botó «Duplicats» de la barra lateral i un avís en iniciar la sessió."
 
 #: cps/templates/cwa_settings.html
@@ -17008,8 +17030,7 @@ msgstr "Tauler d'activitat de l'usuari"
 
 #: cps/templates/cwa_user_activity.html
 msgid "Track library usage, downloads, and user engagement"
-msgstr ""
-"Segueix l'ús de la biblioteca, les baixades i l'activitat dels usuaris"
+msgstr "Segueix l'ús de la biblioteca, les baixades i l'activitat dels usuaris"
 
 #: cps/templates/cwa_user_activity.html
 msgid "Filter by User:"
@@ -17297,11 +17318,10 @@ msgid "Anonymize my feedback"
 msgstr "Anonimitza els meus comentaris"
 
 #: cps/templates/cwng_feedback_popup.html
-msgid ""
-"No account, name, IP address, version or device info is sent or stored."
+msgid "No account, name, IP address, version or device info is sent or stored."
 msgstr ""
-"No s'envia ni emmagatzema cap informació de compte, nom, adreça IP, versió o"
-" dispositiu."
+"No s'envia ni emmagatzema cap informació de compte, nom, adreça IP, versió o "
+"dispositiu."
 
 #: cps/templates/cwng_feedback_popup.html
 msgid ""
@@ -17505,16 +17525,16 @@ msgid ""
 "initial baseline."
 msgstr ""
 "CWA fa servir un índex per agilitzar la detecció de duplicats durant les "
-"importacions i els canvis de metadades. Per fer cerques incrementals, primer"
-" cal crear aquest índex amb una cerca completa."
+"importacions i els canvis de metadades. Per fer cerques incrementals, primer "
+"cal crear aquest índex amb una cerca completa."
 
 #: cps/templates/duplicates.html
 msgid ""
-"Click \"Run Full Duplicate Scan\" to build it. This may take several minutes"
-" on large libraries, and you can keep using CWA while it runs."
+"Click \"Run Full Duplicate Scan\" to build it. This may take several minutes "
+"on large libraries, and you can keep using CWA while it runs."
 msgstr ""
-"Feu clic a «Inicia una cerca completa de duplicats» per crear-lo. Pot trigar"
-" uns minuts en biblioteques grans, però podeu continuar fent servir CWA "
+"Feu clic a «Inicia una cerca completa de duplicats» per crear-lo. Pot trigar "
+"uns minuts en biblioteques grans, però podeu continuar fent servir CWA "
 "mentrestant."
 
 #: cps/templates/duplicates.html
@@ -17554,8 +17574,8 @@ msgstr ""
 #: cps/templates/duplicates.html
 msgid "Keep Oldest - Delete newer copies, keep the earliest added"
 msgstr ""
-"Conserva el més antic: suprimeix les còpies més recents i conserva el primer"
-" llibre afegit"
+"Conserva el més antic: suprimeix les còpies més recents i conserva el primer "
+"llibre afegit"
 
 #: cps/templates/duplicates.html
 msgid "Merge Formats - Merge formats into the newest book, delete the rest"
@@ -17587,8 +17607,7 @@ msgid "Execute Resolution"
 msgstr "Executa la resolució"
 
 #: cps/templates/duplicates.html
-msgid ""
-"This will permanently delete books. Original files will be backed up to"
+msgid "This will permanently delete books. Original files will be backed up to"
 msgstr ""
 "Aquesta opció suprimirà llibres definitivament. Els fitxers originals es "
 "copiaran a"
@@ -17618,16 +17637,15 @@ msgid "No Duplicate Books Found"
 msgstr "No s'han trobat llibres duplicats"
 
 #: cps/templates/duplicates.html
-msgid ""
-"Your library has no books with duplicate title and author combinations."
+msgid "Your library has no books with duplicate title and author combinations."
 msgstr ""
 "La vostra biblioteca no té llibres amb combinacions d'autor i títol "
 "duplicats."
 
 #: cps/templates/duplicates.html
 msgid ""
-"This search looks for books with identical titles AND authors to avoid false"
-" positives."
+"This search looks for books with identical titles AND authors to avoid false "
+"positives."
 msgstr ""
 "Aquesta cerca busca llibres amb el mateix títol i el mateix autor per a "
 "evitar falsos positius."
@@ -17796,8 +17814,8 @@ msgstr "Revisió obligatòria"
 #: cps/templates/hardcover_review_matches.html
 #, python-format
 msgid ""
-"%(count)s book(s) have ambiguous Hardcover matches. Please review each match"
-" and select the correct result, or skip/reject if no good match exists."
+"%(count)s book(s) have ambiguous Hardcover matches. Please review each match "
+"and select the correct result, or skip/reject if no good match exists."
 msgstr ""
 "Hi ha %(count)s llibres amb coincidències ambigües a Hardcover. Reviseu-les "
 "i trieu el resultat correcte, o ometeu-les o rebutgeu-les si cap no és "
@@ -18020,8 +18038,8 @@ msgstr ""
 
 #: cps/templates/kobo_reconcile.html
 msgid ""
-"Select only books you know came from this server. Selecting a book schedules"
-" its device copy for archival on the next sync."
+"Select only books you know came from this server. Selecting a book schedules "
+"its device copy for archival on the next sync."
 msgstr ""
 "Seleccioneu només llibres que sapigueu que provenen d'aquest servidor. Els "
 "que seleccioneu es programaran per arxivar-los al dispositiu a la pròxima "
@@ -18058,8 +18076,7 @@ msgstr "Ja n’hi havia %(count)d de programats."
 #: cps/templates/kobo_reconcile.html
 #, python-format
 msgid "%(count)d are currently in the library and were not changed."
-msgstr ""
-"N’hi ha %(count)d que encara són a la biblioteca i no s’han modificat."
+msgstr "N’hi ha %(count)d que encara són a la biblioteca i no s’han modificat."
 
 #: cps/templates/kobo_reconcile.html
 #, python-format
@@ -18167,22 +18184,21 @@ msgstr "La sincronització de KOReader està desactivada."
 
 #: cps/templates/kosync_plugin.html
 msgid ""
-"Enable it in NextGen Settings to activate the /kosync endpoints and checksum"
-" generation."
+"Enable it in NextGen Settings to activate the /kosync endpoints and checksum "
+"generation."
 msgstr ""
-"Activeu-la a la configuració de NextGen per habilitar els punts de connexió "
-"/kosync i la generació de sumes de comprovació."
+"Activeu-la a la configuració de NextGen per habilitar els punts de connexió /"
+"kosync i la generació de sumes de comprovació."
 
 #: cps/templates/kosync_plugin.html
 msgid "Open NextGen Settings"
 msgstr "Obre la configuració de NextGen"
 
 #: cps/templates/kosync_plugin.html
-msgid ""
-"Download is available after enabling KOReader Sync in NextGen Settings."
+msgid "Download is available after enabling KOReader Sync in NextGen Settings."
 msgstr ""
-"La baixada estarà disponible quan activeu la sincronització de KOReader a la"
-" configuració de NextGen."
+"La baixada estarà disponible quan activeu la sincronització de KOReader a la "
+"configuració de NextGen."
 
 #: cps/templates/layout.html cps/templates/login.html
 msgid "Home"
@@ -18420,8 +18436,7 @@ msgstr ""
 #: cps/templates/magic_shelf_edit.html
 msgid "Smart shelves were called Magic Shelves in older versions."
 msgstr ""
-"En versions anteriors, els prestatges intel·ligents es deien «Magic "
-"Shelves»."
+"En versions anteriors, els prestatges intel·ligents es deien «Magic Shelves»."
 
 #: cps/templates/magic_shelf_edit.html
 msgid "System Template"
@@ -18472,8 +18487,8 @@ msgstr "Selecciona les etiquetes permeses o denegades de l'usuari"
 #: cps/templates/modal_dialogs.html
 msgid "Select Allowed/Denied Custom Column Values of User"
 msgstr ""
-"Selecciona els valors permesos o denegats de les columnes personalitzades de"
-" l'usuari"
+"Selecciona els valors permesos o denegats de les columnes personalitzades de "
+"l'usuari"
 
 #: cps/templates/modal_dialogs.html
 msgid "Undefined"
@@ -18502,9 +18517,9 @@ msgstr "i del disc dur"
 
 #: cps/templates/modal_dialogs.html
 msgid ""
-"Deleting this book also tries to archive its copy on paired Kobo devices the"
-" next time they sync. If that update cannot be recorded, the book may remain"
-" on a device."
+"Deleting this book also tries to archive its copy on paired Kobo devices the "
+"next time they sync. If that update cannot be recorded, the book may remain "
+"on a device."
 msgstr ""
 "En suprimir aquest llibre, també s'intenta arxivar-ne la còpia als "
 "dispositius Kobo vinculats la pròxima vegada que se sincronitzin. Si no es "
@@ -19153,8 +19168,8 @@ msgstr "Gestor de contenidors de Synology:"
 
 #: cps/templates/update_now_modal.html
 msgid ""
-"Registry → download the image below (tag: latest), then stop the container →"
-" Action → Reset to recreate it."
+"Registry → download the image below (tag: latest), then stop the container → "
+"Action → Reset to recreate it."
 msgstr ""
 "Registry → baixeu la imatge indicada més avall (etiqueta: latest). Després, "
 "atureu el contenidor → Action → Reset per tornar-lo a crear."
@@ -19200,8 +19215,8 @@ msgstr "Utilitzeu comes per separar diverses adreces"
 
 #: cps/templates/user_edit.html
 msgid ""
-"Email address(es) for your eReader devices. Separate multiple addresses with"
-" commas."
+"Email address(es) for your eReader devices. Separate multiple addresses with "
+"commas."
 msgstr ""
 "Adreces electròniques dels lectors. Separeu-les amb comes si n'hi ha més "
 "d'una."
@@ -19254,8 +19269,7 @@ msgstr "Llengua dels llibres"
 
 #: cps/templates/user_edit.html
 msgid "Filter the library to only show books in a specific language."
-msgstr ""
-"Filtra la biblioteca per mostrar només llibres en un idioma específic."
+msgstr "Filtra la biblioteca per mostrar només llibres en un idioma específic."
 
 #: cps/templates/user_edit.html
 msgid "Book Language Filter"
@@ -19283,8 +19297,7 @@ msgstr "Testimoni de l'API de Hardcover"
 
 #: cps/templates/user_edit.html
 msgid "API token for Hardcover metadata provider integration."
-msgstr ""
-"Testimoni de l'API per a integrar el proveïdor de metadades Hardcover."
+msgstr "Testimoni de l'API per a integrar el proveïdor de metadades Hardcover."
 
 #: cps/templates/user_edit.html
 msgid "Kobo Sync Token"
@@ -19333,8 +19346,7 @@ msgstr "Sincronitza només els llibres dels prestatges seleccionats amb Kobo"
 #: cps/templates/user_edit.html
 msgid ""
 "New accounts sync only selected shelves. If no books arrive, add books to a "
-"shelf and enable its Kobo sync mark. Uncheck this to sync your whole "
-"library."
+"shelf and enable its Kobo sync mark. Uncheck this to sync your whole library."
 msgstr ""
 "Els comptes nous només sincronitzen els prestatges seleccionats. Si no "
 "arriba cap llibre, afegiu-ne a un prestatge i activeu-ne la marca de "
@@ -19348,8 +19360,8 @@ msgid ""
 "the instance-level opt-in."
 msgstr ""
 "Desactivada per defecte. La fase 0 només registra dades per recuperar "
-"l'estat anterior i no canvia les anotacions que rep el Kobo. L'administrador"
-" també ha d'activar l'opció general de la instància."
+"l'estat anterior i no canvia les anotacions que rep el Kobo. L'administrador "
+"també ha d'activar l'opció general de la instància."
 
 #: cps/templates/user_edit.html
 msgid "OPDS Shelf Exposure"
@@ -19465,8 +19477,8 @@ msgstr "Visibilitat dels prestatges intel·ligents"
 
 #: cps/templates/user_edit.html
 msgid ""
-"Uncheck shelves you want to hide from your sidebar. System shelves cannot be"
-" deleted, only hidden. Public shelves from other users can also be hidden."
+"Uncheck shelves you want to hide from your sidebar. System shelves cannot be "
+"deleted, only hidden. Public shelves from other users can also be hidden."
 msgstr ""
 "Desmarqueu els prestatges que vulgueu amagar de la barra lateral. Els "
 "prestatges del sistema només es poden amagar, no suprimir. També podeu "
@@ -19500,15 +19512,15 @@ msgstr "Contrasenyes d'aplicació per a OPDS i la sincronització de KOReader"
 
 #: cps/templates/user_edit.html
 msgid ""
-"OPDS readers and KOReader can't sign in through your IdP — they only support"
-" HTTP Basic auth. Create an app password here, label it for the device "
+"OPDS readers and KOReader can't sign in through your IdP — they only support "
+"HTTP Basic auth. Create an app password here, label it for the device "
 "that'll use it, and copy the token shown after creation. You can revoke any "
 "app password at any time without affecting your active web session."
 msgstr ""
 "Els lectors OPDS i KOReader no poden iniciar sessió amb el vostre proveïdor "
 "d'identitat; només admeten l'autenticació bàsica HTTP. Creeu aquí una "
-"contrasenya d'aplicació, poseu-li una etiqueta que identifiqui el dispositiu"
-" i copieu el testimoni que apareix en crear-la. La podreu revocar quan "
+"contrasenya d'aplicació, poseu-li una etiqueta que identifiqui el dispositiu "
+"i copieu el testimoni que apareix en crear-la. La podreu revocar quan "
 "vulgueu sense afectar la sessió web activa."
 
 #: cps/templates/user_edit.html
