@@ -11451,6 +11451,24 @@ msgstr ""
 msgid "Your rating (stars)"
 msgstr ""
 
+#: cps/spa_strings.py cps/templates/email_edit.html
+msgid "eReader attachment filename template"
+msgstr ""
+
+#: cps/spa_strings.py cps/templates/email_edit.html
+#, python-brace-format
+msgid ""
+"Leave blank to keep the existing filename. Example: {series} #{series_index} "
+"- {title}. Fields include {title}, {authors}, {series} and {series_index}; "
+"the file extension is added automatically."
+msgstr ""
+
+#: cps/spa_strings.py cps/templates/email_edit.html
+#, python-brace-format
+msgid ""
+"Use {series:|(|) }{title} to omit the series prefix when no series is set."
+msgstr ""
+
 #: cps/tasks_status.py
 msgid "Waiting"
 msgstr "Väntar"
@@ -11934,6 +11952,11 @@ msgstr ""
 #: cps/services/gmail.py
 msgid "Found no valid gmail.json file with OAuth information"
 msgstr "Hittade ingen giltig gmail.json-fil med OAuth-information"
+
+#: cps/services/mail_filename.py
+msgid ""
+"Use a valid attachment filename template with supported metadata fields."
+msgstr ""
 
 #: cps/services/opds_filename.py
 msgid "Conditional text needs both prefix and suffix separators."
@@ -19506,21 +19529,3 @@ msgstr "Visa avsnittet Läst/oläst"
 #~ msgstr ""
 #~ "Böcker måste först arkiveras och enheten synkroniseras innan en bok "
 #~ "säkert kan tas bort."
-
-#: cps/spa_strings.py
-msgid "eReader attachment filename template"
-msgstr ""
-
-#: cps/spa_strings.py
-#, python-brace-format
-msgid "Leave blank to keep the existing filename. Example: {series} #{series_index} - {title}. Fields include {title}, {authors}, {series} and {series_index}; the file extension is added automatically."
-msgstr ""
-
-#: cps/spa_strings.py
-#, python-brace-format
-msgid "Use {series:|(|) }{title} to omit the series prefix when no series is set."
-msgstr ""
-
-#: cps/services/mail_filename.py
-msgid "Use a valid attachment filename template with supported metadata fields."
-msgstr ""

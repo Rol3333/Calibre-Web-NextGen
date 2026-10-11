@@ -514,8 +514,8 @@ msgstr "أرسل بريدًا إلكترونيًا إلى مستخدميك"
 msgid ""
 "Please configure the email server under Edit Email Server Settings first."
 msgstr ""
-"يرجى أولاً ضبط إعدادات خادم البريد الإلكتروني من خلال قسم «تعديل إعدادات "
-"خادم البريد الإلكتروني»."
+"يرجى أولاً ضبط إعدادات خادم البريد الإلكتروني من خلال قسم «تعديل إعدادات خادم "
+"البريد الإلكتروني»."
 
 #: cps/admin.py
 msgid "Please enter a subject for the announcement email."
@@ -551,8 +551,8 @@ msgid ""
 "Announcement email queued for %(num)s recipient(s) — check Tasks for "
 "delivery."
 msgstr ""
-"تمت إضافة رسالة الإعلان إلى قائمة الإرسال لعدد %(num)s من المستلمين — "
-"راجع «المهام» لمتابعة التسليم."
+"تمت إضافة رسالة الإعلان إلى قائمة الإرسال لعدد %(num)s من المستلمين — راجع "
+"«المهام» لمتابعة التسليم."
 
 #: cps/admin.py
 #, python-format
@@ -1996,8 +1996,8 @@ msgid ""
 "Login failed: The OAuth provider returned invalid user profile data. Please "
 "contact your administrator."
 msgstr ""
-"فشل تسجيل الدخول: أعاد مزوّد خدمة OAuth بيانات ملف تعريف مستخدم غير "
-"صالحة. يرجى الاتصال بمسؤول النظام."
+"فشل تسجيل الدخول: أعاد مزوّد خدمة OAuth بيانات ملف تعريف مستخدم غير صالحة. "
+"يرجى الاتصال بمسؤول النظام."
 
 #: cps/oauth_bb.py
 #, python-format
@@ -11091,6 +11091,24 @@ msgstr ""
 msgid "Your rating (stars)"
 msgstr ""
 
+#: cps/spa_strings.py cps/templates/email_edit.html
+msgid "eReader attachment filename template"
+msgstr ""
+
+#: cps/spa_strings.py cps/templates/email_edit.html
+#, python-brace-format
+msgid ""
+"Leave blank to keep the existing filename. Example: {series} #{series_index} "
+"- {title}. Fields include {title}, {authors}, {series} and {series_index}; "
+"the file extension is added automatically."
+msgstr ""
+
+#: cps/spa_strings.py cps/templates/email_edit.html
+#, python-brace-format
+msgid ""
+"Use {series:|(|) }{title} to omit the series prefix when no series is set."
+msgstr ""
+
 #: cps/tasks_status.py
 msgid "Waiting"
 msgstr "في انتظار"
@@ -11572,6 +11590,11 @@ msgstr ""
 #: cps/services/gmail.py
 msgid "Found no valid gmail.json file with OAuth information"
 msgstr "لم يتم العثور على ملف gmail.json صالح بمعلومات OAuth"
+
+#: cps/services/mail_filename.py
+msgid ""
+"Use a valid attachment filename template with supported metadata fields."
+msgstr ""
 
 #: cps/services/opds_filename.py
 msgid "Conditional text needs both prefix and suffix separators."
@@ -18607,21 +18630,3 @@ msgstr "إظهار قسم المقروء/غير المقروء"
 #~ "Books must first be archived and the device synced before a book can "
 #~ "safely be deleted."
 #~ msgstr "يجب أولاً أرشفة الكتب ومزامنة الجهاز قبل أن يتم حذف الكتاب بأمان."
-
-#: cps/spa_strings.py
-msgid "eReader attachment filename template"
-msgstr ""
-
-#: cps/spa_strings.py
-#, python-brace-format
-msgid "Leave blank to keep the existing filename. Example: {series} #{series_index} - {title}. Fields include {title}, {authors}, {series} and {series_index}; the file extension is added automatically."
-msgstr ""
-
-#: cps/spa_strings.py
-#, python-brace-format
-msgid "Use {series:|(|) }{title} to omit the series prefix when no series is set."
-msgstr ""
-
-#: cps/services/mail_filename.py
-msgid "Use a valid attachment filename template with supported metadata fields."
-msgstr ""

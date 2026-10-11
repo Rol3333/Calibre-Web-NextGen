@@ -11728,6 +11728,29 @@ msgstr "{rating} van 5"
 msgid "Your rating (stars)"
 msgstr "Je beoordeling (sterren)"
 
+#: cps/spa_strings.py cps/templates/email_edit.html
+msgid "eReader attachment filename template"
+msgstr "Bestandsnaamsjabloon voor eReader-bijlagen"
+
+#: cps/spa_strings.py cps/templates/email_edit.html
+#, python-brace-format
+msgid ""
+"Leave blank to keep the existing filename. Example: {series} #{series_index} "
+"- {title}. Fields include {title}, {authors}, {series} and {series_index}; "
+"the file extension is added automatically."
+msgstr ""
+"Laat leeg om de bestaande bestandsnaam te behouden. Voorbeeld: {series} "
+"#{series_index} - {title}. Velden: {title}, {authors}, {series} en "
+"{series_index}; de bestandsextensie wordt automatisch toegevoegd."
+
+#: cps/spa_strings.py cps/templates/email_edit.html
+#, python-brace-format
+msgid ""
+"Use {series:|(|) }{title} to omit the series prefix when no series is set."
+msgstr ""
+"Gebruik {series:|(|) }{title} om het serievoorvoegsel weg te laten als er "
+"geen serie is ingesteld."
+
 #: cps/tasks_status.py
 msgid "Waiting"
 msgstr "Wachten"
@@ -12227,6 +12250,13 @@ msgstr ""
 #: cps/services/gmail.py
 msgid "Found no valid gmail.json file with OAuth information"
 msgstr "Geen geldig gmail.json bestand gevonden met OAuth informatie"
+
+#: cps/services/mail_filename.py
+msgid ""
+"Use a valid attachment filename template with supported metadata fields."
+msgstr ""
+"Gebruik een geldig bestandsnaamsjabloon voor bijlagen met ondersteunde "
+"metadatavelden."
 
 #: cps/services/opds_filename.py
 msgid "Conditional text needs both prefix and suffix separators."
@@ -20187,24 +20217,6 @@ msgstr "Toon gelezen/niet gelezen selectie"
 #~ msgstr ""
 #~ "Boeken moeten eerst worden gearchiveerd en het apparaat moet worden "
 #~ "gesynchroniseerd, voordat een boek veilig kan worden verwijderd."
-
-#: cps/spa_strings.py
-msgid "eReader attachment filename template"
-msgstr "Bestandsnaamsjabloon voor eReader-bijlagen"
-
-#: cps/spa_strings.py
-#, python-brace-format
-msgid "Leave blank to keep the existing filename. Example: {series} #{series_index} - {title}. Fields include {title}, {authors}, {series} and {series_index}; the file extension is added automatically."
-msgstr "Laat leeg om de bestaande bestandsnaam te behouden. Voorbeeld: {series} #{series_index} - {title}. Velden: {title}, {authors}, {series} en {series_index}; de bestandsextensie wordt automatisch toegevoegd."
-
-#: cps/spa_strings.py
-#, python-brace-format
-msgid "Use {series:|(|) }{title} to omit the series prefix when no series is set."
-msgstr "Gebruik {series:|(|) }{title} om het serievoorvoegsel weg te laten als er geen serie is ingesteld."
-
-#: cps/services/mail_filename.py
-msgid "Use a valid attachment filename template with supported metadata fields."
-msgstr "Gebruik een geldig bestandsnaamsjabloon voor bijlagen met ondersteunde metadatavelden."
 
 #~ msgid "Calibre library rating (1-10)"
 #~ msgstr "Calibre-bibliotheekbeoordeling (1–10)"
