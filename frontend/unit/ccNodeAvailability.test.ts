@@ -32,10 +32,21 @@ test('the server publishes availability on every node', () => {
 
   assert.match(
     body,
-    /hierarchy\.node_availability\(node\)/,
+    /hierarchy\.node_availability\(\s*node\s*,/,
     'the wire node must carry the flag hierarchy.node_availability computes',
   );
   assert.match(body, /"available"/, 'the flag must actually be serialised, not just computed');
+
+  // The sibling list is not optional detail. `node_availability(node)` with no
+  // second argument returns every move flag refused, so a caller that forgets
+  // it produces a tree where nothing can be moved and nothing looks wrong --
+  // which is exactly what happened on the classic side while this was being
+  // built. Assert the argument is passed, not that a call happened.
+  assert.match(
+    body,
+    /node_availability\([\s\S]*?sibling/,
+    '_node_to_json must pass the sibling list, or every move flag reads as refused',
+  );
 });
 
 test('the editor reads the published flag instead of deriving it', () => {

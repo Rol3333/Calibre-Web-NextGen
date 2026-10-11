@@ -30,6 +30,13 @@
             "cutValue": _("Cut {name}"),
             "paste": _("Paste"),
             "pasteUnder": _("Paste under {name}"),
+        "moveUp": _("Move up"),
+        "moveDown": _("Move down"),
+        "moveUpValue": _("Move {name} up one place"),
+        "moveDownValue": _("Move {name} down one place"),
+        "tickToMove": _("Tick this value before moving it"),
+        "alreadyAtTop": _("Already first at this level"),
+        "alreadyAtBottom": _("Already last at this level"),
             "merge": _("Merge"),
             "mergeInto": _("Merge into {name}"),
             "mergeSelectedInto": _("Merge the selected values into {name}"),
@@ -50,6 +57,12 @@
             "readyToPaste": _("{name} is ready to paste. Tick the value it should go under, then press Paste on that row."),
             "renamePrompt": _("New name for {name}"),
             "createPrompt": _("New value. Use dots for a hierarchy, e.g. Arts.Mystery."),
+        "createBesidePrompt": _("New value, placed just below {name}. Same level, so the name cannot contain a dot."),
+        "besideNoDot": _("A value created beside another stays on the same level, so its name cannot contain a dot. Use the Create new button for a sub-value."),
+        "allLevels": _("All levels"),
+        "oneLevel": _("1 level"),
+        "manyLevels": _("{count} levels"),
+        "hiddenByNarrowing": _("{count} value(s) hidden by the filters above"),
             "renameMergeConfirm": _("This will merge into existing value(s). There is no undo. Continue?"),
             "mergeConfirm": _("These values are folded into {name}. Their books keep a value, but the values themselves are gone. There is no undo."),
             "deleteConfirm": _("Remove {name}? The books are kept — they simply lose the value. There is no undo."),
@@ -72,6 +85,29 @@
     {{ _('Renaming renames everything below the value. To move one, tick it and press Cut, then tick the value it should go under and press Paste.') if hierarchical|default(true) else _('To merge, tick two or more values, then use Merge on the one that should survive.') }}
   </p>
 
+  {# Narrowing controls. A column of several thousand values is unusable
+     unfiltered, and the fix is a VIEW filter rather than paging: every row is
+     already in the page, so this is client-side and costs no round trip --
+     the same reasoning as server-rendering the rows in the first place.
+     Built here rather than server-side because the options depend on the
+     deepest level actually present, which the script reads off data-depth. #}
+  <div class="cc-values-controls" id="ccValuesControls">
+    <label class="cc-values-depth-label" for="ccValuesDepth">{{ _('Show') }}</label>
+    <select id="ccValuesDepth" class="form-control input-sm cc-values-depth"
+            aria-label="{{ _('How many levels of values to show') }}">
+      <option value="0">{{ _('All levels') }}</option>
+    </select>
+    <span class="cc-values-focus" id="ccValuesFocus" hidden>
+      <span class="cc-values-focus-text" id="ccValuesFocusText"></span>
+      <button type="button" class="btn btn-default btn-xs cc-values-focus-clear"
+              id="ccValuesFocusClear" title="{{ _('Show every value again') }}"
+              aria-label="{{ _('Show every value again') }}">
+        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+      </button>
+    </span>
+    <span class="cc-values-hidden-note" id="ccValuesHiddenNote" role="status"></span>
+  </div>
+
   {# How far each level of nesting shifts right, and the gutter a root row keeps.
      Was 18px/level, which read as a flat list once a column was three or four
      levels deep -- the nesting was there but invisible. 40px makes the depth
@@ -85,6 +121,8 @@
           data-depth="{{ row.depth }}"
           data-can-delete="{{ '1' if row.can_delete else '0' }}"
           data-can-merge-source="{{ '1' if row.can_merge_source else '0' }}"
+          data-can-move-up="{{ '1' if row.can_move_up else '0' }}"
+          data-can-move-down="{{ '1' if row.can_move_down else '0' }}"
           data-has-children="{{ '1' if row.has_children else '0' }}">
         <label class="cc-values-check" style="padding-left: {{ row.depth * indent_px + indent_root_px }}px;">
           <input type="checkbox" class="cc-values-tick">
@@ -96,7 +134,29 @@
         {% if row.has_children %}
           <span class="label label-default cc-values-tag">{{ _('has sub-values') }}</span>
         {% endif %}
-        <span class="btn-group cc-values-actions"></span>
+        <span class="cc-values-actions"></span>
+        {# Per-row create, so a new value lands BESIDE the one you clicked
+           rather than at the top of the column. The parent is not in the
+           markup: the row's data-path carries it, and the script derives the
+           level from that -- one source of truth rather than two that can
+           disagree. #}
+        <button type="button" class="btn btn-default btn-xs cc-values-create-under"
+                data-path="{{ row.path }}"
+                title="{{ _('Create a value just below this one') }}"
+                aria-label="{{ _('Create a value just below {name}').format(name=row.name) }}">
+          <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+        </button>
+        {# Narrow to this value and everything under it. Only offered where it
+           would actually narrow something -- a leaf is the only row that
+           cannot. #}
+        {% if row.has_children %}
+        <button type="button" class="btn btn-default btn-xs cc-values-focus-here"
+                data-path="{{ row.path }}" data-name="{{ row.name }}"
+                title="{{ _('Show only {name} and its sub-values').format(name=row.name) }}"
+                aria-label="{{ _('Show only {name} and its sub-values').format(name=row.name) }}">
+          <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+        </button>
+        {% endif %}
       </li>
     {% endfor %}
   </ul>

@@ -2542,16 +2542,20 @@ def cc_value_edit_rows(entries, is_hierarchical):
     carries its ``available`` flags, computed by the SAME
     ``hierarchy.node_availability`` the JSON tree publishes, so the classic
     editor and the new interface cannot disagree about which values may be
-    deleted or merged.
+    deleted, merged or moved.
 
     Rendered server-side rather than fetched on toggle: the tree is already in
     hand here, and an edit mode that has to round-trip before it can draw
     itself is the "button does nothing" failure this feature already had once.
     """
-    rows, stack = [], [(node, 0) for node in reversed(entries)]
+    rows, stack = [], [(node, 0, entries) for node in reversed(entries)]
     while stack:
-        node, depth = stack.pop()
-        available = hierarchy.node_availability(node)
+        node, depth, siblings = stack.pop()
+        # `siblings` is the node's own level, in display order. Needed because
+        # sibling position is not a property of a node: "can this move up" is a
+        # question about its place in a list, not about the node.
+        available = hierarchy.node_availability(
+            node, [sibling['path'] for sibling in (siblings or [])])
         rows.append({
             'path': node['path'],
             'name': node['name'],
@@ -2562,9 +2566,12 @@ def cc_value_edit_rows(entries, is_hierarchical):
             'depth': depth if is_hierarchical else 0,
             'can_delete': available['can_delete'],
             'can_merge_source': available['can_merge_source'],
+            'can_move_up': available['can_move_up'],
+            'can_move_down': available['can_move_down'],
             'has_children': bool(node['children']),
         })
-        stack.extend((child, depth + 1) for child in reversed(node['children']))
+        stack.extend((child, depth + 1, node['children'])
+                     for child in reversed(node['children']))
     return rows
 
 

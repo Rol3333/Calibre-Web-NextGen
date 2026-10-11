@@ -39,7 +39,28 @@ def join_path(parts):
     return SEPARATOR.join(split_path(SEPARATOR.join(parts)))
 
 
-def parse_tag_hierarchy(values):
+#: Sort sentinel for a value nobody has curated a position for. Larger than any
+#: stored ``view_order``, so unordered siblings fall to the back *as a group* and
+#: then sort alphabetically among themselves -- which is exactly today's
+#: behaviour, and is what makes the sidecar inert until somebody reorders
+#: something.
+UNORDERED = float('inf')
+
+
+def _order_key(order, node):
+    """Sort key for one sibling: curated position first, then name.
+
+    ``order`` is ``{path: view_order}`` for the whole column, passed in by the
+    caller. This module cannot fetch it itself: the rules below are kept free of
+    database imports on purpose (see the note further down), and
+    ``test_the_rule_module_imports_nothing_from_the_web_stack`` enforces it.
+    """
+    if not order:
+        return node['name'].lower()
+    return (order.get(node['path'], UNORDERED), node['name'].lower())
+
+
+def parse_tag_hierarchy(values, order=None):
     """Convert an iterable of dot-notation strings into a sorted list of
     top-level tree nodes.
 
@@ -53,6 +74,12 @@ def parse_tag_hierarchy(values):
     in the whole subtree (a book filed under both ``X.Y`` and ``X.Y.Z`` counts
     once for ``X``). ``raw_values`` keeps the stored spellings that normalise
     to the node, so a lookup can match exactly what the tree counted.
+
+    ``order`` is an optional ``{path: view_order}`` map -- the curated sibling
+    order held in the app.db sidecar (``cps/cc_sidecar.py``). Siblings with a
+    stored position sort by it; the rest sort alphabetically after them. Omit it
+    and the result is byte-identical to the pre-sidecar behaviour, which is why
+    an empty sidecar changes nothing.
     """
     roots = {}
     for index, item in enumerate(values):
@@ -82,14 +109,14 @@ def parse_tag_hierarchy(values):
                 node['books'].add(book)
                 node['raw_values'].add(value)
             node_map = node['children']
-    return _finalize(list(roots.values()))
+    return _finalize(list(roots.values()), order)
 
 
-def _finalize(nodes):
+def _finalize(nodes, order=None):
     """Recursively convert children dicts to sorted lists; aggregate counts."""
-    nodes.sort(key=lambda n: n['name'].lower())
+    nodes.sort(key=lambda n: _order_key(order, n))
     for node in nodes:
-        node['children'] = _finalize(list(node['children'].values()))
+        node['children'] = _finalize(list(node['children'].values()), order)
         for child in node['children']:
             node['books'] |= child['books']
         node['total_count'] = len(node['books'])
@@ -134,7 +161,7 @@ def breadcrumb_trail(path):
     return trail
 
 
-def add_bookless_nodes(nodes, values):
+def add_bookless_nodes(nodes, values, order=None):
     """Insert values no visible book carries, as nodes whose counts are 0.
 
     A value row exists whether or not any book uses it -- "Create new" makes one
@@ -146,6 +173,10 @@ def add_bookless_nodes(nodes, values):
 
     ``total_count`` is deliberately NOT propagated upwards. A subtree containing
     nothing visible must report 0, not 1.
+
+    Sorts through :func:`_order_key` like every other sibling list, so a
+    bookless node lands where its curated position says rather than being
+    alphabetised into the middle of an ordering somebody set by hand.
 
     Mutates and returns ``nodes``.
     """
@@ -168,7 +199,7 @@ def add_bookless_nodes(nodes, values):
                             'books': set(), 'raw_values': {value},
                             'total_count': 0}
                 siblings.append(existing)
-                siblings.sort(key=lambda n: n['name'].lower())
+                siblings.sort(key=lambda n: _order_key(order, n))
             siblings = existing['children']
     return nodes
 
@@ -206,6 +237,7 @@ ERR_MISSING_SOURCE = 'missing-source'
 ERR_SOURCE_HAS_CHILDREN = 'source-has-children'
 ERR_MERGE_INTO_ITSELF = 'merge-into-itself'
 ERR_MERGE_INTO_DESCENDANT = 'merge-into-descendant'
+ERR_NO_NEIGHBOUR = 'no-neighbour'
 
 
 def is_descendant(candidate, ancestor):
@@ -380,13 +412,44 @@ def plan_delete(paths, exists, has_children):
     return list(paths), None
 
 
-def node_availability(node):
+def plan_reorder(path, siblings, direction):
+    """Where `path` should sit among `siblings`, for a one-place move.
+
+    Reordering is NOT the other rules with different arguments: it changes **no
+    stored value at all**. A node and its whole subtree keep their paths; only
+    the order in which their siblings are listed changes. That is why there is
+    no value mapping here, and why a rename and a move are invisible to it.
+
+    `siblings` is the full ordered list of the node's siblings, as the tree
+    already holds it -- same level only, never the whole column. `direction` is
+    'up' or 'down' and moves exactly one place.
+
+    Returns ``(ordered_sibling_paths, error)``. On success the list is every
+    sibling in its new order, including `path` itself, which is what the caller
+    writes back: giving every touched sibling an explicit position means the
+    ordering stops depending on the alphabetical fallback for anything the user
+    has actually arranged.
+    """
+    if path not in siblings:
+        return list(siblings), (ERR_MISSING_SOURCE, path)
+    index = siblings.index(path)
+    target = index - 1 if direction == 'up' else index + 1
+    if target < 0 or target >= len(siblings):
+        return list(siblings), (ERR_NO_NEIGHBOUR, direction)
+    reordered = list(siblings)
+    reordered[index], reordered[target] = reordered[target], reordered[index]
+    return reordered, None
+
+
+def node_availability(node, siblings=None):
     """What can be done to this node, WITHOUT knowing what else is selected.
 
     Returns the wire shape both interfaces read:
 
         {'can_delete': bool, 'delete_reason': code|None,
-         'can_merge_source': bool, 'merge_reason': code|None}
+         'can_merge_source': bool, 'merge_reason': code|None,
+         'can_move_up': bool, 'move_up_reason': code|None,
+         'can_move_down': bool, 'move_down_reason': code|None}
 
     These are the rules that depend only on the node itself, so a client never
     has to re-derive them. They are computed BY the rule functions above rather
@@ -394,9 +457,19 @@ def node_availability(node):
     disagree with what the endpoint would decide for the same value -- the test
     ``test_the_published_flags_are_the_rules_own_verdict`` holds them together.
 
+    `siblings` is the node's own sibling list, **the same level only**. It is a
+    parameter rather than something read off the node because sibling position
+    is not a property of a node -- it is a property of its position in a list --
+    so a node on its own cannot answer "can this move up". Both call sites
+    (``cps/api/columns.py`` and ``cps/web.py``) already hold the list. Omit it
+    and the move flags are ``False``, which is the safe direction: a client that
+    cannot tell offers nothing.
+
     What is deliberately NOT here: whether a node may receive a moved value, or
     whether it may be a merge destination. Both depend on what the user has
-    currently ticked or cut, which only the client knows.
+    currently ticked or cut, which only the client knows. Move up/down is the
+    opposite case and IS published: its answer turns only on the node's place
+    among its siblings, so there was never a reason for a client to derive it.
     """
     path = node['path']
     leaf = not node['children']
@@ -406,11 +479,22 @@ def node_availability(node):
     _, merge_error = plan_merge(
         [path], '', exists=lambda p: True,
         has_children=lambda p: not leaf)
+
+    if siblings is None:
+        up_error = down_error = (ERR_NO_NEIGHBOUR, 'unknown')
+    else:
+        _, up_error = plan_reorder(path, list(siblings), 'up')
+        _, down_error = plan_reorder(path, list(siblings), 'down')
+
     return {
         'can_delete': delete_error is None,
         'delete_reason': None if delete_error is None else delete_error[0],
         'can_merge_source': merge_error is None,
         'merge_reason': None if merge_error is None else merge_error[0],
+        'can_move_up': up_error is None,
+        'move_up_reason': None if up_error is None else up_error[0],
+        'can_move_down': down_error is None,
+        'move_down_reason': None if down_error is None else down_error[0],
     }
 
 

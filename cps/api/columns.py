@@ -113,15 +113,26 @@ def list_columns():
     } for col in _visible_columns()]})
 
 
-def _node_to_json(node):
+def _node_to_json(node, siblings=None):
     """One node as the SPA's wire shape (recursive).
 
-    ``available`` is the point of this field. Whether a value may be deleted or
-    used as a merge source depends only on the value itself, so it is decided
-    ONCE here, by ``hierarchy.node_availability``, and published. The SPA's
-    editor and the classic template then read the same flag instead of each
-    re-deriving "does this node have children?" -- which is how the two
-    interfaces had started to disagree.
+    ``siblings`` is the node's own sibling list as **node dicts** -- the same
+    level only, in display order -- which both call sites already have. It
+    cannot be read off ``node``: sibling position is a property of a node's
+    place in a list, not of the node, so a node on its own cannot answer "can
+    this move up?". Omit it and the move flags come back refused, which is the
+    safe direction.
+
+    ``available`` is the point of this field. Whether a value may be deleted,
+    used as a merge source, or moved up or down depends only on the value and
+    its place among its siblings, so it is decided ONCE here, by
+    ``hierarchy.node_availability``, and published. The SPA's editor and the
+    classic template then read the same flag instead of each re-deriving "does
+    this node have children?" -- which is how the two interfaces had started to
+    disagree.
+
+    ``siblings`` is passed in because sibling position is not a property of a
+    node: a node alone cannot answer "can this move up".
 
     Deliberately absent: whether a value can receive a move, or be a merge
     destination. Those depend on what the user has currently ticked or cut,
@@ -132,8 +143,10 @@ def _node_to_json(node):
         "path": node["path"],
         "count": node["count"],
         "total_count": node["total_count"],
-        "available": hierarchy.node_availability(node),
-        "children": [_node_to_json(child) for child in node["children"]],
+        "available": hierarchy.node_availability(
+            node, [sibling["path"] for sibling in (siblings or [])]),
+        "children": [_node_to_json(child, node["children"])
+                     for child in node["children"]],
     }
 
 
@@ -163,7 +176,7 @@ def column_tree(col_id):
             "datatype": col.datatype,
             "hierarchical": is_hierarchical,
         },
-        "nodes": [_node_to_json(node) for node in nodes],
+        "nodes": [_node_to_json(node, nodes) for node in nodes],
     })
 
 

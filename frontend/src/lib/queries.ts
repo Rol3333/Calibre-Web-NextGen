@@ -536,11 +536,34 @@ export function useMoveCcValue(colId: string | number) {
   });
 }
 
+/** Move one value one place up or down among its own siblings.
+ *
+ *  The only value operation that changes no stored value: no book is touched
+ *  and no value is rewritten, so there is no merge to confirm and nothing to
+ *  undo. A move cannot cross a level -- the server orders it against the node's
+ *  own sibling list -- and it answers 409 if the value is already at the end it
+ *  was asked to reach, which is what a stale tree looks like. */
+export function useReorderCcValue(colId: string | number) {
+  const qc = useQueryClient();
+  return useMutation({
+    mutationFn: ({ path, direction }: { path: string; direction: 'up' | 'down' }) =>
+      apiPost<CcValueWriteResult>(`/api/v1/columns/${colId}/values/reorder`,
+        { path, direction }),
+    onSuccess: () => invalidateCcViews(qc),
+  });
+}
+
 export function useCreateCcValue(colId: string | number) {
   const qc = useQueryClient();
   return useMutation({
-    mutationFn: (path: string) =>
-      apiPost<CcValueWriteResult>(`/api/v1/columns/${colId}/values/create`, { path }),
+    /* `after` places the new value immediately below that sibling -- the same
+     * level, not under it. Sent by the per-row create button; the bottom
+     * Create-new omits it and the value sorts alphabetically among its peers,
+     * which is the predictable default when the user has said nothing about
+     * where it should go. */
+    mutationFn: ({ path, after }: { path: string; after?: string }) =>
+      apiPost<CcValueWriteResult>(`/api/v1/columns/${colId}/values/create`,
+        after ? { path, after } : { path }),
     onSuccess: () => invalidateCcViews(qc),
   });
 }

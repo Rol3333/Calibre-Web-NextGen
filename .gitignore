@@ -319,3 +319,13 @@ wiki-generated/
 /local-dev/koreader-emulator/*
 !/local-dev/koreader-emulator/Dockerfile
 !/local-dev/koreader-emulator/entrypoint.sh
+# Custom Local Development & Virtualenvs
+venv311/
+thumbnails/
+calibre-library/
+metadata.db
+user_profiles.json
+cwa_update_notice
+windows_issues*.md
+*.md
+.kilo/

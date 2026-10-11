@@ -2443,9 +2443,28 @@ class CalibreDB:
         return cc_classes[col_id].value == value
 
     def is_flat_cc_column(self, col_id, fail_on_error=False):
-        """Whether a registered tag-like column uses exact atomic values."""
-        return (col_id in cc_classes
-                and col_id not in self.get_hierarchical_column_ids(fail_on_error=fail_on_error))
+        """Whether a registered tag-like column uses exact atomic values.
+
+        An administrator's stored verdict wins. ``cc_sidecar.hierarchy_verdict``
+        is a tri-state: ``True``/``False`` declared, ``None`` "still derive it".
+        ``None`` is what every install answers today, so consulting it first
+        changes nothing until somebody sets one -- and once they do, the answer
+        stops depending on which books happen to be filed under the column.
+
+        That matters more than it looks. Derived from the data, a Dewey column
+        holding ``778`` and ``778.3`` becomes a tree, and adding ONE book can
+        flip it mid-session behind a 300-second cache, with two workers able to
+        disagree for five minutes.
+        """
+        if col_id not in cc_classes:
+            return False
+        # Local import: cps.cc_sidecar imports calibre_db and db.
+        from . import cc_sidecar
+        verdict = cc_sidecar.hierarchy_verdict(col_id)
+        if verdict.value is not None:
+            return not verdict.value
+        return col_id not in self.get_hierarchical_column_ids(
+            fail_on_error=fail_on_error)
 
     def get_hierarchical_column_ids(self, ttl=300, fail_on_error=False):
         """Resolve mode once per request, scoped to the active library engine."""
@@ -2582,8 +2601,21 @@ class CalibreDB:
         # counts as one book. They are therefore added AFTER parsing, as nodes
         # with count 0, and their parents' totals are left alone: a subtree
         # containing nothing visible must not report one visible book.
-        nodes = hierarchy.parse_tag_hierarchy(rows)
-        hierarchy.add_bookless_nodes(nodes, [v for v in every_value if v and v not in seen])
+        #
+        # `order` is the curated sibling order from the app.db sidecar. It is
+        # fetched once for the whole column rather than per parent: the tree is
+        # about to sort every level, and one query beats one query per level.
+        # Empty on any install where nobody has reordered, in which case the
+        # sort is the pre-sidecar alphabetical one and nothing moves.
+        #
+        # Imported here rather than at module scope: cps.cc_sidecar imports
+        # calibre_db and db, so a top-level import would close the cycle.
+        from . import cc_sidecar
+        order = cc_sidecar.stored_order(col_id)
+        nodes = hierarchy.parse_tag_hierarchy(rows, order)
+        hierarchy.add_bookless_nodes(nodes,
+                                     [v for v in every_value if v and v not in seen],
+                                     order)
         return nodes
 
     def get_cc_flat_list(self, col_id, apply_common_filters=True, book_filter=None, fail_on_error=False):
@@ -2634,7 +2666,11 @@ class CalibreDB:
             count = counts.get(value, 0)
             entries.append({'name': value, 'path': value, 'count': count,
                             'total_count': count, 'children': []})
-        entries.sort(key=lambda e: e['name'].lower())
+        # A flat column has one level, so a curated order still applies to it. Local
+        # import for the same reason as in get_hierarchical_tree.
+        from . import cc_sidecar
+        entries.sort(key=lambda e: hierarchy._order_key(
+            cc_sidecar.stored_order(col_id), e))
         return entries
 
     # read search results from calibre-database and return it (function is used for feed and simple search

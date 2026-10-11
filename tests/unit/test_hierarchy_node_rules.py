@@ -480,12 +480,20 @@ def test_a_merge_of_a_value_that_no_longer_exists_is_refused(leaves):
 
 @pytest.mark.unit
 def test_a_leaf_may_be_deleted_and_may_be_a_merge_source(tree):
+    # Pinned exactly, deliberately. A new published flag has to come through
+    # here on purpose: this is the wire contract both interfaces read, and a
+    # silent addition is how a client ends up trusting a field nobody agreed to.
+    #
+    # `Other` is the only child of the tree root, so it has no sibling either way
+    # -- hence both move flags refused with no sibling list to compare against.
     availability = hierarchy.node_availability(
         hierarchy.get_node_by_path(tree, 'Other'))
 
     assert availability == {
         'can_delete': True, 'delete_reason': None,
         'can_merge_source': True, 'merge_reason': None,
+        'can_move_up': False, 'move_up_reason': hierarchy.ERR_NO_NEIGHBOUR,
+        'can_move_down': False, 'move_down_reason': hierarchy.ERR_NO_NEIGHBOUR,
     }
 
 
@@ -498,6 +506,11 @@ def test_a_value_with_sub_values_is_refused_both_operations(tree):
     assert availability['delete_reason'] == hierarchy.ERR_SOURCE_HAS_CHILDREN
     assert availability['can_merge_source'] is False
     assert availability['merge_reason'] == hierarchy.ERR_SOURCE_HAS_CHILDREN
+    # Having children does not block a move. A branch reorders exactly as a leaf
+    # does, and coupling the two would quietly stop anyone moving a whole
+    # subtree -- which is the most useful case of all.
+    assert availability['can_move_up'] is False      # sole root: nowhere to go
+    assert availability['can_move_down'] is False
 
 
 @pytest.mark.unit

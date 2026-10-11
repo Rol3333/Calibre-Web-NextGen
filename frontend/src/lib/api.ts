@@ -341,6 +341,15 @@ export interface CcNodeAvailability {
   delete_reason: string | null;
   can_merge_source: boolean;
   merge_reason: string | null;
+  /** Whether this value can move one place among its OWN siblings. Published
+   *  rather than derived, because the answer turns only on the node's place in
+   *  its parent's list -- unlike `can_merge_into`, which needs the live
+   *  selection and so has to be worked out here. Absent on older servers, where
+   *  the buttons stay hidden. */
+  can_move_up?: boolean;
+  move_up_reason?: string | null;
+  can_move_down?: boolean;
+  move_down_reason?: string | null;
 }
 
 /** One node of a custom column's browse tree. `path` is the canonical dotted

@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Check, ClipboardPaste, Merge, Pencil, Plus, Scissors, Trash2, X } from 'lucide-react';
-import { useCcTree, useCreateCcValue, useDeleteCcValues, useMergeCcValues, useMoveCcValue, useRenameCcValue } from '../lib/queries';
+import { Check, ChevronDown, ChevronUp, ClipboardPaste, Filter, Merge, Pencil, Plus, Scissors, Trash2, X } from 'lucide-react';
+import { useCcTree, useCreateCcValue, useDeleteCcValues, useMergeCcValues, useMoveCcValue, useRenameCcValue, useReorderCcValue } from '../lib/queries';
 import type { CcNode, CcValueConflict } from '../lib/api';
 import { ApiError } from '../lib/api';
 import { useT } from '../lib/i18n';
 import { canCut, canPasteInto, isValidPasteTarget, pasteAvailability } from '../lib/ccPaste';
 import type { PasteBlockReason } from '../lib/ccPaste';
 import { mergeAvailability, mergeSourcePaths } from '../lib/ccMerge';
+import { depthOptions, narrowRows } from '../lib/ccNarrow';
 import { useAnnouncer } from '../lib/a11y/announcer';
 import styles from './CcValueEditor.module.css';
 
@@ -39,6 +40,14 @@ function rewritePath(current: string, newName: string): string {
 }
 
 type Mode = 'idle' | 'rename' | 'mergeInto' | 'delete' | 'create';
+
+// ---------------------------------------------------------------- narrowing
+//
+// The rules live in lib/ccNarrow.ts, not here: the frontend unit runner is
+// node --test and cannot import a .tsx file, so a rule left in this component
+// would be untestable (it throws ERR_UNKNOWN_FILE_EXTENSION). That is the same
+// reason ccMerge.ts and ccPaste.ts are separate modules. See that file for why
+// the classic script is allowed to mirror it.
 
 /** How far each level of nesting shifts right, and the gutter a root row keeps.
  *
@@ -87,6 +96,7 @@ export function CcValueEditor({ colId, hierarchical, onDone }: CcValueEditorProp
   const merge = useMergeCcValues(colId);
   const remove = useDeleteCcValues(colId);
   const move = useMoveCcValue(colId);
+const reorder = useReorderCcValue(colId);
   const create = useCreateCcValue(colId);
 
   const [mode, setMode] = useState<Mode>('idle');
@@ -99,14 +109,28 @@ export function CcValueEditor({ colId, hierarchical, onDone }: CcValueEditorProp
   // inline Delete on a row must act on THAT value, whatever else is ticked --
   // deleting a neighbour the user never looked at would be a nasty surprise.
   const [deleteTargets, setDeleteTargets] = useState<string[]>([]);
+  // Set when Create was pressed ON a row rather than on the bottom button: the
+  // new value then belongs at that row's level, immediately below it. Null for
+  // the bottom button, where the typed path may nest as deep as it likes.
+  const [createBeside, setCreateBeside] = useState<string | null>(null);
   // The value waiting to be pasted somewhere else (a relocation buffer).
   // Null when nothing is held. Never persisted: leaving edit mode drops it.
   const [cutPath, setCutPath] = useState<string | null>(null);
+  // --- narrowing (see the note on the filter helpers below) ---
+  // Narrow to one value and everything under it, and how many levels below
+  // that root to show. 0 = every level.
+  const [focusPath, setFocusPath] = useState<string>('');
+  const [depthLimit, setDepthLimit] = useState<number>(0);
   const [draft, setDraft] = useState('');
   const [err, setErr] = useState('');
   const [conflicts, setConflicts] = useState<CcValueConflict[] | null>(null);
 
   const rows = useMemo(() => flatten(tree?.nodes ?? []), [tree]);
+  const visibleRows = useMemo(
+    () => narrowRows(rows, focusPath, depthLimit),
+    [rows, focusPath, depthLimit]);
+  const hiddenCount = rows.length - visibleRows.length;
+  const maxLevel = useMemo(() => depthOptions(rows).length, [rows]);
   const chosen = useMemo(() => Object.keys(checked).filter((k) => checked[k]), [checked]);
   const nodeByPath = useMemo(() => {
     const map = new Map<string, CcNode>();
@@ -162,7 +186,7 @@ export function CcValueEditor({ colId, hierarchical, onDone }: CcValueEditorProp
   const toggle = (p: string) => setChecked((prev) => ({ ...prev, [p]: !prev[p] }));
   const reset = () => {
     setMode('idle'); setDraft(''); setErr(''); setConflicts(null);
-    setChecked({}); setDeleteTargets([]);
+    setChecked({}); setDeleteTargets([]); setCreateBeside(null);
   };
 
   /** Which values a rename of `target` would merge, computed from the tree we
@@ -234,6 +258,58 @@ export function CcValueEditor({ colId, hierarchical, onDone }: CcValueEditorProp
     );
   };
 
+  /** Why Move up/down is disabled on `node`, for its tooltip.
+   *
+   *  Two independent gates, so the user can tell which one is stopping them.
+   *  The position verdict is READ from the server rather than derived here --
+   *  sibling position is not a property of a node, and re-deriving it is how
+   *  the two interfaces started to disagree in the first place. A server that
+   *  predates the flags publishes neither, and the buttons then never appear. */
+  const moveState = (node: CcNode, direction: 'up' | 'down'): { ok: boolean } => ({
+    ok: direction === 'up'
+      ? node.available?.can_move_up === true
+      : node.available?.can_move_down === true,
+  });
+
+  const moveTitle = (node: CcNode, direction: 'up' | 'down'): string => {
+    if (!checked[node.path]) return t('Tick this value before moving it');
+    if (!moveState(node, direction).ok) {
+      return direction === 'up' ? t('Already first at this level') : t('Already last at this level');
+    }
+    return direction === 'up' ? t('Move up') : t('Move down');
+  };
+
+  /** Move one value one place among its own siblings.
+   *
+   *  No confirm dialog: unlike merge and delete this touches no book and
+   *  rewrites no value, so there is nothing to be asked about. */
+  const runReorder = (path: string, direction: 'up' | 'down') => {
+    reorder.mutate(
+      { path, direction },
+      {
+        onSuccess: () => {
+          setErr('');
+          announce(direction === 'up'
+            ? t('{name} moved up one place.', { name: path })
+            : t('{name} moved down one place.', { name: path }));
+        },
+        onError: (error) => {
+          if (error instanceof ApiError && error.status === 409) {
+            setErr(direction === 'up'
+              ? t('That value is already at the top of its level.')
+              : t('That value is already at the bottom of its level.'));
+            return;
+          }
+          if (error instanceof ApiError && error.status === 404) {
+            setErr(t('Value not found'));
+            return;
+          }
+          setErr(failure(error, t('Could not move')));
+        },
+      },
+    );
+  };
+
   const runRename = (confirmMerges: boolean) => {
     if (!target) return;
     rename.mutate(
@@ -262,15 +338,34 @@ export function CcValueEditor({ colId, hierarchical, onDone }: CcValueEditorProp
   if (mode === 'rename' || mode === 'create') {
     const title = mode === 'rename' ? t('Rename value') : t('Create value');
     const label = mode === 'rename' ? t('New name') : t('New value');
-    const placeholder = mode === 'create' ? 'Arts.Mystery' : 'Culture';
-    const canSubmit = mode === 'create' ? !!draft.trim() : (!!target && !!draft.trim());
+    // With an anchor the name is a single node at the clicked row's level, so a
+    // dot would put it in a different level -- the one thing a "beside" create
+    // must not do. Without one the dots ARE the point (Arts.Mystery).
+    const beside = mode === 'create' && !!createBeside;
+    const placeholder = mode === 'create' ? (beside ? 'Sculpture' : 'Arts.Mystery') : 'Culture';
+    const hasDot = beside && draft.includes('.');
+    const canSubmit = beside
+      ? !!target && !!draft.trim() && !hasDot
+      : (mode === 'create' ? !!draft.trim() : (!!target && !!draft.trim()));
     const submit = () => {
       if (!canSubmit) return;
-      if (mode === 'rename') runRename(false);
-      else create.mutate(draft.trim(), {
-        onSuccess: () => { announce(t('Created {name}', { name: draft.trim() })); reset(); },
-        onError: (error) => setErr(failure(error, t('Could not create'))),
-      });
+      if (mode === 'rename') { runRename(false); return; }
+      const name = draft.trim();
+      // Same level as the anchor: the parent comes off the clicked row's path.
+      const parent = beside && String(target).includes('.')
+        ? String(target).replace(/\.[^.]*$/, '') : '';
+      create.mutate(
+        beside ? { path: parent ? `${parent}.${name}` : name, after: target } : { path: name },
+        {
+          onSuccess: () => {
+            announce(beside
+              ? t('Created {name} just below {anchor}', { name, anchor: target ?? '' })
+              : t('Created {name}', { name }));
+            reset();
+          },
+          onError: (error) => setErr(failure(error, t('Could not create'))),
+        },
+      );
     };
     return (
       <div className={styles.panel}>
@@ -283,6 +378,17 @@ export function CcValueEditor({ colId, hierarchical, onDone }: CcValueEditorProp
         {mode === 'rename' && (nodeByPath.get(target)?.children.length ?? 0) > 0 && (
           <p className={styles.note}>
             {t('This value has sub-values, so they are renamed too.')}
+          </p>
+        )}
+        {beside && (
+          <p className={styles.note}>
+            {t('This will be created at the same level as {name}, just below it.',
+              { name: target ?? '' })}
+          </p>
+        )}
+        {hasDot && (
+          <p className={styles.warn} role="status">
+            {t('A value created beside another stays on the same level, so its name cannot contain a dot. Use the Create new button for a sub-value.')}
           </p>
         )}
         <label className={styles.field}>
@@ -455,8 +561,42 @@ export function CcValueEditor({ colId, hierarchical, onDone }: CcValueEditorProp
           ? t('Every action is on the row it applies to. Renaming renames everything below the value. To move a value, tick it and press Cut, then tick the value it should go under and press Paste.')
           : t('Every action is on the row it applies to. To merge, tick two or more values, then use Merge on the one that should survive.')}
       </p>
+
+      {/* Narrowing, for a column too large to work through unfiltered. A view
+          filter rather than paging: every row is already loaded, so this cannot
+          fail the way a fetch-based control did when the editor first landed. */}
+      <div className={styles.narrow}>
+        <label className={styles.narrowLabel} htmlFor="cc-depth">{t('Show')}</label>
+        <select id="cc-depth" className={styles.narrowSelect}
+          value={depthLimit}
+          aria-label={t('How many levels of values to show')}
+          onChange={(e) => { setDepthLimit(Number(e.target.value)); setChecked({}); }}>
+          <option value={0}>{t('All levels')}</option>
+          {Array.from({ length: maxLevel }, (_, i) => i + 1).map((level) => (
+            <option key={level} value={level}>
+              {level === 1 ? t('1 level') : t('{count} levels', { count: level })}
+            </option>
+          ))}
+        </select>
+        {focusPath && (
+          <span className={styles.narrowFocus}>
+            <span className={styles.narrowFocusText}>{focusPath}</span>
+            <button type="button" className={styles.narrowClear}
+              title={t('Show every value again')} aria-label={t('Show every value again')}
+              onClick={() => { setFocusPath(''); setDepthLimit(0); setChecked({}); }}>
+              <X size={13} aria-hidden="true" focusable={false} />
+            </button>
+          </span>
+        )}
+        {hiddenCount > 0 && (
+          <span className={styles.narrowNote} role="status">
+            {t('{count} value(s) hidden by the filters above', { count: hiddenCount })}
+          </span>
+        )}
+      </div>
+
       <ul className={styles.tree}>
-        {rows.map(({ node, depth }) => {
+        {visibleRows.map(({ node, depth }) => {
           // The server's verdict on this node, not a local `children.length`
           // check. The fallback keeps an older server's nodes working.
           const isLeaf = node.available
@@ -501,6 +641,24 @@ export function CcValueEditor({ colId, hierarchical, onDone }: CcValueEditorProp
                 </button>
                 {hierarchical && (
                   <button type="button" className={styles.rowBtn}
+                    disabled={busy || !isTicked || !moveState(node, 'up').ok}
+                    aria-label={t('Move {name} up one place', { name: node.name })}
+                    title={moveTitle(node, 'up')}
+                    onClick={() => runReorder(node.path, 'up')}>
+                    <ChevronUp size={14} aria-hidden="true" focusable={false} />
+                  </button>
+                )}
+                {hierarchical && (
+                  <button type="button" className={styles.rowBtn}
+                    disabled={busy || !isTicked || !moveState(node, 'down').ok}
+                    aria-label={t('Move {name} down one place', { name: node.name })}
+                    title={moveTitle(node, 'down')}
+                    onClick={() => runReorder(node.path, 'down')}>
+                    <ChevronDown size={14} aria-hidden="true" focusable={false} />
+                  </button>
+                )}
+                {hierarchical && (
+                  <button type="button" className={styles.rowBtn}
                     disabled={!pasteState.ok || busy}
                     aria-label={t('Paste under {name}', { name: node.name })}
                     title={pasteReason(pasteState.reason)}
@@ -530,6 +688,25 @@ export function CcValueEditor({ colId, hierarchical, onDone }: CcValueEditorProp
                   onClick={() => { setDeleteTargets([node.path]); setErr(''); setMode('delete'); }}>
                   <Trash2 size={14} aria-hidden="true" focusable={false} />
                 </button>
+<button type="button" className={styles.rowBtn}
+                  disabled={busy}
+                  aria-label={t('Create a value just below {name}', { name: node.name })}
+                  title={t('Create a value just below this one')}
+                  onClick={() => { setCreateBeside(node.path); setTarget(node.path); setDraft(''); setErr(''); setConflicts(null); setMode('create'); }}>
+                  <Plus size={14} aria-hidden="true" focusable={false} />
+                </button>
+                {/* Narrow to this value and its sub-values. Only where it would
+                    actually narrow something -- a leaf is the only row that
+                    cannot. */}
+                {hierarchical && node.children.length > 0 && (
+                  <button type="button" className={styles.rowBtn}
+                    disabled={busy}
+                    aria-label={t('Show only {name} and its sub-values', { name: node.name })}
+                    title={t('Show only {name} and its sub-values', { name: node.name })}
+                    onClick={() => { setFocusPath(node.path); setDepthLimit(0); setChecked({}); setErr(''); }}>
+                    <Filter size={14} aria-hidden="true" focusable={false} />
+                  </button>
+                )}
               </span>
             </li>
           );
@@ -545,7 +722,8 @@ export function CcValueEditor({ colId, hierarchical, onDone }: CcValueEditorProp
           paste read as "nothing happened". It now sits beside the paste
           banner, inside the first screenful (see the role="alert" above). */}
       <div className={styles.actions}>
-        <button type="button" className={styles.action} onClick={() => { setMode('create'); setDraft(''); }}>
+        <button type="button" className={styles.action}
+          onClick={() => { setCreateBeside(null); setMode('create'); setDraft(''); }}>
           <Plus size={15} aria-hidden="true" focusable={false} /> {t('Create new')}
         </button>
       </div>
