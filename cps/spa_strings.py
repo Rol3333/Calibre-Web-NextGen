@@ -2142,6 +2142,10 @@ _("The completed download exceeds the safe file limits. Choose a smaller release
 _("Unsupported rule")
 _("This rule cannot be edited here. It will be kept unless you remove it.")
 
+# Built-in tag hierarchy browse and the existing flat maintenance view.
+_("All tags")
+_("Could not load tags. Please try again.")
+
 _("Allow completed DRM-free MOBI 6 books")
 _("Applies only to this download client. The server upload-format setting must also allow MOBI. Normal conversion settings apply; without conversion, MOBI can be downloaded but cannot be opened in the web reader.")
 
@@ -2168,3 +2172,6 @@ _("Your rating (stars)")
 _('eReader attachment filename template')
 _('Leave blank to keep the existing filename. Example: {series} #{series_index} - {title}. Fields include {title}, {authors}, {series} and {series_index}; the file extension is added automatically.')
 _('Use {series:|(|) }{title} to omit the series prefix when no series is set.')
+
+# Built-in tag hierarchy; generic category wording remains for custom columns.
+_("Choose a tag group to browse books from it and its subtags.")
