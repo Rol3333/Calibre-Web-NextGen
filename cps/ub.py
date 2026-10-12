@@ -4322,7 +4322,7 @@ def migrate_annotation_polymorphic_position(engine, _session):
     Runs AFTER the decouple migration. We query the live SQLite catalog
     via `PRAGMA table_info` (NOT SQLAlchemy's inspector) because the
     inspector's reflection cache can be stale after the preceding
-    decouple migration's RENAME — observed on v4.0.130 teenyverse deploy
+    decouple migration's RENAME — observed on v4.0.130 household host deployment
     where the inspector still saw the dropped `annotation` placeholder
     columns and incorrectly reported `position_type` as already present
     OR (more likely) reported the old kobo_annotation_sync columns
