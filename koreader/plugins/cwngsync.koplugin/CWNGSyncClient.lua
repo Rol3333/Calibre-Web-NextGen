@@ -662,7 +662,7 @@ function CWNGSyncClient:download_file(
 end
 
 -- Phase 2: pull annotations for a document (server -> device).
-function CWNGSyncClient:pull_annotations(username, password, document, callback)
+function CWNGSyncClient:pull_annotations(username, password, document, device, device_id, callback)
     self.client:reset_middlewares()
     self.client:enable("Format.JSON")
     self.client:enable("GinClient")
@@ -670,6 +670,7 @@ function CWNGSyncClient:pull_annotations(username, password, document, callback)
         username = username,
         password = password,
     })
+    self.client:enable("CWNGDeviceHeaders", { device = device, device_id = device_id })
     socketutil:set_timeout(ANNOTATION_TIMEOUTS[1], ANNOTATION_TIMEOUTS[2])
     local co = coroutine.create(function()
         local ok, res = pcall(function()

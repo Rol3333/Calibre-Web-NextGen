@@ -1,6 +1,6 @@
 ### Changed
 
-- **The Browser reader joins Share my place behind the rollout switch, which remains off by default.** When enabled, an unchecked Browser keeps its own place and read status; a checked Browser shares the latest place, including a move back, and resumes automatically at a newer exact shared place. Browser EPUB places can reach a Kobo exactly when the books align and the Kobo has proven its current KEPUB download. When the switch is enabled, the Devices page lists the account's web reader and shows a sharing control for each device.
+- **The web reader joins Share my place.** An unchecked web reader keeps its own place and read status; a checked web reader shares the latest place, including a move back, and resumes at a newer exact shared place. Web-reader EPUB places can reach a Kobo exactly when the books align and the Kobo has proven its current KEPUB download. The Devices page lists the account's web reader and shows a sharing control for each device.
 
 ### Fixed
 

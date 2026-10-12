@@ -250,7 +250,7 @@ def test_an_unchecked_kobos_report_at_its_own_place_stays_its_own(sw, rows):
 
 def test_with_the_switch_off_a_report_at_the_old_place_behaves_as_on_main(
         sw, rows, monkeypatch):
-    monkeypatch.delenv(SWITCH, raising=False)
+    monkeypatch.setenv(SWITCH, "0")
     kobo = _arm(sw, rows)
     sw.sync(kobo)
 
@@ -298,7 +298,7 @@ def test_an_unchecked_kobos_report_does_not_reach_koreader(sw, rows):
 
 def test_with_the_switch_off_a_kobos_backward_move_leaves_koreader_where_it_was(
         sw, rows, monkeypatch):
-    monkeypatch.delenv(SWITCH, raising=False)
+    monkeypatch.setenv(SWITCH, "0")
     kobo = _kobo_after_koreader(sw, rows, checked=True)
 
     _close_at(sw, kobo, rows["page-back-far"], HELD_PERCENT - 3)

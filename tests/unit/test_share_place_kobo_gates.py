@@ -68,14 +68,14 @@ GATES_ENV = "CWNG_SHARE_PLACE_GATES"
 def gates_enforced(monkeypatch):
     """Spec section 12: the gates enforce only when switched on. These tests
     pin the enforced behaviour, so every test here starts with the switch on
-    for every account; switch-off tests unset it themselves."""
+    for every account; switch-off tests set it to "0" themselves."""
     monkeypatch.setenv(GATES_ENV, "1")
 
 
 # == 0. The rollout switch (spec section 12) =================================
 
 def test_switch_off_an_unchecked_kobo_gets_todays_put_get_and_sync(kw, monkeypatch):
-    monkeypatch.delenv(GATES_ENV, raising=False)
+    monkeypatch.setenv(GATES_ENV, "0")
     one, two = kw.books[0], kw.books[1]
     kw.seed_shared(one, 20.0, _now() - timedelta(hours=2))
     kw.seed_shared(two, 45.0, _now() - timedelta(hours=2))

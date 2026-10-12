@@ -38,7 +38,7 @@ pytestmark = pytest.mark.unit
 
 @pytest.fixture(autouse=True)
 def gates_off(monkeypatch):
-    monkeypatch.delenv("CWNG_SHARE_PLACE_GATES", raising=False)
+    monkeypatch.setenv("CWNG_SHARE_PLACE_GATES", "0")
 
 
 # == Order across the upgrade =================================================

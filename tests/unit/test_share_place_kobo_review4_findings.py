@@ -143,7 +143,7 @@ def test_a_checked_kobo_is_served_a_shared_trusted_fast_clock_tie_winner(kw):
 def test_a_switch_off_journal_rows_fast_clock_loses_to_an_honest_newer_report(
         kw, monkeypatch):
     book = kw.books[0]
-    monkeypatch.delenv(GATES_ENV, raising=False)
+    monkeypatch.setenv(GATES_ENV, "0")
     kw.put(kw.a, book, 70, _now() + timedelta(days=1))
     monkeypatch.setenv(GATES_ENV, "1")
 

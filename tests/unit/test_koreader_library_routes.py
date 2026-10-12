@@ -31,6 +31,14 @@ OPF_NS = {"opf": "http://www.idpf.org/2007/opf",
           "dc": "http://purl.org/dc/elements/1.1/"}
 
 
+@pytest.fixture(autouse=True)
+def _share_place_switch_off(monkeypatch):
+    """These tests pin the shared (pre share-my-place) behaviour, which since
+    PR 5 needs the emergency off switch: unset now means gates on. The gated
+    behaviour is covered by tests/unit/test_share_place_*."""
+    monkeypatch.setenv("CWNG_SHARE_PLACE_GATES", "0")
+
+
 @pytest.fixture
 def world(monkeypatch, tmp_path):
     built = LibraryWorld(monkeypatch, tmp_path)

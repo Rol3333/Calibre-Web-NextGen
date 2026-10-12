@@ -55,7 +55,7 @@ GATES_ENV = "CWNG_SHARE_PLACE_GATES"
 
 @pytest.fixture(autouse=True)
 def gates_enforced(monkeypatch):
-    """Enforcement on for every account; switch-off tests unset it."""
+    """Enforcement on for every account; switch-off tests set it to "0"."""
     monkeypatch.setenv(GATES_ENV, "1")
 
 
@@ -199,7 +199,7 @@ def test_an_unexpected_token_retry_after_turn_off_carries_no_shared_state(kw):
 
 
 def test_switch_off_a_retried_page_is_replayed_unchanged(kw, monkeypatch):
-    monkeypatch.delenv(GATES_ENV, raising=False)
+    monkeypatch.setenv(GATES_ENV, "0")
     book = kw.books[0]
     kw.settle(kw.a)
     kw.seed_shared(book, 70, _now() - timedelta(minutes=30))
@@ -476,7 +476,7 @@ def test_switch_off_a_kobo_update_ranks_by_when_it_arrived(
     Kobo update for book 1 still carries an old clock, but it is the latest
     reading received, so book 1 goes first: a Kobo ranks by receipt, as web
     saves and KOReader syncs already do."""
-    monkeypatch.delenv(GATES_ENV, raising=False)
+    monkeypatch.setenv(GATES_ENV, "0")
     older = datetime(2026, 7, 1, tzinfo=timezone.utc)
     _kobo_progress_put(library, 1, 50, older)
     _web_reader_save(library, 3, percentage=30)

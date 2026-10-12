@@ -652,8 +652,8 @@ def _assert_gated_for_an_identified_unchecked_device(world):
         pytest.approx(0.90)
 
 
-def test_switch_off_by_default_keeps_todays_behaviour(world, monkeypatch):
-    monkeypatch.delenv(SWITCH, raising=False)
+def test_the_emergency_off_switch_keeps_todays_behaviour(world, monkeypatch):
+    monkeypatch.setenv(SWITCH, "0")
     _assert_todays_behaviour_for_an_identified_unchecked_device(world)
 
 
@@ -674,7 +674,7 @@ def test_allow_list_with_this_account_is_gated(world, monkeypatch):
 
 
 def test_switch_is_read_on_every_request(world, monkeypatch):
-    monkeypatch.delenv(SWITCH, raising=False)
+    monkeypatch.setenv(SWITCH, "0")
     _stock_reader_sets_shared(world, 70)
     _put(world, 20, device_id="kindle-a", name="Kindle A")
     assert _get_json(world, device_id="kindle-a", name="Kindle A")["percentage"] == \
@@ -693,7 +693,7 @@ def _auth(world):
 
 
 @pytest.mark.parametrize("value, expected", [
-    (None, False),
+    (None, True),
     ("0", False),
     ("1", True),
     ("user:{other}", False),

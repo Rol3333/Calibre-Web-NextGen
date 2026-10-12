@@ -1983,6 +1983,10 @@ class KoboAnnotationBookState(Base):
     # treat an empty/error annotations GET as authoritative deletion, so this
     # is the durable fallback when both live render queries fail after Kobo's
     # cloud copy has become stale.
+    # Snapshot scope is durable provenance, not a live Device relation: a
+    # deleted device must not turn its private snapshot into an account set.
+    # NULL identifies pre-upgrade/unresolved all-origin snapshot bytes.
+    last_served_device_id = Column(Integer, nullable=True)
     last_served_body_gzip = Column(BLOB, nullable=True)
     last_served_body_sha256 = Column(String(64), nullable=True)
     last_served_etag = Column(Text, nullable=True)
@@ -4712,6 +4716,11 @@ def migrate_kobo_annotation_seed_pipeline(engine, _session):
                 "kobo_annotation_book_state",
                 "ever_authoritative",
                 "ever_authoritative BOOLEAN NOT NULL DEFAULT 0",
+            ),
+            (
+                "kobo_annotation_book_state",
+                "last_served_device_id",
+                "last_served_device_id INTEGER",
             ),
             (
                 "kobo_annotation_book_state",

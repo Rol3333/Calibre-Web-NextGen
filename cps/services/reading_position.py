@@ -124,8 +124,11 @@ def record_web_reader_progress(user, book_id: int, percentage: float,
                     WEBREADER_INSTALLATION_ID_HEADER,
                     ensure_webreader_device_best_effort,
                 )
-                origin_device_id = getattr(g, "annotation_origin_device_id", None)
-                if origin_device_id is None:
+                # The route has already attempted registration when it set g,
+                # including a None result. Do not retry the same failed save.
+                if hasattr(g, "annotation_origin_device_id"):
+                    origin_device_id = g.annotation_origin_device_id
+                else:
                     origin_device_id = ensure_webreader_device_best_effort(
                         user_id=user_id,
                         installation_id=request.headers.get(
@@ -134,7 +137,16 @@ def record_web_reader_progress(user, book_id: int, percentage: float,
                     )
                     g.annotation_origin_device_id = origin_device_id
         except Exception:
-            log.warning("Best-effort web-reader device observation failed", exc_info=True)
+            log.debug("Best-effort web-reader device observation failed", exc_info=True)
+
+    from .share_place import gates_enforced
+    if origin_device_id is None and gates_enforced(user_id):
+        _warn_unregistered_browser(user_id, book_id)
+        # A missing identity cannot create a journal or shared report. The
+        # account's actual reading still follows the unchecked-save fan-out.
+        from ..helper import queue_hardcover_reading_progress
+        queue_hardcover_reading_progress(user, book_id, percentage)
+        return False
 
     mode = web_place_mode(user_id, origin_device_id)
     if mode is not None:
@@ -340,6 +352,13 @@ def web_place_mode(user_id, device_id=None):
     return bool(row and row.share_place)
 
 
+def _warn_unregistered_browser(user_id, book_id):
+    log.warning(
+        "Browser registration unavailable; keeping reading private user_id=%s book_id=%s",
+        user_id, book_id,
+    )
+
+
 def record_gated_reader_open(user, book_id):
     """Journal a Browser open's status, and share it only when checked.
 
@@ -356,8 +375,15 @@ def record_gated_reader_open(user, book_id):
     from .kobo_place_gate import advance_feed_clock, skew_ordered_clock
 
     user_id = int(user.id)
-    device_id = ensure_webreader_device_best_effort(user_id=user_id)
-    checked = web_place_mode(user_id, device_id)
+    try:
+        device_id = ensure_webreader_device_best_effort(user_id=user_id)
+    except Exception:
+        device_id = None
+    if device_id is None:
+        _warn_unregistered_browser(user_id, book_id)
+        checked = False
+    else:
+        checked = web_place_mode(user_id, device_id)
     now = datetime.now(timezone.utc)
     table = ub.ReadBook.__table__
     own_status = ub.session.execute(select(ub.DeviceReadingPosition.reading_status).where(

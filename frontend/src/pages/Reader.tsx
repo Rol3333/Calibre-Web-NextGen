@@ -549,7 +549,7 @@ export function Reader({ id }: { id: string }) {
 
   const epubFormat = book?.formats.find((f) => f.format.toLowerCase() === 'epub');
   const epubContentUrl = epubFormat
-    ? getReaderContentUrl(id, epubFormat.format, epubFormat.content_url)
+    ? withLookupMode(getReaderContentUrl(id, epubFormat.format, epubFormat.content_url), lookupMode)
     : null;
 
   const openReadingSource = useCallback(async (source: ReadingSource) => {

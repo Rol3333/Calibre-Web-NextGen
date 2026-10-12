@@ -2488,6 +2488,7 @@ function CWNGSync:syncAnnotations(interactive)
     }
 
     client:pull_annotations(self.settings.username, self.settings.password, digest,
+        Device.model, self.device_id,
         function(ok, body)
             if not ok or type(body) ~= "table" then
                 if interactive then showSyncError() end

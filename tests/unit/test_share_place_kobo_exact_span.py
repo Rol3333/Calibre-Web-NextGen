@@ -217,7 +217,7 @@ def test_unchanged_paths_keep_the_kobos_own_span_with_the_new_percentage(
     """Today the KOReader bridge moves only the percentage, forward only."""
     sw = account
     if path == "switch-off":
-        monkeypatch.delenv(SWITCH, raising=False)
+        monkeypatch.setenv(SWITCH, "0")
     own = rows["kobo-own"]
 
     sw.push(rows["late"]["xpointer"], 40, identified=path != "unidentified-koreader",

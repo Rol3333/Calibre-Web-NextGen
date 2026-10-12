@@ -28,7 +28,7 @@ pytestmark = pytest.mark.unit
 
 @pytest.fixture(autouse=True)
 def gates_off(monkeypatch):
-    monkeypatch.delenv("CWNG_SHARE_PLACE_GATES", raising=False)
+    monkeypatch.setenv("CWNG_SHARE_PLACE_GATES", "0")
 
 
 def test_a_kobos_first_report_for_a_book_is_accepted_whole(kw):

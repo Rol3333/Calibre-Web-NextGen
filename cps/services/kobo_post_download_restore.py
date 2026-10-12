@@ -20,7 +20,7 @@ Two halves:
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 from sqlalchemy import update
 from sqlalchemy.exc import SQLAlchemyError
@@ -56,18 +56,42 @@ def resolve_download_device(*, user_id, book_id, log):
     the change identified it); otherwise the user's most recently seen active
     Kobo, which is the one that just synced.
     """
+    device_id, _unambiguous = _resolve_download_attribution(
+        user_id=user_id, book_id=book_id, log=log,
+    )
+    return device_id
+
+
+def _resolve_download_attribution(*, user_id, book_id, log):
+    """Keep the restore heuristic, and separately establish file-proof authority."""
     if user_id is None:
-        return None
+        return None, False
     try:
         user_devices = ub.session.query(ub.Device).filter(
             ub.Device.user_id == int(user_id),
             ub.Device.kind == "kobo",
-            ub.Device.active.is_(True),
         ).order_by(ub.Device.last_seen_at.desc(), ub.Device.id.desc()).all()
-        if not user_devices:
-            return None
+        active_devices = [device for device in user_devices if device.active]
+        if not active_devices:
+            return None, False
+        now = _now()
+
+        def recent(value, age, *, inclusive=True):
+            if value is None:
+                return False
+            if value.tzinfo is None:
+                value = value.replace(tzinfo=timezone.utc)
+            return value >= now - age if inclusive else value > now - age
+
+        candidates = {
+            device.id for device in user_devices
+            if recent(device.last_seen_at, timedelta(days=30))
+        }
+        active_ids = {device.id for device in active_devices}
+        device_id = active_devices[0].id
+        fresh_arms = set()
         if book_id is not None:
-            armed = (
+            armed_rows = (
                 ub.session.query(ub.KoboDeviceBookDownload)
                 .filter(
                     ub.KoboDeviceBookDownload.book_id == int(book_id),
@@ -77,18 +101,28 @@ def resolve_download_device(*, user_id, book_id, log):
                     ),
                 )
                 .order_by(ub.KoboDeviceBookDownload.downloaded_at.desc())
-                .first()
+                .all()
             )
-            if armed is not None:
-                return armed.device_id
-        return user_devices[0].id
+            restore_arms = [row for row in armed_rows if row.device_id in active_ids]
+            if restore_arms:
+                # Restore still follows the newest active arm, even if stale.
+                device_id = restore_arms[0].device_id
+            fresh_arms = {
+                row.device_id for row in armed_rows
+                if row.device_id in candidates
+                and recent(row.downloaded_at, timedelta(minutes=15), inclusive=False)
+            }
+        # Inactive but recently synced Kobos remain possible senders. Neither
+        # an old arm nor a different sole candidate proves the restore guess.
+        unambiguous = candidates == {device_id} or fresh_arms == {device_id}
+        return device_id, unambiguous
     except SQLAlchemyError:
         ub.session.rollback()
         log.warning(
             "Could not resolve the downloading Kobo for user_id=%s book_id=%s",
             user_id, book_id, exc_info=True,
         )
-        return None
+        return None, False
 
 
 def arm_pending_restore(*, device_id, book_ids, log):
@@ -146,8 +180,9 @@ def record_download(*, device_id, book_id, book_format, log, user_id=None,
     """
     if book_id is None:
         return None
+    unambiguous = device_id is not None
     if device_id is None:
-        device_id = resolve_download_device(
+        device_id, unambiguous = _resolve_download_attribution(
             user_id=user_id, book_id=book_id, log=log,
         )
         if device_id is None:
@@ -174,9 +209,11 @@ def record_download(*, device_id, book_id, book_format, log, user_id=None,
             ub.session.add(row)
         row.book_format = (book_format or "")[:16] or None
         row.downloaded_at = _now()
-        row.completed_at = row.downloaded_at if completed else None
-        row.kepub_file_identity = None
-        if (book_format or "").lower() == "kepub":
+        row.completed_at = row.downloaded_at if completed and unambiguous else None
+        # An ambiguous restore attribution must never become exact-place proof,
+        # even when the guessed device successfully receives the whole file.
+        row.kepub_file_identity = None if unambiguous else ""
+        if unambiguous and (book_format or "").lower() == "kepub":
             # Best-effort file proof is independent of annotation restoration.
             # Failure to prove it must not prevent the pending row being saved.
             try:
