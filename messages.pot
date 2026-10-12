@@ -7,7 +7,7 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Calibre-Web Automated dev\n"
+"Project-Id-Version: Calibre-Web Automated v4.0.8\n"
 "Report-Msgid-Bugs-To: https://github.com/crocodilestick/Calibre-Web-"
 "Automated\n"
 "POT-Creation-Date: 2026-07-17 21:21-0400\n"
@@ -4810,6 +4810,26 @@ msgstr ""
 #: cps/spa_strings.py
 #, python-brace-format
 msgid "Display name for {name}"
+msgstr ""
+
+#: cps/spa_strings.py
+msgid "Share my place"
+msgstr ""
+
+#: cps/spa_strings.py
+msgid ""
+"Devices with this on open each book where you last stopped on any of "
+"them. Turn it off for a device someone else reads on."
+msgstr ""
+
+#: cps/spa_strings.py
+msgid "Could not save Share my place. Try again."
+msgstr ""
+
+#: cps/spa_strings.py
+msgid ""
+"Always shares its place. Install or update the NextGen Sync plugin on "
+"this device to choose."
 msgstr ""
 
 #: cps/spa_strings.py
