@@ -181,7 +181,11 @@ def visible_book_ids(user, *, cdb=None):
     """Every book id the user can see, archived and hidden books excluded."""
     if cdb is None:
         from .. import calibre_db as cdb
-    cdb.ensure_session()
+    # Callers may supply an already-bound query facade (including isolated
+    # sync simulations). The application CalibreDB still refreshes its session.
+    ensure_session = getattr(cdb, 'ensure_session', None)
+    if ensure_session is not None:
+        ensure_session()
     rows = cdb.session.query(db.Books.id).filter(cdb.common_filters(user=user))
     return {row[0] for row in rows}
 

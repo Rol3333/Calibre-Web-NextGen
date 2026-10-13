@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 # SPDX-License-Identifier: GPL-3.0-or-later
-"""Per-device scope PR A leaves the Kobo path exactly as main has it.
+"""A Kobo left on "Same as my account setting" syncs exactly as main has it.
 
 Spec: state/kindle-kids/specs/2026-10-12-per-device-scope.md, "What it must not
 touch" and "Review additions": PR A (model + UI + KOReader) must not change the
@@ -9,11 +9,18 @@ sync response, byte for byte, as main gives it. That is the shelf-only Kobo's
 guarantee (the household's "To Read" Kobo) and it is checked here for a
 shelf-only account and for a whole-library account.
 
-The real Kobo sync handler runs a fresh device to the end and then a device
-that already holds every book. Every response (body bytes, sync token, the
-continue flag) is compared with a recording made by this same file on main
-65dce676d (``fixtures/device_scope_kobo_unset_golden.json``). The recording is
-only ever regenerated from main's code: ``CWNG_RECORD_KOBO_GOLDEN=1``.
+The real Kobo sync handler runs a fresh device to the end. Every response
+(body bytes, sync token, the continue flag) is compared with a recording made
+by this same file on main 65dce676d (``fixtures/device_scope_kobo_unset_golden.json``).
+The recording is only ever regenerated from main's code:
+``CWNG_RECORD_KOBO_GOLDEN=1``.
+
+PR B (sync-removal spec, "CWNG review") changes the remove/re-add lifecycle for
+every Kobo (G2, G3, G4, G7) and removes hidden, restricted and whole-library
+departures (G8). So from PR B the byte-identical guarantee covers ORDINARY sync
+responses, the ones with no removal or re-add in them: a device that already
+held every book and is told to remove some is a G8 case
+(test_kobo_device_removal.py), no longer a byte-for-byte one.
 
 Metadata rendering is stubbed exactly as in test_ereader_scope_kobo_parity.py:
 which books are delivered or removed, in which order, under which token, is
@@ -40,7 +47,6 @@ GOLDEN = Path(__file__).parent / "fixtures" / "device_scope_kobo_unset_golden.js
 RECORD = os.environ.get("CWNG_RECORD_KOBO_GOLDEN") == "1"
 
 NOW = datetime(2026, 8, 28, 12, 0, 0)
-FAR_FUTURE = datetime(2100, 1, 1)
 ALL_BOOKS = set(range(1, 11))
 TO_READ = {1, 4, 6, 7, 9, 10}    # the account's e-reader shelf (kobo_sync on)
 KINDLE = {2, 3}                  # a shelf for one KOReader device (kobo_sync off)
@@ -190,6 +196,29 @@ class _KoboWorld:
             "continue": response.headers.get("x-kobo-sync"),
         }
 
+    def add_scoped_kobo(self, mode, shelves=()):
+        """A second Kobo on the account, given its own scope on the Devices page."""
+        from werkzeug.exceptions import HTTPException
+        device = ub.Device(
+            user_id=self.user.id, kind="kobo", display_name="Kobo B", active=True,
+            created_by="auto", public_id="00000000-0000-4000-8000-00000000000d",
+            first_seen_at=NOW, last_seen_at=NOW)
+        self.session.add(device)
+        self.session.commit()
+        path = "/api/annotations/devices/%s" % device.public_id
+        body = {"book_scope": {"mode": mode,
+                               "shelf_ids": [shelf.id for shelf in shelves],
+                               "magic_shelf_ids": []}}
+        with self.app.test_request_context(path, method="PATCH", json=body):
+            endpoint, args = self.app.url_map.bind("localhost").match(
+                path, method="PATCH")
+            view = inspect.unwrap(self.app.view_functions[endpoint])
+            try:
+                result = view(**args)
+            except HTTPException as error:
+                return error.code
+        return result[1] if isinstance(result, tuple) else result.status_code
+
     def fresh_device(self):
         """A new Kobo syncs until the server says it is done."""
         pages, token = [], ""
@@ -200,23 +229,6 @@ class _KoboWorld:
             if page["continue"] != "continue":
                 return pages
         raise AssertionError("Kobo sync never finished")
-
-    def device_holding_everything(self):
-        """A Kobo that holds every book syncs once: what it is told to remove."""
-        self.session.add_all([
-            ub.KoboSyncedBooks(user_id=self.user.id, book_id=book_id,
-                               book_uuid="uuid-%d" % book_id)
-            for book_id in sorted(ALL_BOOKS)
-        ])
-        self.session.commit()
-        token = self.kobo.SyncToken.SyncToken(
-            books_last_created=FAR_FUTURE,
-            books_last_modified=FAR_FUTURE,
-            archive_last_modified=FAR_FUTURE,
-            reading_state_last_modified=FAR_FUTURE,
-            books_last_id=max(ALL_BOOKS),
-        ).build_sync_token()
-        return [self._sync(token)]
 
 
 ACCOUNTS = [pytest.param(True, id="shelf-only"),
@@ -255,12 +267,10 @@ def _assert_same_as_main(key, observed):
 
 @pytest.mark.parametrize("shelf_only", ACCOUNTS)
 def test_an_unset_kobo_syncs_byte_for_byte_as_on_main(kobo_world, shelf_only):
-    """GUARD: passes on main by construction; PR A must keep it passing."""
+    """GUARD: passes on main by construction; PR A and PR B keep it passing."""
     key = "shelf-only" if shelf_only else "whole-library"
 
     _assert_same_as_main(key + "/fresh", kobo_world(shelf_only=shelf_only).fresh_device())
-    _assert_same_as_main(key + "/holding-everything",
-                         kobo_world(shelf_only=shelf_only).device_holding_everything())
 
 
 @pytest.mark.parametrize("shelf_only", ACCOUNTS)
@@ -274,6 +284,14 @@ def test_a_scoped_koreader_on_the_account_leaves_the_unset_kobo_as_on_main(
     assert fresh.set_koreader_scope("shelves", [fresh.kindle]) == 200
     _assert_same_as_main(key + "/fresh", fresh.fresh_device())
 
-    full = kobo_world(shelf_only=shelf_only)
-    assert full.set_koreader_scope("shelves", [full.kindle]) == 200
-    _assert_same_as_main(key + "/holding-everything", full.device_holding_everything())
+
+@pytest.mark.parametrize("shelf_only", ACCOUNTS)
+def test_a_scoped_kobo_on_the_account_leaves_the_unset_kobo_as_on_main(
+        kobo_world, shelf_only):
+    """GUARD (PR B): another Kobo on the account picks its own shelf; the
+    unset Kobo's ordinary sync is still byte for byte main's."""
+    key = "shelf-only" if shelf_only else "whole-library"
+
+    world = kobo_world(shelf_only=shelf_only)
+    assert world.add_scoped_kobo("shelves", [world.kindle]) == 200
+    _assert_same_as_main(key + "/fresh", world.fresh_device())

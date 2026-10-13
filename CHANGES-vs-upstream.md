@@ -67,6 +67,7 @@ Format: each row is one fork-PR, mapped to its upstream PR or issue (if any), wi
 
 | Fork PR | Upstream | Description | SHA | Release |
 |---|---|---|---|---|
+| [#2596](https://github.com/new-usemame/Calibre-Web-NextGen/pull/2596) | — | Each Kobo keeps its selected books, own reading journal and bounded annotation-capture hold through scope removal, with archived/hidden/visibility reconciliation and download-armed own-place restore. | TBD | Unreleased |
 | [#2595](https://github.com/new-usemame/Calibre-Web-NextGen/pull/2595) | Fork-original | **Choose books separately for each KOReader device.** Account defaults stay exact when unset; selected shelves retain surviving choices or fall back when none remain. Proven foreign highlights are cleaned locally without hiding server originals. Kobo sync is unchanged in PR A. | TBD | Unreleased |
 | [#2490](https://github.com/new-usemame/Calibre-Web-NextGen/pull/2490) | Fork issue [#1809](https://github.com/new-usemame/Calibre-Web-NextGen/issues/1809) | **Browse Calibre’s built-in Tags hierarchy** in New UI, Classic and OPDS using the library preference; exact subtree paths, distinct visible counts and export/Select all scope preserve flat literal tags and custom-column behavior. | TBD | Unreleased |
 | [#2470](https://github.com/new-usemame/Calibre-Web-NextGen/pull/2470) | — | #2442 configurable safe Send-to-eReader attachment filenames, separate library paths and matching sync names | TBD | Unreleased |

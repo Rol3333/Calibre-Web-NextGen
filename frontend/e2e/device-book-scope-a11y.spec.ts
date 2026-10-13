@@ -25,8 +25,10 @@ test('book choice supports keyboard selection and accessible desktop/mobile pale
     devices, total: devices.length, limit: 100, offset: 0, share_place_gates: true,
   } }));
   await page.goto('/app/account/devices');
-  const group = page.getByRole('group', { name: 'Books on this device' });
-  await expect(group).toHaveCount(1);
+  // Both the KOReader and the Kobo device get the control; exercise the first (KOReader A).
+  const groups = page.getByRole('group', { name: 'Books on this device' });
+  await expect(groups).toHaveCount(2);
+  const group = groups.first();
   const radio = group.getByRole('radio', { name: 'Only these shelves' });
   await radio.focus();
   await expect(radio).toBeFocused();

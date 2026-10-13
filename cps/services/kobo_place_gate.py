@@ -128,6 +128,17 @@ def record_own_report(*, device_id, book_id, client_at, place=None,
     )).first()
     pending = bool(row is not None and row.rehydrate_needed) or _nudged(
         s, device_id, book_id)
+    from . import kobo_removal
+    if place and pending and kobo_removal.own_restore_pending(device_id, book_id, session=s):
+        previous = s.query(ub.DeviceReadingPosition).filter_by(
+            device_id=device_id, book_id=book_id).one_or_none()
+        progress = place.get('progress_percent')
+        from ..kobo import KOB0_COVER_RESET_PROGRESS_EPSILON
+        if (progress is not None and 0 <= progress <= KOB0_COVER_RESET_PROGRESS_EPSILON
+                and previous is not None and previous.progress_percent is not None
+                and previous.progress_percent > progress):
+            place = None
+            status_supplied = False
     outcome = write_report(
         device_id=device_id, book_id=book_id, client_at=client_at,
         place=place, status=status, status_supplied=status_supplied,

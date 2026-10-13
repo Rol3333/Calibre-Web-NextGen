@@ -125,6 +125,7 @@ PER_USER_BOOK_MODELS = (
 # tuple's final insertion point.
 PER_USER_BOOK_MODELS += (
     "KoboDeviceBookEntitlement",
+    "KoboDeviceBookRemoval",
     "DeviceBookDelivery",
     "DeviceReadingPosition",
     "KoboPlaceEchoGuard",     # invalidated on merge: bound to one book's file
@@ -338,6 +339,9 @@ def migrate_user_book_data(from_book_id, to_book_id, session=None):
     session.query(ub.KoboDeviceBookEntitlement).filter(
         ub.KoboDeviceBookEntitlement.book_id == from_book_id,
     ).delete(synchronize_session=False)
+    session.query(ub.KoboDeviceBookRemoval).filter(
+        ub.KoboDeviceBookRemoval.book_id == from_book_id,
+    ).delete(synchronize_session=False)
     # A pending response embeds immutable metadata and confirmation ids for the
     # losing book. Invalidate the bounded page rather than promoting stale ids.
     session.query(ub.KoboDevicePendingSyncPage).delete(
@@ -534,7 +538,7 @@ def purge_user_book_data(book_id=None, user_id=None, session=None,
         )
     pending_state.delete(synchronize_session=False)
 
-    for model in (ub.DeviceReadingPosition, ub.KoboPlaceEchoGuard):
+    for model in (ub.DeviceReadingPosition, ub.KoboDeviceBookRemoval, ub.KoboPlaceEchoGuard):
         position_state = session.query(model)
         if book_id is not None:
             position_state = position_state.filter(model.book_id == book_id)

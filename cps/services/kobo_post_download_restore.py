@@ -233,6 +233,8 @@ def record_download(*, device_id, book_id, book_format, log, user_id=None,
         row.restore_state = RESTORE_PENDING
         row.restored_at = None
         row.restored_count = None
+        from .kobo_removal import arm_own_restore
+        arm_own_restore(device_id, book_id)
         ub.session.commit()
         if row.kepub_file_identity:
             from .kobo_resume import warm_alignment

@@ -372,7 +372,7 @@ export function Devices() {
               {sharePlaceGates && device.place_control === 'always_shared' && (
                 <p className={styles.sharePlaceNote}>{t('Always shares its place. Install or update the NextGen Sync plugin on this device to choose.')}</p>
               )}
-              {device.kind === 'koreader' && device.book_scope && (
+              {(device.kind === 'koreader' || device.kind === 'kobo') && device.book_scope && (
                 <DeviceBookScope key={JSON.stringify(device.book_scope)} id={device.public_id}
                   scope={device.book_scope} onSaved={() => { void refresh(); }} />
               )}

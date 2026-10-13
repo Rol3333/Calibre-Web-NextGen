@@ -42,7 +42,7 @@ try:
     from sqlalchemy.orm import declarative_base
 except ImportError:
     from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import backref, relationship, sessionmaker, Session, scoped_session, validates
+from sqlalchemy.orm import backref, relationship, sessionmaker, Session, scoped_session, validates, deferred
 from werkzeug.security import generate_password_hash
 
 from . import constants, logger
@@ -1622,6 +1622,9 @@ class DeviceReadingPosition(Base):
         Boolean, nullable=False, default=False, server_default='0',
     )
 
+    # Delivery work has its own clock; it is never a reading observation.
+    rehydrate_armed_at = deferred(Column(DateTime, nullable=True))
+
     __table_args__ = (
         UniqueConstraint(
             'device_id', 'book_id',
@@ -1633,6 +1636,34 @@ class DeviceReadingPosition(Base):
             'device_id', 'rehydrate_needed',
         ),
     )
+
+
+class KoboDeviceBookRemoval(Base):
+    """Capture hold and post-download own-place work, separate from observations."""
+    __tablename__ = 'kobo_device_book_removal'
+    device_id = Column(Integer, ForeignKey('device.id', ondelete='CASCADE'), primary_key=True)
+    book_id = Column(Integer, primary_key=True)
+    activity_received_at = Column(DateTime, nullable=True)
+    annotation_uploaded_at = Column(DateTime, nullable=True)
+    hold_syncs = Column(Integer, nullable=False, default=0, server_default='0')
+    own_restore_until = Column(DateTime, nullable=True)
+    legacy_marker_delivery = Column(Boolean, nullable=False, default=False, server_default='0')
+    removal_acknowledged = Column(Boolean, nullable=False, default=False, server_default='0')
+
+
+class KoboDeviceDeletionCapture(Base):
+    """Minimal UUID-bound hold evidence surviving a permanent book purge.
+
+    No retained reading content and no live book-id ownership: an unrelated
+    book reusing the numeric id cannot inherit this deletion work.
+    """
+    __tablename__ = 'kobo_device_deletion_capture'
+    device_id = Column(Integer, ForeignKey('device.id', ondelete='CASCADE'), primary_key=True)
+    book_uuid = Column(String, primary_key=True)
+    book_id = Column(Integer, nullable=False)  # diagnostic only
+    activity_received_at = Column(DateTime, nullable=True)
+    annotation_uploaded_at = Column(DateTime, nullable=True)
+    hold_syncs = Column(Integer, nullable=False, default=0, server_default='0')
 
 
 class DeviceIdentity(Base):
@@ -4620,6 +4651,12 @@ def migrate_device_reading_position_slice(engine, _session):
         ))
 
 
+def migrate_kobo_device_removal(engine, _session):
+    from .migrations.versions.kobo_device_removal import upgrade
+    with engine.begin() as connection:
+        upgrade(connection)
+
+
 def migrate_device_sleep_screen(engine, _session):
     """Add a capability observation without changing existing devices."""
     _add_column_if_missing(engine, "device", "sleep_screen_capability",
@@ -5663,6 +5700,7 @@ def migrate_Database(_session):
     migrate_device_management_slice(engine, _session)
     migrate_webreader_device_identity_slice(engine, _session)
     migrate_device_reading_position_slice(engine, _session)
+    migrate_kobo_device_removal(engine, _session)
     migrate_device_share_place(engine, _session)
     migrate_device_sleep_screen(engine, _session)
     migrate_kobo_bookmark_receipt(engine, _session)
