@@ -31,18 +31,23 @@ _SLOTS = threading.BoundedSemaphore(2)
 _WARM_SLOT = threading.BoundedSemaphore(1)
 
 
-def _resume_timeout():
+def _resume_timeout(default=0.05):
     try:
-        value = float(os.environ.get('CWA_KOBO_RESUME_TIMEOUT_SECONDS', '0.05'))
+        value = float(os.environ.get('CWA_KOBO_RESUME_TIMEOUT_SECONDS', str(default)))
         if math.isfinite(value) and value > 0:
             return value
     except ValueError:
         pass
-    log.warning('Invalid CWA_KOBO_RESUME_TIMEOUT_SECONDS; using 0.05 seconds')
-    return 0.05
+    log.warning('Invalid CWA_KOBO_RESUME_TIMEOUT_SECONDS; using %s seconds', default)
+    return default
 
 
 RESUME_TIMEOUT_SECONDS = _resume_timeout()
+# A proven KEPUB span may need cold alignment after a restart or cache eviction.
+# Measured cold resolution of a 353 KB EPUB took 119–154 ms, beyond the generic
+# 50 ms budget. Keep a bounded quarter-second wait only for this bridge path;
+# an explicit operator timeout still overrides both defaults.
+KEPUB_RESUME_TIMEOUT_SECONDS = _resume_timeout(default=0.25)
 _CACHE_MAX_ENTRIES = 256
 _CACHE_TTL_SECONDS = 300
 _CACHE = OrderedDict()
@@ -145,7 +150,9 @@ def exact_resume(book_id, source, kind, value, *, wait=True, kepub_identity=None
     KEPUB locators revalidate the files on every call instead of caching the
     result, so a replaced book or revoked proof cannot reuse an exact place.
     """
-    deadline = time.monotonic() + RESUME_TIMEOUT_SECONDS
+    budget = (KEPUB_RESUME_TIMEOUT_SECONDS if kind == 'KoboSpan' and kepub_identity
+              else RESUME_TIMEOUT_SECONDS)
+    deadline = time.monotonic() + budget
     if kind not in _EXACT_KINDS or not source or not value:
         return None
     from .. import config
