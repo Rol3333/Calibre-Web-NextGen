@@ -12,6 +12,7 @@ import { useT, type TFunction } from '../lib/i18n';
 import { SpinnerCentered } from '../components/Spinner';
 import { DeviceInventory, type Device } from '../components/DeviceInventory';
 import { KoboPairing } from '../components/KoboPairing';
+import { DeviceBookScope } from '../components/DeviceBookScope';
 import { DeviceSleepScreen } from '../components/DeviceSleepScreen';
 import styles from './Devices.module.css';
 
@@ -370,6 +371,10 @@ export function Devices() {
               )}
               {sharePlaceGates && device.place_control === 'always_shared' && (
                 <p className={styles.sharePlaceNote}>{t('Always shares its place. Install or update the NextGen Sync plugin on this device to choose.')}</p>
+              )}
+              {device.kind === 'koreader' && device.book_scope && (
+                <DeviceBookScope key={JSON.stringify(device.book_scope)} id={device.public_id}
+                  scope={device.book_scope} onSaved={() => { void refresh(); }} />
               )}
               {device.type !== 'webreader' && <button type="button" className={styles.inventoryToggle}
                 aria-expanded={expandedInventory === device.public_id}

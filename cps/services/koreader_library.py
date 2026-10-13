@@ -70,6 +70,7 @@ class Manifest:
     entries: list
     unsupported: int
     paths: dict = field(default_factory=dict)
+    device_scope: Optional[list] = None
 
 
 def _utc(value):
@@ -280,7 +281,7 @@ def _magic_shelves_for_collections(user_id, session):
             .all())
 
 
-def shelf_catalogue(user, *, session=None):
+def shelf_catalogue(user, *, session=None, choice=None):
     """Return ``(shelves, members, scope_shelves)``.
 
     ``shelves`` lists every regular shelf the user owns plus the magic shelves
@@ -297,6 +298,10 @@ def shelf_catalogue(user, *, session=None):
     members = {}
     scope_shelves = []
     shelf_only = ereader_scope.shelf_only(user)
+    override = choice is not None and choice.overrides_account
+    if override:
+        shelf_only = choice.mode == "shelves"
+    selected_ids = {s.id for s in choice.shelves} if override else set()
 
     regular = (session.query(ub.Shelf)
                .filter(ub.Shelf.user_id == user_id)
@@ -306,7 +311,7 @@ def shelf_catalogue(user, *, session=None):
         shelf_id = shelf.uuid or str(shelf.id)
         ids_by_row[shelf.id] = shelf_id
         shelves.append({"id": shelf_id, "name": shelf.name or ""})
-        if shelf_only and shelf.kobo_sync:
+        if shelf_only and (shelf.id in selected_ids if override else shelf.kobo_sync):
             scope_shelves.append({"id": shelf_id, "name": shelf.name or "",
                                   "kind": "shelf"})
     if ids_by_row:
@@ -316,9 +321,17 @@ def shelf_catalogue(user, *, session=None):
                 .order_by(ub.BookShelf.shelf, ub.BookShelf.order, ub.BookShelf.id)):
             members.setdefault(book_id, []).append(ids_by_row[shelf_row_id])
 
-    for shelf in _magic_shelves_for_collections(user_id, session):
+    magic_rows = _magic_shelves_for_collections(user_id, session)
+    if override:
+        from .. import config
+        if getattr(config, "config_kobo_sync_magic_shelves", False):
+            by_id = {s.id: s for s in magic_rows}
+            by_id.update({s.id: s for s in choice.magic_shelves})
+            magic_rows = sorted(by_id.values(), key=lambda s: (s.name or "", s.id))
+    selected_magic_ids = {s.id for s in choice.magic_shelves} if override else set()
+    for shelf in magic_rows:
         shelf_id = shelf.uuid or "magic-%d" % shelf.id
-        if shelf_only:
+        if shelf_only and (not override or shelf.id in selected_magic_ids):
             scope_shelves.append({"id": shelf_id, "name": shelf.name or "",
                                   "kind": "magic"})
         try:
@@ -462,8 +475,8 @@ def _describe(ids, *, user, cdb, session, read_column, members):
     return entries, paths, unsupported
 
 
-def _revision(scope, scope_shelves, shelves, entries):
-    return _digest({
+def _revision(scope, scope_shelves, shelves, entries, *, device_scope=None):
+    value = {
         "scope": scope,
         "scope_shelves": scope_shelves,
         "shelves": shelves,
@@ -471,10 +484,13 @@ def _revision(scope, scope_shelves, shelves, entries):
                    entry["read_status"], entry["progress"], entry["shelves"],
                    entry.get("author_sort"), entry.get("last_read")]
                   for entry in entries],
-    }, 24)
+    }
+    if device_scope is not None:
+        value["device_scope"] = device_scope
+    return _digest(value, 24)
 
 
-def build_manifest(user, *, cdb=None, session=None, read_column=None):
+def build_manifest(user, *, device=None, cdb=None, session=None, read_column=None):
     """Describe every book an e-reader of ``user`` should hold.
 
     The request must be acting as ``user`` (``current_user``): magic shelves
@@ -487,24 +503,28 @@ def build_manifest(user, *, cdb=None, session=None, read_column=None):
         read_column = getattr(config, "config_read_column", 0)
     session = session or ub.session
     cdb.ensure_session()
-    scope = ereader_scope.membership(user, session=session)
+    from . import device_book_scope
+    choice = device_book_scope.resolve(user, device, session=session)
+    scope = ereader_scope.membership(user, device=device, session=session)
     if not scope.reliable:
         raise ScopeUnavailable(
             "One of the smart shelves that choose this device's books could "
             "not be read")
     ids = ereader_scope.held_book_ids(user, cdb=cdb, session=session, scope=scope)
-    shelves, members, scope_shelves = shelf_catalogue(user, session=session)
+    shelves, members, scope_shelves = shelf_catalogue(user, session=session, choice=choice)
     entries, paths, unsupported = _describe(
         ids, user=user, cdb=cdb, session=session, read_column=read_column,
         members=members)
     return Manifest(
-        revision=_revision(scope.mode, scope_shelves, shelves, entries),
+        revision=_revision(scope.mode, scope_shelves, shelves, entries,
+                           device_scope=choice.revision_key),
         scope=scope.mode,
         scope_shelves=scope_shelves,
         shelves=shelves,
         entries=entries,
         unsupported=unsupported,
         paths=paths,
+        device_scope=choice.revision_key,
     )
 
 

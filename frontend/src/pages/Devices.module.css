@@ -321,3 +321,16 @@
 .sharePlaceError:empty { display: none; }
 .sharePlaceHelp { margin: calc(-1 * var(--sp-2)) 0 var(--sp-5); color: var(--text-muted); font-size: var(--fs-sm); line-height: var(--lh-base); }
 .sharePlaceNote { margin: var(--sp-3) 0 0; padding-top: var(--sp-2); border-top: 1px solid var(--border); color: var(--text-muted); font-size: var(--fs-sm); line-height: var(--lh-base); }
+.bookScope {
+  min-width: 0;
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+.bookScope legend { font-weight: 600; }
+.bookScopeHelp { color: var(--text-muted); line-height: 1.5; margin: .5rem 0; }
+.bookScopeOption { display: flex; align-items: center; gap: .5rem; min-height: 36px; cursor: pointer; }
+.bookScopeOption input { flex: 0 0 auto; accent-color: var(--accent); }
+.bookScopeOption span { overflow-wrap: anywhere; }
+.bookScopeShelves { padding-left: 1.5rem; }

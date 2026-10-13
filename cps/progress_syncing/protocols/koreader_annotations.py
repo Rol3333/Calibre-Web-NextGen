@@ -133,12 +133,22 @@ def build_pull_payload(user_id: int, book_id: int, session, *,
     from ...services.annotation_portable import to_portable
     query = session.query(ub.Annotation).filter(
         ub.Annotation.user_id == user_id, ub.Annotation.book_id == book_id)
+    device = None
+    foreign_ids = None
     if has_request_context():
         from ...services.device_registry import find_koreader_device
         raw_id = request.headers.get("X-CWNG-Device-ID")
         device = (find_koreader_device(user_id=user_id, device_id=raw_id,
                                       session=session) if raw_id else None)
         if device is not None:
+            # Only an attributed origin is proof. Include hidden rows; local
+            # cleanup does not delete or modify these authoritative records.
+            foreign_ids = [aid for (aid,) in session.query(ub.Annotation.annotation_id)
+                           .filter(ub.Annotation.user_id == user_id,
+                                   ub.Annotation.book_id == book_id,
+                                   ub.Annotation.origin_device_id.isnot(None),
+                                   ub.Annotation.origin_device_id != device.id)
+                           .order_by(ub.Annotation.id)]
             query = query.filter(_device_annotations_predicate(device))
     rows = query.order_by(ub.Annotation.id.asc()).all()
     annotations = [to_portable(r) for r in rows]
@@ -148,7 +158,10 @@ def build_pull_payload(user_id: int, book_id: int, session, *,
         # Reading the book's text is file work; keep it off the request greenlet.
         from ...services.parallel import run_blocking
         run_blocking(lambda: _add_text_quotes(rows, annotations, book))
-    return {"annotations": annotations, "annotation_count": len(annotations)}
+    payload = {"annotations": annotations, "annotation_count": len(annotations)}
+    if foreign_ids is not None:
+        payload["foreign_annotation_ids"] = foreign_ids
+    return payload
 
 
 def _add_text_quotes(rows, annotations, book) -> None:

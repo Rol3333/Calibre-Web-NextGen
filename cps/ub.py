@@ -1508,6 +1508,9 @@ class Device(Base):
     share_place = Column(Boolean, nullable=False, default=False, server_default='0')
     share_place_enabled_at = Column(DateTime, nullable=True)
     cwng_header_seen_at = Column(DateTime, nullable=True)
+    # NULL is the account setting. JSON retains deleted selection ids for the
+    # fallback notice; it holds no foreign keys or reading state.
+    book_scope = Column(Text, nullable=True)
     # Capability observations exist even before a reader chooses an image.
     sleep_screen_capability = Column(JSON, nullable=True)
 
@@ -4631,6 +4634,12 @@ def migrate_device_share_place(engine, _session):
     insert) start off. Only missing columns are added, so repeated or partial
     upgrades preserve subsequent sharing choices and recorded status.
     """
+    # Keep this legacy device-upgrade entry point compatible with the current
+    # Device model, including callers upgrading an old schema directly.
+    if _table_columns(engine, "device"):
+        from .migrations.versions.device_book_scope import upgrade as upgrade_device_scope
+        with engine.begin() as connection:
+            upgrade_device_scope(connection)
     for table, name, ddl in (
         ("device", "share_place", "share_place BOOLEAN NOT NULL DEFAULT 0"),
         ("device", "share_place_enabled_at", "share_place_enabled_at DATETIME"),

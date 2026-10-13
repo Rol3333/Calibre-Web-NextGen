@@ -2432,13 +2432,37 @@ local ANNOTATION_WATERMARK_KEY = "cwasync_pushed_annotation_ids"
 function CWNGSync:readAnnotationWatermark()
     local doc_settings = self.ui and self.ui.doc_settings
     if not (doc_settings and doc_settings.readSetting) then return {} end
-    return doc_settings:readSetting(ANNOTATION_WATERMARK_KEY) or {}
+    local Foreign = require("cwng_foreign_annotations")
+    return Foreign.filterIds(doc_settings:readSetting(ANNOTATION_WATERMARK_KEY), Foreign.proofs(doc_settings, self))
 end
 
 function CWNGSync:saveAnnotationWatermark(localList)
     local doc_settings = self.ui and self.ui.doc_settings
     if not (doc_settings and doc_settings.saveSetting) then return end
-    doc_settings:saveSetting(ANNOTATION_WATERMARK_KEY, SyncLogic.annotationIds(localList))
+    local Foreign = require("cwng_foreign_annotations")
+    doc_settings:saveSetting(ANNOTATION_WATERMARK_KEY,
+        Foreign.filterIds(SyncLogic.annotationIds(localList), Foreign.proofs(doc_settings, self)))
+end
+
+function CWNGSync:forgetForeignAnnotationWatermark(ids)
+    if type(ids) ~= "table" or #ids == 0 then return end
+    local doc_settings = self.ui and self.ui.doc_settings
+    if not (doc_settings and doc_settings.saveSetting) then return end
+    local Foreign = require("cwng_foreign_annotations")
+    local foreign = Foreign.remember(doc_settings, self, ids)
+    local kept = Foreign.filterIds(self:readAnnotationWatermark(), foreign)
+    if self.readPending and self.writePending then
+        local queue = self:readPending()
+        local entry = queue[self:getDocumentDigest()]
+        local owner = self:accountOwner()
+        if entry and (entry.owner == nil or entry.owner == owner) and entry.annotations then
+            entry.annotations = Foreign.filterPayload(entry.annotations, foreign)
+            self:writePending(queue)
+        end
+    end
+    -- Save immediately, even if the following upload fails. These are not
+    -- deletions to retry against the server on this or any later sync.
+    doc_settings:saveSetting(ANNOTATION_WATERMARK_KEY, kept)
 end
 
 -- Highlights just drawn from the server are known to both sides from that
@@ -2457,7 +2481,8 @@ function CWNGSync:addToAnnotationWatermark(ids)
             end
         end
     end
-    doc_settings:saveSetting(ANNOTATION_WATERMARK_KEY, merged)
+    local Foreign = require("cwng_foreign_annotations")
+    doc_settings:saveSetting(ANNOTATION_WATERMARK_KEY, Foreign.filterIds(merged, Foreign.proofs(doc_settings, self)))
 end
 
 function CWNGSync:syncAnnotations(interactive)
@@ -2507,6 +2532,16 @@ function CWNGSync:syncAnnotations(interactive)
             end
             local remote = body.annotations or {}
 
+            if type(provider.removeForeign) == "function" then
+                local cleaned, forgotten, removed = pcall(provider.removeForeign, body.foreign_annotation_ids, self.device_id)
+                if not cleaned then return end
+                if forgotten and #forgotten > 0 then self:forgetForeignAnnotationWatermark(forgotten) end
+                if (removed or 0) > 0 then
+                    self:recordOpenedAnnotations()
+                    self:refreshLibraryViews({ self:getCurrentDocumentFile() })
+                end
+            end
+
             -- Kobo's VolumeID for a CW-synced kepub is the book UUID, which the
             -- server carries in content_id as "<uuid>!!<chapter>".
             local volume_id
@@ -2533,6 +2568,13 @@ function CWNGSync:syncAnnotations(interactive)
                 -- trusting incomparable device clocks.
                 diff.send_to_server = localList
             end
+
+            -- Persisted proof also protects direct uploads if an older server
+            -- later sends the foreign copy without its reconciliation key.
+            local Foreign = require("cwng_foreign_annotations")
+            local outgoing = Foreign.filterPayload({ list = diff.send_to_server, deletions = plan.deletions },
+                Foreign.proofs(self.ui and self.ui.doc_settings, self))
+            diff.send_to_server, plan.deletions = outgoing.list, outgoing.deletions
 
             -- Every device applies now: KOReader's own annotations off Kobo,
             -- KoboReader.sqlite for a Kobo kepub. The deletions go too, so a

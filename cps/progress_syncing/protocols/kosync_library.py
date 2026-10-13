@@ -146,7 +146,7 @@ def get_library():
                and not target.share_place)
     # Private walks have a device-scoped cache key. A different reader or a
     # changed share setting can never reuse their private projection.
-    walk_owner = (user.id, "device", target.id) if private else user.id
+    walk_owner = (user.id, "device", target.id, "private" if private else "shared") if identified else user.id
     # The pages after the first come from the manifest this sync started with
     # (see koreader_library's "Syncs still reading pages"); a sync the server
     # no longer remembers carries on from the library as it is now.
@@ -155,7 +155,8 @@ def get_library():
     resumed = manifest is not None
     try:
         if manifest is None:
-            manifest = koreader_library.build_manifest(user)
+            manifest = koreader_library.build_manifest(
+                user, device=target if identified else None)
     except koreader_library.ScopeUnavailable as error:
         # Never serve a short list: the device would treat the missing books
         # as removed from its library (the #468 lesson, applied here).
@@ -188,7 +189,8 @@ def get_library():
             if own is not None and own.progress_percent is not None:
                 entry["last_read"] = koreader_library.iso_z(own.client_modified_at or own.server_modified_at)
         revision = koreader_library._revision(manifest.scope, manifest.scope_shelves,
-                                              manifest.shelves, entries)
+                                              manifest.shelves, entries,
+                                              device_scope=manifest.device_scope)
         manifest = replace(manifest, entries=entries, revision=revision)
     if_revision = request.args.get("if_revision")
     if cursor is None and if_revision and if_revision == manifest.revision:

@@ -213,12 +213,26 @@ def _empty_authority_rollup():
     return {**{status: 0 for status in AUTHORITY_STATUSES}, "books_partially_seeded": 0}
 
 
+_UNSET_SCOPE_PAYLOAD = object()
+
+
 def _device_json(device, annotation_count=0, inventory_report=None, storage_snapshot=None,
                  annotation_counts=None, authority_rollup=None, seeded_books=0,
                  unseeded_books=0, inventory_count=None, books_with_position=0,
                  last_position_at=None, origin_annotation_count=None,
-                 browser_identity=None):
+                 browser_identity=None, scope_payload=_UNSET_SCOPE_PAYLOAD):
     annotation_counts = annotation_counts or {}
+    if scope_payload is _UNSET_SCOPE_PAYLOAD:
+        scope_payload = None
+        if device.kind in ("kobo", "koreader"):
+            from sqlalchemy import inspect
+            from sqlalchemy.orm import object_session
+            from .services import device_book_scope
+            mapped = inspect(device, raiseerr=False)
+            session = (object_session(device) or ub.session) if mapped is not None else None
+            owner = _device_owner(device, session) if session is not None else None
+            if owner is not None:
+                scope_payload = device_book_scope.payload(owner, device, session=session)
     return {
         "public_id": device.public_id,
         "label": device.display_name or _device_kind_label(device.kind),
@@ -256,6 +270,7 @@ def _device_json(device, annotation_count=0, inventory_report=None, storage_snap
         "active": bool(device.active),
         "share_place": bool(device.share_place),
         "place_control": device_registry.place_control(device),
+        "book_scope": scope_payload,
     }
 
 
@@ -727,6 +742,9 @@ def _aggregate_device_rows(*, devices, owners_by_id, scopes, session):
     }
 
     rows = []
+    from .services import device_book_scope
+    scope_choices = {owner_id: device_book_scope.choices(owner, session)
+                     for owner_id, owner in owners_by_id.items()}
     for device in devices:
         owner_id = int(device.user_id)
         seeded = (
@@ -740,9 +758,12 @@ def _aggregate_device_rows(*, devices, owners_by_id, scopes, session):
         books_with_position, last_position = position_counts.get(device.id, (0, None))
         rows.append(_device_json(
             device,
-            assigned_counts.get(device.id, 0),
-            reports.get(device.id),
-            storage.get(device.id),
+            scope_payload=device_book_scope.payload(
+                owners_by_id[owner_id], device, session=session,
+                offered=scope_choices[owner_id]),
+            annotation_count=assigned_counts.get(device.id, 0),
+            inventory_report=reports.get(device.id),
+            storage_snapshot=storage.get(device.id),
             annotation_counts=origin_counts.get(device.id),
             authority_rollup=authority_by_owner.get(owner_id),
             seeded_books=seeded,
@@ -789,7 +810,8 @@ class InvalidSharePlace(ValueError):
 
 
 def rename_annotation_device(public_id, *, user_id, label=_DEVICE_SETTING_UNSET,
-                             share_place=_DEVICE_SETTING_UNSET, session, commit):
+                             share_place=_DEVICE_SETTING_UNSET,
+                             book_scope=_DEVICE_SETTING_UNSET, session, commit):
     """Update the owner's label and/or sharing choice in a single commit.
 
     Resolve ownership before validation and validate every field before any
@@ -801,14 +823,24 @@ def rename_annotation_device(public_id, *, user_id, label=_DEVICE_SETTING_UNSET,
         return None
     if share_place is not _DEVICE_SETTING_UNSET and not isinstance(share_place, bool):
         raise InvalidSharePlace("share_place must be a boolean")
-    if label is _DEVICE_SETTING_UNSET and share_place is _DEVICE_SETTING_UNSET:
+    from .services import device_book_scope
+    if book_scope is not _DEVICE_SETTING_UNSET:
+        book_scope = device_book_scope.validate(
+            book_scope, _device_owner(device, session), device, session)
+    if (label is _DEVICE_SETTING_UNSET and share_place is _DEVICE_SETTING_UNSET
+            and book_scope is _DEVICE_SETTING_UNSET):
         raise ValueError("device label or share_place is required")
     if label is not _DEVICE_SETTING_UNSET:
         if not isinstance(label, str) or label != label.strip() or not 1 <= len(label) <= 60:
             raise ValueError("device label must be 1-60 characters without surrounding whitespace")
         if any(ord(char) < 32 or ord(char) == 127 for char in label):
             raise ValueError("device label contains control characters")
+    # Validate all fields before mutating any, including a combined PATCH.
+    if label is not _DEVICE_SETTING_UNSET:
         device.display_name = label
+    if book_scope is not _DEVICE_SETTING_UNSET:
+        device.book_scope = (None if book_scope["mode"] == "unset"
+                             else json.dumps(book_scope, sort_keys=True))
     if share_place is not _DEVICE_SETTING_UNSET:
         turned_on = share_place and not device.share_place
         turned_off = not share_place and device.share_place
@@ -1413,6 +1445,7 @@ def annotation_device_inventory_delete(public_id, item_id):
 @annotations_bp.route("/api/annotations/devices/<public_id>", methods=["PATCH"])
 @user_login_required
 def annotation_device_rename(public_id):
+    from .services import device_book_scope
     data = request.get_json(silent=True) or {}
     if not isinstance(data, dict):
         data = {}
@@ -1421,8 +1454,11 @@ def annotation_device_rename(public_id):
             public_id, user_id=current_user.id,
             label=data.get("label", _DEVICE_SETTING_UNSET),
             share_place=data.get("share_place", _DEVICE_SETTING_UNSET),
+            book_scope=data.get("book_scope", _DEVICE_SETTING_UNSET),
             session=ub.session, commit=ub.session_commit,
         )
+    except device_book_scope.InvalidBookScope:
+        return jsonify({"error": "invalid_book_scope"}), 400
     except InvalidSharePlace:
         return jsonify({"error": "invalid_share_place"}), 400
     except ValueError as error:

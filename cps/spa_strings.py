@@ -663,6 +663,19 @@ _("Devices with this on open each book where you last stopped on any of them. Tu
 _("Could not save Share my place. Try again.")
 _("Always shares its place. Install or update the NextGen Sync plugin on this device to choose.")
 
+
+# Per-device book scope (KOReader, PR A).
+_("Books on this device")
+_("Same as my account setting")
+_("Everything in my library")
+_("Only these shelves")
+_("Choose which books this device keeps. Books you take off are removed from the device at its next sync; your place, highlights and notes stay saved.")
+_("The shelf chosen for this device was deleted. It uses your account setting until you choose again.")
+_("The shelf chosen for this device is no longer available. It uses your account setting until you choose again.")
+_("Account setting: {scope}")
+_("Could not save the book choice. Try again.")
+_("Saved.")
+
 # ==== BEGIN AUTOGEN (scripts/extract_spa_strings.py --write) ====
 # Auto-anchored SPA-only msgids — every t('literal') and static label
 # property in frontend/src that
