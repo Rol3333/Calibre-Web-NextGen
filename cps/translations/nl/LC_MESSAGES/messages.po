@@ -5100,6 +5100,56 @@ msgstr ""
 "of werk deze bij om te kiezen."
 
 #: cps/spa_strings.py
+msgid "Books on this device"
+msgstr "Boeken op dit apparaat"
+
+#: cps/spa_strings.py
+msgid "Same as my account setting"
+msgstr "Hetzelfde als mijn accountinstelling"
+
+#: cps/spa_strings.py
+msgid "Everything in my library"
+msgstr "Alles in mijn bibliotheek"
+
+#: cps/spa_strings.py
+msgid "Only these shelves"
+msgstr "Alleen deze planken"
+
+#: cps/spa_strings.py
+msgid ""
+"Choose which books this device keeps. Books you take off are removed from "
+"the device at its next sync; your place, highlights and notes stay saved."
+msgstr ""
+"Kies welke boeken dit apparaat bewaart. Boeken die u verwijdert, worden bij "
+"de volgende synchronisatie van het apparaat verwijderd; uw leespositie, "
+"markeringen en notities blijven bewaard."
+
+#: cps/spa_strings.py
+msgid ""
+"The shelf chosen for this device was deleted. It uses your account setting "
+"until you choose again."
+msgstr ""
+"De plank die voor dit apparaat is gekozen, is verwijderd. Het gebruikt uw "
+"accountinstelling totdat u opnieuw kiest."
+
+#: cps/spa_strings.py
+msgid ""
+"The shelf chosen for this device is no longer available. It uses your "
+"account setting until you choose again."
+msgstr ""
+"De plank die voor dit apparaat is gekozen, is niet meer beschikbaar. Het "
+"gebruikt uw accountinstelling totdat u opnieuw kiest."
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "Account setting: {scope}"
+msgstr "Accountinstelling: {scope}"
+
+#: cps/spa_strings.py
+msgid "Could not save the book choice. Try again."
+msgstr "De boekkeuze kon niet worden opgeslagen. Probeer het opnieuw."
+
+#: cps/spa_strings.py
 msgid "(no text captured)"
 msgstr "(geen tekst vastgelegd)"
 
@@ -20376,40 +20426,3 @@ msgstr "Toon gelezen/niet gelezen selectie"
 
 #~ msgid "Calibre library rating (1-10)"
 #~ msgstr "Calibre-bibliotheekbeoordeling (1–10)"
-
-#: cps/spa_strings.py
-msgid "Books on this device"
-msgstr "Boeken op dit apparaat"
-
-#: cps/spa_strings.py
-msgid "Same as my account setting"
-msgstr "Hetzelfde als mijn accountinstelling"
-
-#: cps/spa_strings.py
-msgid "Everything in my library"
-msgstr "Alles in mijn bibliotheek"
-
-#: cps/spa_strings.py
-msgid "Only these shelves"
-msgstr "Alleen deze planken"
-
-#: cps/spa_strings.py
-msgid "Choose which books this device keeps. Books you take off are removed from the device at its next sync; your place, highlights and notes stay saved."
-msgstr "Kies welke boeken dit apparaat bewaart. Boeken die u verwijdert, worden bij de volgende synchronisatie van het apparaat verwijderd; uw leespositie, markeringen en notities blijven bewaard."
-
-#: cps/spa_strings.py
-msgid "The shelf chosen for this device was deleted. It uses your account setting until you choose again."
-msgstr "De plank die voor dit apparaat is gekozen, is verwijderd. Het gebruikt uw accountinstelling totdat u opnieuw kiest."
-
-#: cps/spa_strings.py
-msgid "The shelf chosen for this device is no longer available. It uses your account setting until you choose again."
-msgstr "De plank die voor dit apparaat is gekozen, is niet meer beschikbaar. Het gebruikt uw accountinstelling totdat u opnieuw kiest."
-
-#: cps/spa_strings.py
-#, python-brace-format
-msgid "Account setting: {scope}"
-msgstr "Accountinstelling: {scope}"
-
-#: cps/spa_strings.py
-msgid "Could not save the book choice. Try again."
-msgstr "De boekkeuze kon niet worden opgeslagen. Probeer het opnieuw."

@@ -4960,6 +4960,49 @@ msgid ""
 msgstr ""
 
 #: cps/spa_strings.py
+msgid "Books on this device"
+msgstr ""
+
+#: cps/spa_strings.py
+msgid "Same as my account setting"
+msgstr ""
+
+#: cps/spa_strings.py
+msgid "Everything in my library"
+msgstr ""
+
+#: cps/spa_strings.py
+msgid "Only these shelves"
+msgstr ""
+
+#: cps/spa_strings.py
+msgid ""
+"Choose which books this device keeps. Books you take off are removed from "
+"the device at its next sync; your place, highlights and notes stay saved."
+msgstr ""
+
+#: cps/spa_strings.py
+msgid ""
+"The shelf chosen for this device was deleted. It uses your account setting "
+"until you choose again."
+msgstr ""
+
+#: cps/spa_strings.py
+msgid ""
+"The shelf chosen for this device is no longer available. It uses your "
+"account setting until you choose again."
+msgstr ""
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "Account setting: {scope}"
+msgstr ""
+
+#: cps/spa_strings.py
+msgid "Could not save the book choice. Try again."
+msgstr ""
+
+#: cps/spa_strings.py
 msgid "(no text captured)"
 msgstr ""
 

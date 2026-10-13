@@ -5234,6 +5234,56 @@ msgstr ""
 "d’extension NextGen Sync sur cet appareil pour choisir."
 
 #: cps/spa_strings.py
+msgid "Books on this device"
+msgstr "Livres sur cet appareil"
+
+#: cps/spa_strings.py
+msgid "Same as my account setting"
+msgstr "Comme dans les paramètres de mon compte"
+
+#: cps/spa_strings.py
+msgid "Everything in my library"
+msgstr "Tous les livres de ma bibliothèque"
+
+#: cps/spa_strings.py
+msgid "Only these shelves"
+msgstr "Uniquement ces étagères"
+
+#: cps/spa_strings.py
+msgid ""
+"Choose which books this device keeps. Books you take off are removed from "
+"the device at its next sync; your place, highlights and notes stay saved."
+msgstr ""
+"Choisissez les livres conservés sur cet appareil. Les livres retirés seront "
+"supprimés de l’appareil à sa prochaine synchronisation ; votre position de "
+"lecture, vos surlignages et vos notes restent enregistrés."
+
+#: cps/spa_strings.py
+msgid ""
+"The shelf chosen for this device was deleted. It uses your account setting "
+"until you choose again."
+msgstr ""
+"L’étagère choisie pour cet appareil a été supprimée. Il utilise les "
+"paramètres de votre compte jusqu’à ce que vous fassiez un nouveau choix."
+
+#: cps/spa_strings.py
+msgid ""
+"The shelf chosen for this device is no longer available. It uses your "
+"account setting until you choose again."
+msgstr ""
+"L’étagère choisie pour cet appareil n’est plus disponible. Il utilise les "
+"paramètres de votre compte jusqu’à ce que vous fassiez un nouveau choix."
+
+#: cps/spa_strings.py
+#, python-brace-format
+msgid "Account setting: {scope}"
+msgstr "Paramètre du compte : {scope}"
+
+#: cps/spa_strings.py
+msgid "Could not save the book choice. Try again."
+msgstr "Impossible d’enregistrer le choix des livres. Réessayez."
+
+#: cps/spa_strings.py
 msgid "(no text captured)"
 msgstr "(aucun texte enregistré)"
 
@@ -20992,40 +21042,3 @@ msgstr "Afficher la section Lu / Non lu"
 
 #~ msgid "Calibre library rating (1-10)"
 #~ msgstr "Note de la bibliothèque Calibre (1–10)"
-
-#: cps/spa_strings.py
-msgid "Books on this device"
-msgstr "Livres sur cet appareil"
-
-#: cps/spa_strings.py
-msgid "Same as my account setting"
-msgstr "Comme dans les paramètres de mon compte"
-
-#: cps/spa_strings.py
-msgid "Everything in my library"
-msgstr "Tous les livres de ma bibliothèque"
-
-#: cps/spa_strings.py
-msgid "Only these shelves"
-msgstr "Uniquement ces étagères"
-
-#: cps/spa_strings.py
-msgid "Choose which books this device keeps. Books you take off are removed from the device at its next sync; your place, highlights and notes stay saved."
-msgstr "Choisissez les livres conservés sur cet appareil. Les livres retirés seront supprimés de l’appareil à sa prochaine synchronisation ; votre position de lecture, vos surlignages et vos notes restent enregistrés."
-
-#: cps/spa_strings.py
-msgid "The shelf chosen for this device was deleted. It uses your account setting until you choose again."
-msgstr "L’étagère choisie pour cet appareil a été supprimée. Il utilise les paramètres de votre compte jusqu’à ce que vous fassiez un nouveau choix."
-
-#: cps/spa_strings.py
-msgid "The shelf chosen for this device is no longer available. It uses your account setting until you choose again."
-msgstr "L’étagère choisie pour cet appareil n’est plus disponible. Il utilise les paramètres de votre compte jusqu’à ce que vous fassiez un nouveau choix."
-
-#: cps/spa_strings.py
-#, python-brace-format
-msgid "Account setting: {scope}"
-msgstr "Paramètre du compte : {scope}"
-
-#: cps/spa_strings.py
-msgid "Could not save the book choice. Try again."
-msgstr "Impossible d’enregistrer le choix des livres. Réessayez."
