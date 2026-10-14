@@ -909,13 +909,42 @@ select.cwa-settings-select {
 
 /* Right-hand button cluster. The JS fills this span in edit mode (rename,
  * cut, move up/down, paste, merge, delete); margin-left:auto anchors it to
- * the row's right edge, level with the value name. */
+ * the row's right edge, level with the value name. The gap keeps adjacent
+ * icon buttons from reading as one control. */
 .cc-values-actions {
   display: inline-flex;
   align-items: center;
-  column-gap: 2px;
+  column-gap: 4px;
   margin-left: auto;
   flex-shrink: 0;
+}
+
+/* Count chip. Sized and shaped like the row's .btn-xs controls (12px text,
+ * 1px/5px padding, 3px radius) so it reads as part of the same control family,
+ * but it is an indicator, not a control: warning orange, default cursor, and
+ * no hover/active states to invite a press. The number means "books under
+ * this value", spelled out in the badge's title tooltip. */
+.cc-values-count {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+  background-color: #f0ad4e;
+  border: 1px solid #eea236;
+  color: #fff;
+  cursor: default;
+}
+
+.cc-values-count .glyphicon {
+  margin-right: 4px;
+}
+
+.cc-values-count .glyphicon,
+.cc-values-tag .glyphicon {
+  top: 1px;
+  line-height: 1;
 }
 
 /* Keep OPDS field errors readable on both Classic theme backgrounds. */

@@ -130,9 +130,22 @@
              escaped here and never interpolated as markup. #}
           <span class="cc-values-name">{{ row.name }}</span>
         </label>
-        <span class="badge">{{ row.total_count }}</span>
+        {# Book count: icon first, then the number. `glyphicon-book` is the
+           only book glyph in the shipped Bootstrap 3 build. The hover title
+           says what the number counts; the chip itself is an indicator, not a
+           control, so it looks like the row buttons but is not clickable. #}
+        <span class="badge cc-values-count" title="{{ _('Number of books') }}">
+          <span class="glyphicon glyphicon-book" aria-hidden="true"></span>
+          {{ row.total_count }}
+        </span>
         {% if row.has_children %}
-          <span class="label label-default cc-values-tag">{{ _('has sub-values') }}</span>
+          {# Icon replaces the text; the text survives as the accessible name
+             (aria-label for screen readers, title as the hover tooltip). #}
+          <span class="label label-default cc-values-tag"
+                title="{{ _('has sub-values') }}"
+                aria-label="{{ _('has sub-values') }}">
+            <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+          </span>
         {% endif %}
         <span class="cc-values-actions"></span>
         {# Per-row create, so a new value lands BESIDE the one you clicked
