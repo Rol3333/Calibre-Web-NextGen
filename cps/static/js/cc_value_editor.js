@@ -60,6 +60,11 @@
          * at all. Binding the stable slot instead, and branching on its current
          * class, makes the class swap irrelevant to wiring. */
         var $slot = $('.cc-values-toolbar .cc-values-toggle');
+        /* The tree tools (Expand all / Collapse all) act on the browse tree.
+         * Cached once: they are server-rendered and never re-rendered, so the
+         * set needs to survive every setMode call. Absent entirely on flat
+         * columns, where the .prop() calls below are a no-op on an empty set. */
+        var $treeTools = $('#hierarchy-expand-all, #hierarchy-collapse-all');
 var cutPath = null;
 var busy = false;
 /* Total rows in the page, fixed: narrowing hides rows, it never adds any, so
@@ -581,6 +586,11 @@ var totalRows = $rows.length;
         function setMode(editing) {
             $editor.prop('hidden', !editing);
             $browse.prop('hidden', editing);
+            /* Expand/Collapse operate on the browse tree, which is hidden for
+             * as long as this mode is up -- a visible control that cannot do
+             * anything reads as broken, so the buttons are disabled instead
+             * and handed back when Done returns to the browse view. */
+            $treeTools.prop('disabled', editing);
             cutPath = editing ? cutPath : null;
             if (!editing) {
                 showError('');

@@ -862,6 +862,62 @@ select.cwa-settings-select {
   display: inline-block;
 }
 
+/* ---- Custom-column value editor (classic) ------------------------------- */
+/* Mirrors the SPA's CcValueEditor.module.css (.row / .rowActions): a row once
+ * had no rules here at all, so the inline label, badge, tag and the buttons
+ * the script injects into .cc-values-actions simply flowed in line -- as soon
+ * as the hierarchy indent (40px/level padding) plus the name overflowed the
+ * width, the button cluster wrapped onto the next line, left-aligned, instead
+ * of sitting on the same line as the value. A flex row with margin-left:auto
+ * on the actions pushes the whole cluster to the right edge, as the SPA does.
+ */
+.cc-values-list {
+  margin: .3em 0;
+}
+
+.cc-values-row {
+  display: flex;
+  align-items: center;
+  column-gap: .4em;
+  padding: .15em 0;
+}
+
+/* Label keeps the per-depth inline padding; it owns the checkbox and name and
+ * is the one flex item allowed to shrink, so a long value name wraps within
+ * the label instead of shoving the buttons off the row. */
+.cc-values-check {
+  display: flex;
+  align-items: center;
+  column-gap: .4em;
+  flex: 1 1 auto;
+  min-width: 0;
+  margin-bottom: 0;
+  font-weight: normal;
+  cursor: pointer;
+}
+
+.cc-values-name {
+  overflow-wrap: anywhere;
+}
+
+.cc-values-row .badge,
+.cc-values-row .label,
+.cc-values-create-under,
+.cc-values-focus-here {
+  flex-shrink: 0;
+}
+
+/* Right-hand button cluster. The JS fills this span in edit mode (rename,
+ * cut, move up/down, paste, merge, delete); margin-left:auto anchors it to
+ * the row's right edge, level with the value name. */
+.cc-values-actions {
+  display: inline-flex;
+  align-items: center;
+  column-gap: 2px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
 /* Keep OPDS field errors readable on both Classic theme backgrounds. */
 .settings-container .opds-filename-error {
   color: #8c2020;
