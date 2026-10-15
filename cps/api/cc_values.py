@@ -397,7 +397,7 @@ def rename_cc_value(col_id):
             return _conflict(_('That value name is already in use'), [])
         except SQLAlchemyError:
             calibre_db.session.rollback()
-            log.error("Rename of custom column %s value %r failed", col_id, path)
+            log.error("Rename of custom column %s value %r failed", col_id, path, exc_info=True)
             return jsonify({"error": {"code": "server_error",
                                       "message": _("The value could not be renamed")}}), 500
         _invalidate_hierarchy_cache()
@@ -460,7 +460,7 @@ def reorder_cc_value(col_id):
     try:
         tree = calibre_db.get_hierarchical_tree(col_id)
     except SQLAlchemyError:
-        log.error("Could not read custom column %s to reorder it", col_id)
+        log.error("Could not read custom column %s to reorder it", col_id, exc_info=True)
         return jsonify({"error": {"code": "server_error",
                                   "message": _("The values for this column could not be "
                                                "loaded.")}}), 500
@@ -492,7 +492,7 @@ def reorder_cc_value(col_id):
             calibre_db.session.commit()
         except SQLAlchemyError:
             calibre_db.session.rollback()
-            log.error("Reorder of custom column %s value %r failed", col_id, path)
+            log.error("Reorder of custom column %s value %r failed", col_id, path, exc_info=True)
             return jsonify({"error": {"code": "server_error",
                                       "message": _("The value could not be moved")}}), 500
         _invalidate_hierarchy_cache()
@@ -619,7 +619,7 @@ def merge_cc_values(col_id):
             calibre_db.session.commit()
         except SQLAlchemyError:
             calibre_db.session.rollback()
-            log.error("Merge in custom column %s failed", col_id)
+            log.error("Merge in custom column %s failed", col_id, exc_info=True)
             return jsonify({"error": {"code": "server_error",
                                       "message": _("The values could not be merged")}}), 500
 
@@ -685,7 +685,7 @@ def delete_cc_values(col_id):
             calibre_db.session.commit()
         except SQLAlchemyError:
             calibre_db.session.rollback()
-            log.error("Delete in custom column %s failed", col_id)
+            log.error("Delete in custom column %s failed", col_id, exc_info=True)
             return jsonify({"error": {"code": "server_error",
                                       "message": _("The values could not be deleted")}}), 500
         _invalidate_hierarchy_cache()
@@ -781,7 +781,7 @@ def move_cc_value(col_id):
             return _conflict(_('A value with that name is already there'), [])
         except SQLAlchemyError:
             calibre_db.session.rollback()
-            log.error("Move of custom column %s value %r failed", col_id, path)
+            log.error("Move of custom column %s value %r failed", col_id, path, exc_info=True)
             return jsonify({"error": {"code": "server_error",
                                       "message": _("The value could not be moved")}}), 500
         _invalidate_hierarchy_cache()
@@ -854,7 +854,7 @@ def create_cc_value(col_id):
             return _conflict(_('That value already exists'), [])
         except SQLAlchemyError:
             calibre_db.session.rollback()
-            log.error("Create in custom column %s failed", col_id)
+            log.error("Create in custom column %s failed", col_id, exc_info=True)
             return jsonify({"error": {"code": "server_error",
                                       "message": _("The value could not be created")}}), 500
         # A create with no anchor writes no order row, on purpose: the value has
