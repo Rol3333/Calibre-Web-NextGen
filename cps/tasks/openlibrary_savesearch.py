@@ -13,9 +13,9 @@ metadata apply — the auto-fetch in ``metadata_helper`` or a manual apply in
 ``editbooks.edit_book_param`` — so it runs whichever metadata provider won.
 The saved data is keyed on the book's own ISBN, not on the provider.
 
-This is *not* the library backup/archival workflow (``TaskBackupMetadata``,
-which writes ``metadata.opf``). It only records what Open Library returned for
-the book, so the lookup can be reproduced later without re-querying.
+This is *not* the library backup workflow (``TaskBackupMetadata``, which
+writes ``metadata.opf``). It only records what Open Library returned for the
+book, so the lookup can be reproduced later without re-querying.
 
 Layout written under ``<book_path>/<book.path>/data/openlibrary/``:
 
@@ -24,20 +24,23 @@ Layout written under ``<book_path>/<book.path>/data/openlibrary/``:
   record's position (1-based), ``<item>``/``<offset>`` come from the
   ``source_records`` locator with the ``:``/``/`` stripped so the name is
   filesystem-safe.
-* ``sources.json`` — one entry per written file with its ``locator``, the
-  record's SHA-256 and the fetch date (UTC, ISO-8601).
+* ``sources.json`` — the manifest and the archive's completion record: one
+  entry per source with its ``locator``, ``file``, SHA-256, fetch date and, for
+  a source that could not be retrieved, its ``error``.
 
-The task is deliberately idempotent and polite: a book that already has
-``edition.json`` is skipped, and at least ``MIN_INTERVAL`` seconds elapse
-between Open Library calls. ``OLUnavailable`` (timeout / 403 / 429 / 5xx) is
-retried with exponential back-off and finally logged, never raised, so one
-rate-limited book cannot fail the whole run.
+Completion is driven by the manifest, never by the mere presence of
+``edition.json``: a run that saved the edition but failed a MARC download is
+``partial`` and is retried on the next run, while ``complete``/``no_marc`` are
+left alone. Files are written atomically (temp file + ``os.replace``) and the
+manifest is written last, so an interrupted run cannot leave a file that looks
+complete. A per-book lock keeps two tasks queued close together from racing.
 """
 
 import hashlib
 import json
 import os
 import re
+import threading
 import time
 from datetime import datetime, timezone
 
@@ -49,16 +52,32 @@ from cps.services.openlibrary_edition import (
     fetch_marc,
     marc_locators,
 )
-from cps.services.worker import CalibreTask
+from cps.services.worker import CalibreTask, STAT_CANCELLED, STAT_ENDED
 from flask_babel import lazy_gettext as N_
 
 log = logger.create()
 
-# Open Library asks for <= 1 request/second; stay just above it.
-MIN_INTERVAL = 1.1
 # Cap on a single back-off wait, and on the attempts per request.
 MAX_BACKOFF = 8
 MAX_ATTEMPTS = 4
+
+# Manifest status values.
+STATUS_COMPLETE = "complete"    # edition + every discovered MARC source saved
+STATUS_PARTIAL = "partial"      # edition saved, one or more MARC sources failed
+STATUS_NO_MARC = "no_marc"      # edition saved, no MARC locators were present
+STATUS_FAILED = "failed"        # edition retrieval or the essential write failed
+
+# One lock per book path, so two tasks for the same book cannot interleave.
+_BOOK_LOCKS = {}
+_BOOK_LOCKS_GUARD = threading.Lock()
+
+
+def _book_lock(key):
+    with _BOOK_LOCKS_GUARD:
+        lock = _BOOK_LOCKS.get(key)
+        if lock is None:
+            lock = _BOOK_LOCKS[key] = threading.Lock()
+        return lock
 
 
 def _safe(value: str) -> str:
@@ -69,8 +88,9 @@ def _safe(value: str) -> str:
 def _book_isbn(book) -> str:
     """The book's first checksum-valid ISBN-13, or ''."""
     for identifier in getattr(book, "identifiers", []) or []:
-        if (identifier.type or "").lower() in ("isbn", "isbn13", "isbn_13", "isbn10", "isbn_10"):
-            isbn = normalize_isbn(identifier.val)
+        itype = (getattr(identifier, "type", "") or "").lower()
+        if itype in ("isbn", "isbn13", "isbn_13", "isbn10", "isbn_10"):
+            isbn = normalize_isbn(getattr(identifier, "val", ""))
             if isbn:
                 return isbn
     return ""
@@ -83,7 +103,7 @@ class TaskSaveOpenLibrarySearch(CalibreTask):
         super().__init__(task_message)
         self.book_id = book_id
         self.log = logger.create()
-        self._last_call = 0.0
+        self.calibre_db = None
 
     # -- CalibreTask API ---------------------------------------------------
 
@@ -118,100 +138,191 @@ class TaskSaveOpenLibrarySearch(CalibreTask):
 
     # -- work --------------------------------------------------------------
 
+    def _cancelled(self):
+        return self.stat in (STAT_CANCELLED, STAT_ENDED)
+
     def _save_all(self):
         books = self.calibre_db.session.query(db.Books).all()
         count = len(books) or 1
         for i, book in enumerate(books, start=1):
+            if self._cancelled():
+                return
             self._save_book(book)
             self.progress = i / count
 
     def _save_book(self, book):
-        if book is None:
+        if book is None or self._cancelled():
             return
         isbn = _book_isbn(book)
         if not isbn:
             self.log.debug("Book %s has no valid ISBN; skipping Open Library save", getattr(book, "id", "?"))
             return
 
+        # Google Drive storage has no sidecar-directory equivalent here; say so
+        # rather than writing to an unrelated local path.
+        if getattr(config, "config_use_google_drive", False):
+            self.log.warning("Open Library save is not supported with Google Drive storage; "
+                             "skipping book %s", getattr(book, "id", "?"))
+            return
+
         target = os.path.join(config.get_book_path(), book.path, "data", "openlibrary")
+        with _book_lock(book.path):
+            self._save_book_locked(book, isbn, target)
+
+    def _save_book_locked(self, book, isbn, target):
+        manifest_path = os.path.join(target, "sources.json")
+        manifest = self._read_manifest(manifest_path)
+        if manifest and manifest.get("status") in (STATUS_COMPLETE, STATUS_NO_MARC):
+            self.log.debug("Book %s already has complete Open Library data; skipping", book.id)
+            return
+
+        # Reuse the already-saved edition and verified MARC files from a
+        # previous partial run instead of re-fetching them.
+        sources = list(manifest.get("sources", [])) if manifest else []
+        done = {s["locator"]: s for s in sources if s.get("sha256") and not s.get("error")}
+        failures = [s for s in sources if s.get("error")]
+
         edition_path = os.path.join(target, "edition.json")
-        if os.path.exists(edition_path):
-            self.log.debug("Book %s already has saved Open Library data; skipping", book.id)
-            return
-
-        try:
-            edition = self._get_edition(isbn)
-        except OLUnavailable as exc:
-            self.log.warning("Open Library unavailable for %s: %s", isbn, exc)
-            return
-        if not edition:
-            self.log.info("No Open Library edition for ISBN %s (book %s)", isbn, book.id)
-            return
-
-        os.makedirs(target, exist_ok=True)
-        sources = [{
-            "file": "edition.json",
-            "locator": f"isbn:{isbn}",
-            "sha256": self._write_bytes(edition_path, self._dumps(edition).encode("utf-8")),
-            "fetched_at": self._now(),
-        }]
-
-        for n, (item, fname, off, ln) in enumerate(marc_locators(edition), start=1):
+        if not done.get(f"isbn:{isbn}"):
+            if self._cancelled():
+                return
             try:
-                data = self._get_marc(item, fname, off, ln)
-            except (OLUnavailable, ValueError) as exc:
-                self.log.warning("MARC %s/%s@%s unavailable: %s", item, fname, off, exc)
+                edition = self._get_edition(isbn)
+            except OLUnavailable as exc:
+                self.log.warning("Open Library unavailable for %s: %s", isbn, exc)
+                self._write_manifest(manifest_path, isbn, STATUS_FAILED, sources, edition_key=None)
+                return
+            if not edition:
+                self.log.info("No Open Library edition for ISBN %s (book %s)", isbn, book.id)
+                self._write_manifest(manifest_path, isbn, STATUS_FAILED, sources, edition_key=None)
+                return
+            os.makedirs(target, exist_ok=True)
+            digest = self._atomic_write(edition_path, self._dumps(edition).encode("utf-8"))
+            done[f"isbn:{isbn}"] = {
+                "file": "edition.json", "locator": f"isbn:{isbn}",
+                "sha256": digest, "fetched_at": self._now(),
+            }
+            edition_key = self._edition_key(edition)
+        else:
+            edition = None
+            edition_key = manifest.get("edition_key")
+
+        sources = list(done.values())
+        locators = marc_locators(edition) if edition else self._locators_from(sources)
+        failed = []
+        for n, (item, fname, off, ln) in enumerate(locators, start=1):
+            if self._cancelled():
+                self._write_manifest(manifest_path, isbn, STATUS_PARTIAL, sources, edition_key)
+                return
+            locator = f"marc:{item}/{fname}:{off}:{ln}"
+            if locator in done:
                 continue
             name = f"marc_{n}_{_safe(item)}_{_safe(off)}.mrc"
-            path = os.path.join(target, name)
-            sources.append({
-                "file": name,
-                "locator": f"marc:{item}/{fname}:{off}:{ln}",
-                "sha256": self._write_bytes(path, data),
-                "fetched_at": self._now(),
-            })
+            try:
+                data = self._get_marc(item, fname, off, ln)
+                digest = self._atomic_write(os.path.join(target, name), data)
+                sources.append({
+                    "file": name, "locator": locator, "sha256": digest,
+                    "fetched_at": self._now(),
+                })
+            except (OLUnavailable, ValueError) as exc:
+                self.log.warning("MARC %s/%s@%s unavailable: %s", item, fname, off, exc)
+                failed.append({"locator": locator, "error": str(exc)})
+                sources.append({"file": name, "locator": locator, "error": str(exc)})
 
-        self._write_bytes(
-            os.path.join(target, "sources.json"),
-            self._dumps({"isbn": isbn, "sources": sources}).encode("utf-8"),
-        )
-        self.log.info("Saved Open Library search data for book %s (%s)", book.id, isbn)
+        if self._cancelled():
+            self._write_manifest(manifest_path, isbn, STATUS_PARTIAL, sources, edition_key)
+            return
+
+        if not locators:
+            status = STATUS_NO_MARC
+        elif failed:
+            status = STATUS_PARTIAL
+        else:
+            status = STATUS_COMPLETE
+        self._write_manifest(manifest_path, isbn, status, sources, edition_key)
+        self.log.info("Saved Open Library search data for book %s (%s): %s",
+                      book.id, isbn, status)
 
     # -- network (rate-limited, backed off) --------------------------------
-
-    def _throttle(self):
-        wait = MIN_INTERVAL - (time.monotonic() - self._last_call)
-        if wait > 0:
-            time.sleep(wait)
-        self._last_call = time.monotonic()
 
     def _get_edition(self, isbn):
         delay = 1.0
         for attempt in range(MAX_ATTEMPTS):
-            self._throttle()
+            if self._cancelled():
+                raise OLUnavailable("cancelled")
             try:
                 return fetch_edition(isbn)
             except OLUnavailable:
                 if attempt == MAX_ATTEMPTS - 1:
                     raise
-                time.sleep(min(delay, MAX_BACKOFF))
+                self._backoff(delay)
                 delay *= 2
         return None
 
     def _get_marc(self, item, fname, off, ln):
         delay = 1.0
         for attempt in range(MAX_ATTEMPTS):
-            self._throttle()
+            if self._cancelled():
+                raise OLUnavailable("cancelled")
             try:
                 return fetch_marc(item, fname, off, ln)
             except OLUnavailable:
                 if attempt == MAX_ATTEMPTS - 1:
                     raise
-                time.sleep(min(delay, MAX_BACKOFF))
+                self._backoff(delay)
                 delay *= 2
         return None
 
+    def _backoff(self, delay):
+        """Sleep in small slices so a cancel is noticed promptly."""
+        end = time.monotonic() + min(delay, MAX_BACKOFF)
+        while time.monotonic() < end:
+            if self._cancelled():
+                return
+            time.sleep(min(0.2, end - time.monotonic()))
+
     # -- helpers -----------------------------------------------------------
+
+    @staticmethod
+    def _read_manifest(path):
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            return data if isinstance(data, dict) else None
+        except (OSError, ValueError):
+            return None
+
+    @staticmethod
+    def _locators_from(sources):
+        """Recover locators from a manifest when the edition JSON is gone."""
+        out = []
+        for s in sources:
+            loc = s.get("locator", "")
+            m = re.match(r"^marc:([^/]+)/([^:]+):(\d+):(\d+)$", loc)
+            if m:
+                out.append(m.groups())
+        return out
+
+    @staticmethod
+    def _edition_key(edition):
+        key = edition.get("key")
+        if key:
+            return key
+        works = edition.get("works") or []
+        if works and isinstance(works[0], dict):
+            return works[0].get("key")
+        return None
+
+    def _write_manifest(self, path, isbn, status, sources, edition_key):
+        payload = {
+            "isbn": isbn,
+            "edition_key": edition_key,
+            "status": status,
+            "sources": sources,
+            "updated_at": self._now(),
+        }
+        self._atomic_write(path, self._dumps(payload).encode("utf-8"))
 
     @staticmethod
     def _now():
@@ -222,7 +333,12 @@ class TaskSaveOpenLibrarySearch(CalibreTask):
         return json.dumps(obj, ensure_ascii=False, indent=2, sort_keys=True)
 
     @staticmethod
-    def _write_bytes(path, data):
-        with open(path, "wb") as f:
+    def _atomic_write(path, data):
+        """Write ``data`` to ``path`` atomically; return its SHA-256."""
+        tmp = f"{path}.tmp-{os.getpid()}-{threading.get_ident()}"
+        with open(tmp, "wb") as f:
             f.write(data)
+            f.flush()
+            os.fsync(f.fileno())
+        os.replace(tmp, path)
         return hashlib.sha256(data).hexdigest()

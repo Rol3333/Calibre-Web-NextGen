@@ -21,13 +21,14 @@ from urllib.parse import quote
 
 import requests
 
-from cps import constants
+from cps import constants, logger
 from cps.isoLanguages import get_language_name
 from cps.services.isbn import isbn13 as normalize_isbn
 from cps.services.Metadata import MetaRecord, MetaSourceInfo, Metadata
 from cps.services.openlibrary_edition import (
     OLUnavailable,
     fetch_edition,
+    fetch_marc,
     marc_locators,
     parse_marc,
     series_from_marc,
@@ -68,6 +69,10 @@ class OpenLibrary(Metadata):
 
     SEARCH_LIMIT = 10
     REQUEST_TIMEOUT = 12
+    # Foreground MARC enrichment is bounded: a search dialog must not wait on
+    # Archive.org. The full set of locators is retrieved by the save task.
+    MARC_MAX_LOCATORS = 1
+    MARC_TIMEOUT = 5
 
     def search(
         self, query: str, generic_cover: str = "", locale: str = "en"
@@ -174,20 +179,24 @@ class OpenLibrary(Metadata):
 
     @staticmethod
     def _authors(edition: Dict) -> List[str]:
-        """Author names from the edition's author keys.
+        """Author names from ``by_statement``, conservatively.
 
-        The edition object only carries ``{"key": "/authors/OL…A"}`` refs, so
-        the names come from ``by_statement`` ("David Nicolle.") when present.
-        A full name lookup would cost one request per author; the search
-        endpoint already returns proper names for the common path.
+        ``by_statement`` is a bibliographic statement, not a structured author
+        list: it can lead with "by", and can name editors, illustrators or
+        translators. Only a plain statement is used, and a leading "by" is
+        stripped. Anything that looks like a contributor list (semicolons,
+        bracketed roles, "ed."/"ill."/"trans.") is left to the search endpoint,
+        which returns proper author names.
         """
         by_statement = (edition.get("by_statement") or "").strip()
-        if by_statement:
-            # "David Nicolle." / "Smith, John ; Doe, Jane" → drop trailing dots.
-            names = [n.strip(" .;,") for n in re.split(r";", by_statement) if n.strip(" .;,")]
-            if names:
-                return names
-        return []
+        if not by_statement:
+            return []
+        # A structured statement with several contributors is not safe to split.
+        if ";" in by_statement or re.search(r"[\[\]]|\b(ed|eds|editor|editors|ill|illustrator|"
+                                            r"trans|translator|tr)\b\.?", by_statement, re.I):
+            return []
+        name = re.sub(r"^\s*by\s+", "", by_statement, flags=re.I).strip(" .;,")
+        return [name] if name else []
 
     @staticmethod
     def _edition_cover_url(edition: Dict, generic_cover: str) -> str:
@@ -251,18 +260,22 @@ class OpenLibrary(Metadata):
 
         The search endpoint has no series, but the edition's ``source_records``
         point at the MARC records the catalog was built from, and those carry
-        the authoritative series statement. Best-effort: any failure (network,
-        MARC-8, unparsable) yields ``(None, 0)`` and the series fill simply
-        doesn't happen for this book.
+        the authoritative series statement. Foreground lookup is bounded to
+        ``MARC_MAX_LOCATORS`` so a slow Archive.org cannot stall the dialog; the
+        save task retrieves every locator. Expected per-source failures (a
+        MARC-8 record, a download error, malformed data) are logged at debug
+        and skipped so a later valid locator can still supply the series.
         """
-        try:
-            for item, fname, off, ln in marc_locators(edition):
+        for item, fname, off, ln in marc_locators(edition)[:OpenLibrary.MARC_MAX_LOCATORS]:
+            try:
                 data = fetch_marc(item, fname, off, ln)
                 name, index = series_from_marc(parse_marc(data))
                 if name:
                     return name, index if index is not None else 0
-        except Exception as exc:  # noqa: BLE001 — best-effort enrichment
-            log.debug("OpenLibrary MARC series lookup failed: %s", exc)
+            except (OLUnavailable, ValueError) as exc:
+                log.debug("OpenLibrary: skipping MARC source %s/%s@%s: %s",
+                          item, fname, off, exc)
+                continue
         return None, 0
 
     def _parse_doc(

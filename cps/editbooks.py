@@ -916,15 +916,11 @@ def edit_book_param(param, vals):
 def _queue_openlibrary_save(book_id):
     """Queue saving the Open Library search data for ``book_id``.
 
-    The saved data is keyed on the book's own ISBN, so it runs whichever
-    provider supplied the metadata. Best-effort and never raises: a failure to
-    queue the save must not turn a successful metadata edit into an error.
+    Thin wrapper over the shared helper so the manual apply and the auto-fetch
+    cannot drift. Best-effort and never raises.
     """
-    try:
-        from .tasks.openlibrary_savesearch import TaskSaveOpenLibrarySearch
-        WorkerThread.add(None, TaskSaveOpenLibrarySearch(book_id=book_id))
-    except Exception as e:  # noqa: BLE001 — saving is best-effort
-        log.warning("Could not queue Open Library search-data save for book %s: %s", book_id, e)
+    from .services.openlibrary_save import queue_save_search_data
+    queue_save_search_data(book_id)
 
 
 @editbook.route("/ajax/sort_value/<field>/<int:bookid>")
