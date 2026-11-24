@@ -61,6 +61,7 @@ eggs/
 .eggs/
 lib/
 lib64/
+thumbnails/
 # Python-packaging `lib/` rule above. These ship source, not build output.
 !frontend/src/lib/
 !frontend/src/lib/**
