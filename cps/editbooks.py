@@ -871,6 +871,12 @@ def edit_book_param(param, vals):
         helper.mark_book_modified(book, set_dirty=metadata_changed, metadata_only=True)
 
         calibre_db.session.commit()
+        # A manual metadata apply (the "Search metadata" modal, the inline
+        # editor) lands here, not in metadata_helper's auto-fetch. Queue the
+        # Open Library archive for the book whose metadata just changed, so a
+        # user-applied record is archived too. Best-effort, after the commit.
+        if metadata_changed:
+            _queue_openlibrary_save(book.id)
         # revert change for sort if automatic fields link is deactivated
         if param == 'title' and vals.get('checkT') == "false":
             book.sort = sort_param
@@ -905,6 +911,20 @@ def edit_book_param(param, vals):
                                    'msg': 'Database error: {}'.format(e.orig if hasattr(e, "orig") else e)}),
                        mimetype='application/json')
     return ret
+
+
+def _queue_openlibrary_save(book_id):
+    """Queue saving the Open Library search data for ``book_id``.
+
+    The saved data is keyed on the book's own ISBN, so it runs whichever
+    provider supplied the metadata. Best-effort and never raises: a failure to
+    queue the save must not turn a successful metadata edit into an error.
+    """
+    try:
+        from .tasks.openlibrary_savesearch import TaskSaveOpenLibrarySearch
+        WorkerThread.add(None, TaskSaveOpenLibrarySearch(book_id=book_id))
+    except Exception as e:  # noqa: BLE001 — saving is best-effort
+        log.warning("Could not queue Open Library search-data save for book %s: %s", book_id, e)
 
 
 @editbook.route("/ajax/sort_value/<field>/<int:bookid>")

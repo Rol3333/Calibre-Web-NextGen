@@ -156,6 +156,7 @@ def fetch_and_apply_metadata(book_id: int, user_enabled: bool = False) -> bool:
                 if _apply_metadata_to_book(book, metadata, calibre_db_instance):
                     log.info(f"Successfully applied metadata from {provider.__name__} for book: {searched_title}")
                     metadata_found = True
+                    _queue_openlibrary_save(book)
                     break
                     
             except Exception as e:
@@ -171,6 +172,22 @@ def fetch_and_apply_metadata(book_id: int, user_enabled: bool = False) -> bool:
     except Exception as e:
         log.error(f"Error in fetch_and_apply_metadata: {e}", exc_info=True)
         return False
+
+
+def _queue_openlibrary_save(book):
+    """Queue saving the Open Library search data for ``book``.
+
+    Runs whichever provider won: the saved data is keyed on the book's own ISBN,
+    not on the provider. Best-effort and never raises — a failure to queue the
+    save must not undo a successful metadata apply.
+    """
+    try:
+        from cps.services.worker import WorkerThread
+        from cps.tasks.openlibrary_savesearch import TaskSaveOpenLibrarySearch
+        WorkerThread.add(None, TaskSaveOpenLibrarySearch(book_id=getattr(book, "id", None)))
+    except Exception as e:  # noqa: BLE001 — saving is best-effort
+        log.warning("Could not queue Open Library search-data save for book %s: %s",
+                    getattr(book, "id", "?"), e)
 
 
 def _apply_metadata_to_book(book, metadata, calibre_db_instance) -> bool:
