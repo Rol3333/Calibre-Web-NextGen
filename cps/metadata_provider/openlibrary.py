@@ -19,9 +19,7 @@ import re
 from typing import Dict, List, Optional
 from urllib.parse import quote
 
-import requests
-
-from cps import constants, logger
+from cps import logger
 from cps.isoLanguages import get_language_name
 from cps.services.isbn import isbn13 as normalize_isbn
 from cps.services.Metadata import MetaRecord, MetaSourceInfo, Metadata
@@ -31,6 +29,7 @@ from cps.services.openlibrary_edition import (
     fetch_marc,
     marc_locators,
     parse_marc,
+    search_books,
     series_from_marc,
 )
 
@@ -56,7 +55,6 @@ class OpenLibrary(Metadata):
     # so this provider can fill a series the winning provider left empty.
     FILLS_SERIES = True
 
-    SEARCH_URL = "https://openlibrary.org/search.json"
     BOOK_URL_TEMPLATE = "https://openlibrary.org{key}"  # key starts with /works/...
     COVER_BY_ID_URL = "https://covers.openlibrary.org/b/id/{cover_id}-L.jpg"
     COVER_BY_OLID_URL = "https://covers.openlibrary.org/b/olid/{olid}-L.jpg"
@@ -68,11 +66,9 @@ class OpenLibrary(Metadata):
     ])
 
     SEARCH_LIMIT = 10
-    REQUEST_TIMEOUT = 12
     # Foreground MARC enrichment is bounded: a search dialog must not wait on
     # Archive.org. The full set of locators is retrieved by the save task.
     MARC_MAX_LOCATORS = 1
-    MARC_TIMEOUT = 5
 
     def search(
         self, query: str, generic_cover: str = "", locale: str = "en"
@@ -92,20 +88,19 @@ class OpenLibrary(Metadata):
             return []
         q = "+".join(quote(t.encode("utf-8")) for t in title_tokens)
 
-        url = (
-            f"{OpenLibrary.SEARCH_URL}?q={q}"
-            f"&fields={OpenLibrary.SEARCH_FIELDS}"
-            f"&limit={OpenLibrary.SEARCH_LIMIT}"
-        )
-        headers = {"User-Agent": constants.USER_AGENT}
-
-        response = requests.get(url, headers=headers, timeout=OpenLibrary.REQUEST_TIMEOUT)
-        response.raise_for_status()
-
+        # The search request goes through the shared Open Library HTTP service:
+        # same rate limiter, explicit timeouts, bounded retries with backoff and
+        # Retry-After handling. A failure is logged and reported as an empty
+        # result, but the failure information is preserved in the log (fixes_v2
+        # P1) rather than being indistinguishable from "no results".
         try:
-            payload = response.json()
-        except ValueError:
-            raise ProviderRefused("error", "Open Library returned an invalid response.") from None
+            payload = search_books(q, OpenLibrary.SEARCH_FIELDS, OpenLibrary.SEARCH_LIMIT)
+        except OLUnavailable as exc:
+            log.warning("OpenLibrary search failed: %s", exc)
+            return []
+        except ValueError as exc:
+            log.warning("OpenLibrary search returned invalid data: %s", exc)
+            return []
 
         results: List[MetaRecord] = []
         for doc in payload.get("docs", []) or []:

@@ -1644,12 +1644,14 @@ export function useConversionTask(bookId: string | number, taskId: string | null
 /** Search online metadata providers (reuses the legacy /metadata/search).
  *  `providers` restricts the run to specific provider ids — used by the
  *  editions drill-down, whose query is one provider's own identifier syntax
- *  and means nothing to the rest (#303). Omit it for a normal search. */
+ *  and means nothing to the rest (#303). Omit it for a normal search.
+ *  `bookId` (a book's edit page) makes the server queue the Open Library
+ *  search-data save for that book as soon as the search runs. */
 export function useMetadataSearch() {
   return useMutation({
-    mutationFn: ({ query, providers }: { query: string; providers?: string[] }) =>
+    mutationFn: ({ query, providers, bookId }: { query: string; providers?: string[]; bookId?: string }) =>
       apiPostForm<MetaSearchResponse>('/metadata/search',
-        providers?.length ? { query, providers: providers.join(',') } : { query }),
+        { query, ...(providers?.length ? { providers: providers.join(',') } : {}), ...(bookId ? { book_id: bookId } : {}) }),
   });
 }
 

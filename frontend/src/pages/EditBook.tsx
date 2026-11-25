@@ -289,7 +289,7 @@ export function EditBook({ id }: { id: string }) {
 
       <CoverManager id={id} />
 
-      <MetadataFetch defaultQuery={form.title} onApply={applySelected} />
+      <MetadataFetch defaultQuery={form.title} onApply={applySelected} bookId={id} />
 
       <form className={styles.form} onSubmit={onSubmit}>
         <Field label={t('Title')} error={fieldErrors.title}>
@@ -414,8 +414,8 @@ export function EditBook({ id }: { id: string }) {
  *  ComicVine, …). Each result expands a per-field checklist so you apply only the
  *  values you want (fork #580) instead of overwriting the whole form. Reuses the
  *  legacy /metadata/search endpoint (per-user provider toggles live there). */
-function MetadataFetch({ defaultQuery, onApply }:
-  { defaultQuery: string; onApply: (r: MetaResult, sel: Set<ApplyKey>) => void }) {
+function MetadataFetch({ defaultQuery, onApply, bookId }:
+  { defaultQuery: string; onApply: (r: MetaResult, sel: Set<ApplyKey>) => void; bookId?: string }) {
   const t = useT();
   const search = useMetadataSearch();
   const [open, setOpen] = useState(false);
@@ -445,7 +445,7 @@ function MetadataFetch({ defaultQuery, onApply }:
     const mine = ++seq.current;
     setErr(null);
     setQuery(term);
-    search.mutate({ query: term, providers: ed ? ['hardcover'] : undefined }, {
+    search.mutate({ query: term, providers: ed ? ['hardcover'] : undefined, bookId }, {
       onSuccess: (r) => {
         if (mine !== seq.current) return; // superseded/abandoned — ignore
         if (ed) {

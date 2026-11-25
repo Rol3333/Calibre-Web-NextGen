@@ -375,6 +375,9 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title text-center" id="metaModalLabel">{{_('Fetch Metadata')}}</h4>
         <form class="padded-bottom" id="meta-search">
+          {# The classic search endpoint queues the Open Library search-data
+             save only when it knows which book the search belongs to. #}
+          <input type="hidden" name="book_id" value="{{ book.id }}">
           <div class="input-group">
             <label class="sr-only" for="keyword">{{_('Keyword')}}</label>
             <input type="text" class="form-control" id="keyword" name="keyword" placeholder="{{_("Search keyword")}}">

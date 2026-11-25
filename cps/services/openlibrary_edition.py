@@ -27,6 +27,7 @@ processes that share one public IP, so a multi-process deployment should either
 run a single worker or accept the conservative 1.1 s interval per process.
 """
 
+import random
 import re
 import threading
 import time
@@ -38,6 +39,12 @@ from cps import constants
 
 HEADERS = {"User-Agent": constants.USER_AGENT}   # add a contact email later for 3 req/s
 _LOC = re.compile(r"^marc:([^/]+)/([^:]+):(\d+):(\d+)$")
+
+SEARCH_URL = "https://openlibrary.org/search.json"
+SEARCH_TIMEOUT = (10, 30)
+SEARCH_MAX_ATTEMPTS = 3
+SEARCH_BACKOFF_BASE = 1.0
+SEARCH_BACKOFF_MAX = 8.0
 
 # One request per this many seconds, shared by every caller in this process.
 MIN_INTERVAL = 1.1
@@ -74,6 +81,66 @@ def _reserve_archive_slot():
     with _RATE_LOCK:
         _LAST_ARCHIVE_CALL = _throttle(_LAST_ARCHIVE_CALL, ARCHIVE_MIN_INTERVAL)
         return _LAST_ARCHIVE_CALL
+
+
+def _retry_after_seconds(response):
+    """Parse the Retry-After header (seconds or an HTTP date), or None."""
+    value = response.headers.get("Retry-After")
+    if not value:
+        return None
+    try:
+        return float(value)
+    except ValueError:
+        return None
+
+
+def _jittered_backoff(delay):
+    """Exponential backoff with jitter, capped at SEARCH_BACKOFF_MAX."""
+    return min(delay, SEARCH_BACKOFF_MAX) * (0.5 + random.random())
+
+
+def search_books(query, fields, limit):
+    """Search Open Library through the shared HTTP service.
+
+    ``query`` is the URL-encoded ``q`` value (the provider builds it from its
+    title tokens). Uses the shared rate limiter, explicit timeouts, bounded
+    retries with exponential backoff + jitter for connection errors, timeouts,
+    429 and transient 5xx, and honours ``Retry-After``. Permanent 4xx errors
+    and malformed JSON raise ``ValueError`` (not retried); a retryable failure
+    that exhausts the attempts raises ``OLUnavailable`` so the caller can
+    distinguish "no results" from "the source failed".
+    """
+    url = f"{SEARCH_URL}?q={query}&fields={fields}&limit={limit}"
+    delay = SEARCH_BACKOFF_BASE
+    for attempt in range(SEARCH_MAX_ATTEMPTS):
+        _reserve_ol_slot()
+        try:
+            r = requests.get(url, headers=HEADERS, timeout=SEARCH_TIMEOUT)
+        except requests.RequestException as exc:
+            if attempt == SEARCH_MAX_ATTEMPTS - 1:
+                raise OLUnavailable(type(exc).__name__) from exc
+            time.sleep(_jittered_backoff(delay))
+            delay *= 2
+            continue
+        try:
+            if r.status_code == 429 or r.status_code >= 500:
+                if attempt == SEARCH_MAX_ATTEMPTS - 1:
+                    raise OLUnavailable(f"HTTP {r.status_code}")
+                retry_after = _retry_after_seconds(r)
+                time.sleep(retry_after if retry_after is not None else _jittered_backoff(delay))
+                delay *= 2
+                continue
+            # Any other 4xx is permanent: raise_for_status raises and we do not
+            # retry it.
+            r.raise_for_status()
+            return r.json()
+        except requests.RequestException as exc:
+            raise OLUnavailable(type(exc).__name__) from exc
+        except ValueError as exc:
+            raise ValueError(f"invalid search JSON: {exc}") from exc
+        finally:
+            r.close()
+    raise OLUnavailable("search failed")
 
 
 @lru_cache(maxsize=128)

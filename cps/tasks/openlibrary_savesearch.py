@@ -170,77 +170,102 @@ class TaskSaveOpenLibrarySearch(CalibreTask):
             self._save_book_locked(book, isbn, target)
 
     def _save_book_locked(self, book, isbn, target):
+        # Create the directory before any manifest write, including the failure
+        # manifest written when the edition API returns 404 or a network error.
+        os.makedirs(target, exist_ok=True)
+
         manifest_path = os.path.join(target, "sources.json")
         manifest = self._read_manifest(manifest_path)
-        if manifest and manifest.get("status") in (STATUS_COMPLETE, STATUS_NO_MARC):
-            self.log.debug("Book %s already has complete Open Library data; skipping", book.id)
+
+        # Only a complete archive for the SAME ISBN is skippable. A partial
+        # archive (or one recorded under a different ISBN) is never skipped.
+        if (manifest and manifest.get("isbn") == isbn
+                and manifest.get("status") in (STATUS_COMPLETE, STATUS_NO_MARC)):
+            self.log.debug("Book %s already has complete Open Library data for %s; skipping",
+                           book.id, isbn)
             return
 
-        # Reuse the already-saved edition and verified MARC files from a
-        # previous partial run instead of re-fetching them.
-        sources = list(manifest.get("sources", [])) if manifest else []
-        done = {s["locator"]: s for s in sources if s.get("sha256") and not s.get("error")}
-        failures = [s for s in sources if s.get("error")]
+        # Trust only files that are still on disk and whose SHA-256 matches the
+        # manifest. Failed locators from a previous partial run are kept so they
+        # are retried, and so a partial archive is never demoted to no_marc by
+        # losing them.
+        prev = list(manifest.get("sources", [])) if manifest else []
+        verified = {}  # locator -> source entry (edition or verified MARC file)
+        for s in prev:
+            if (s.get("locator") and s.get("sha256") and not s.get("error")
+                    and self._verify_file(target, s.get("file"), s["sha256"])):
+                verified[s["locator"]] = s
+        failed_locators = [s.get("locator") for s in prev
+                           if s.get("error") and s.get("locator")]
+        edition_key = manifest.get("edition_key") if manifest else None
 
         edition_path = os.path.join(target, "edition.json")
-        if not done.get(f"isbn:{isbn}"):
+        edition = None
+        if f"isbn:{isbn}" not in verified:
             if self._cancelled():
                 return
             try:
                 edition = self._get_edition(isbn)
             except OLUnavailable as exc:
                 self.log.warning("Open Library unavailable for %s: %s", isbn, exc)
-                self._write_manifest(manifest_path, isbn, STATUS_FAILED, sources, edition_key=None)
+                self._write_manifest(manifest_path, isbn, STATUS_FAILED,
+                                     self._final_sources(verified, failed_locators), None)
                 return
             if not edition:
                 self.log.info("No Open Library edition for ISBN %s (book %s)", isbn, book.id)
-                self._write_manifest(manifest_path, isbn, STATUS_FAILED, sources, edition_key=None)
+                self._write_manifest(manifest_path, isbn, STATUS_FAILED,
+                                     self._final_sources(verified, failed_locators), None)
                 return
-            os.makedirs(target, exist_ok=True)
             digest = self._atomic_write(edition_path, self._dumps(edition).encode("utf-8"))
-            done[f"isbn:{isbn}"] = {
+            verified[f"isbn:{isbn}"] = {
                 "file": "edition.json", "locator": f"isbn:{isbn}",
                 "sha256": digest, "fetched_at": self._now(),
             }
             edition_key = self._edition_key(edition)
         else:
-            edition = None
-            edition_key = manifest.get("edition_key")
+            # Load the saved edition to reconstruct the complete set of
+            # source_records, so locators missing from the manifest still get
+            # another chance.
+            edition = self._load_edition(edition_path)
 
-        sources = list(done.values())
-        locators = marc_locators(edition) if edition else self._locators_from(sources)
+        # Reconstruct the full locator set: from the loaded edition when
+        # available, otherwise from verified + failed manifest entries.
+        locators = marc_locators(edition) if edition else self._locators_from(
+            list(verified.values()) + [{"locator": loc} for loc in failed_locators])
         failed = []
         for n, (item, fname, off, ln) in enumerate(locators, start=1):
             if self._cancelled():
-                self._write_manifest(manifest_path, isbn, STATUS_PARTIAL, sources, edition_key)
+                self._write_manifest(manifest_path, isbn, STATUS_PARTIAL,
+                                     self._final_sources(verified, failed), edition_key)
                 return
             locator = f"marc:{item}/{fname}:{off}:{ln}"
-            if locator in done:
-                continue
+            if locator in verified:
+                continue  # already verified on disk; do not re-download
             name = f"marc_{n}_{_safe(item)}_{_safe(off)}.mrc"
             try:
                 data = self._get_marc(item, fname, off, ln)
                 digest = self._atomic_write(os.path.join(target, name), data)
-                sources.append({
+                verified[locator] = {
                     "file": name, "locator": locator, "sha256": digest,
                     "fetched_at": self._now(),
-                })
+                }
             except (OLUnavailable, ValueError) as exc:
                 self.log.warning("MARC %s/%s@%s unavailable: %s", item, fname, off, exc)
                 failed.append({"locator": locator, "error": str(exc)})
-                sources.append({"file": name, "locator": locator, "error": str(exc)})
 
         if self._cancelled():
-            self._write_manifest(manifest_path, isbn, STATUS_PARTIAL, sources, edition_key)
+            self._write_manifest(manifest_path, isbn, STATUS_PARTIAL,
+                                 self._final_sources(verified, failed), edition_key)
             return
 
-        if not locators:
+        if not locators and not failed:
             status = STATUS_NO_MARC
         elif failed:
             status = STATUS_PARTIAL
         else:
             status = STATUS_COMPLETE
-        self._write_manifest(manifest_path, isbn, status, sources, edition_key)
+        self._write_manifest(manifest_path, isbn, status,
+                             self._final_sources(verified, failed), edition_key)
         self.log.info("Saved Open Library search data for book %s (%s): %s",
                       book.id, isbn, status)
 
@@ -314,7 +339,39 @@ class TaskSaveOpenLibrarySearch(CalibreTask):
             return works[0].get("key")
         return None
 
+    @staticmethod
+    def _load_edition(path):
+        """Load a previously saved edition.json, or None."""
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            return data if isinstance(data, dict) else None
+        except (OSError, ValueError):
+            return None
+
+    @staticmethod
+    def _verify_file(target, filename, sha256):
+        """True only when ``filename`` exists and its SHA-256 matches."""
+        if not filename or not sha256:
+            return False
+        try:
+            with open(os.path.join(target, filename), "rb") as f:
+                data = f.read()
+            return hashlib.sha256(data).hexdigest() == sha256
+        except OSError:
+            return False
+
+    @staticmethod
+    def _final_sources(verified, failed):
+        """Manifest source list: verified entries plus failed locators."""
+        return list(verified.values()) + list(failed)
+
     def _write_manifest(self, path, isbn, status, sources, edition_key):
+        """Write the manifest best-effort.
+
+        A failure to write the manifest must not obscure the original network
+        error that led here, so it is logged and swallowed.
+        """
         payload = {
             "isbn": isbn,
             "edition_key": edition_key,
@@ -322,7 +379,10 @@ class TaskSaveOpenLibrarySearch(CalibreTask):
             "sources": sources,
             "updated_at": self._now(),
         }
-        self._atomic_write(path, self._dumps(payload).encode("utf-8"))
+        try:
+            self._atomic_write(path, self._dumps(payload).encode("utf-8"))
+        except OSError as exc:
+            self.log.warning("Failed to write Open Library manifest %s: %s", path, exc)
 
     @staticmethod
     def _now():

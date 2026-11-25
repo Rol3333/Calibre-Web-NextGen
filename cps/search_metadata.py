@@ -10,6 +10,7 @@ import importlib
 import inspect
 import json
 import os
+import re
 import sys
 
 import requests
@@ -433,6 +434,17 @@ def _classify_provider_failure(exc: Exception, provider=None) -> tuple:
     return ("error", text)
 
 
+def _book_id_from_referrer(referrer):
+    """The numeric book id when ``referrer`` is a classic edit page.
+
+    ``/admin/book/<id>`` is the page that hosts the classic metadata modal.
+    Used as a fallback when the request has no ``book_id`` field (a cached
+    ``get_meta.js`` from before the field was added still posts only ``query``).
+    """
+    match = re.search(r"/admin/book/(\d+)(?:[/?#]|$)", referrer or "")
+    return match.group(1) if match else None
+
+
 @meta.route("/metadata/search", methods=["POST"])
 @user_login_required
 def metadata_search():
@@ -453,6 +465,24 @@ def metadata_search():
     """
     form = request.form.to_dict()
     query = form.get("query")
+    # A search from a book's edit page carries the book id. Queue the Open
+    # Library search-data save for that book so the edition JSON + MARC records
+    # are written as soon as the search succeeds, not only after the user
+    # applies a result and saves the form. Best-effort: the task itself skips
+    # books without a valid ISBN and archives that are already complete.
+    book_id = form.get("book_id")
+    if not book_id:
+        # Browsers can still hold the previous get_meta.js, which posts no
+        # book_id. The classic edit page's URL names the book, so fall back to
+        # it rather than silently skipping the save.
+        referer_book = _book_id_from_referrer(request.referrer)
+        book_id = referer_book
+    if book_id:
+        try:
+            from cps.services.openlibrary_save import queue_save_search_data
+            queue_save_search_data(int(book_id))
+        except (TypeError, ValueError):
+            pass
     # Optional comma-separated provider allowlist. The editions drill-down asks
     # for one provider's own identifier syntax (`hardcover-id:<id>`); without
     # this every other enabled provider was handed that literal string, searched

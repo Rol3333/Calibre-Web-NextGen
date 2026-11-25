@@ -1173,6 +1173,9 @@ def table_xchange_author_title():
 
             if config.config_use_google_drive:
                 gdriveutils.updateGdriveCalibreFromLocal()
+            # Archive Open Library search data after the bulk commit.
+            if modify_date and book.id:
+                _queue_openlibrary_save(book.id)
         return json.dumps({'success': True})
     return ""
 
@@ -1352,6 +1355,13 @@ def do_edit_book(book_id, upload_formats=None):
                 calibre_db.session.merge(book)
                 calibre_db.session.commit()
             log.debug("[edit_book] db commit retry ok book_id=%s duration=%.3fs", book.id, time.monotonic() - request_start)
+
+        # Archive the Open Library search data after the metadata commit
+        # succeeds. Queued before the cover publish so a cover download or
+        # staging failure cannot prevent archival of metadata that was already
+        # committed (fixes_v2 P0).
+        if modify_date and book.id:
+            _queue_openlibrary_save(book.id)
 
         if cover_stage is not None:
             published, publish_error = cover_stage.publish()

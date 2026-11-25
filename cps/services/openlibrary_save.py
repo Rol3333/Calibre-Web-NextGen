@@ -29,6 +29,7 @@ def queue_save_search_data(book_id):
         from cps.services.worker import WorkerThread
         from cps.tasks.openlibrary_savesearch import TaskSaveOpenLibrarySearch
         WorkerThread.add(None, TaskSaveOpenLibrarySearch(book_id=book_id))
+        log.info("Queued Open Library search-data save for book %s", book_id)
     except Exception as e:  # noqa: BLE001 — saving is best-effort
         log.warning("Could not queue Open Library search-data save for book %s: %s",
                     book_id, e)

@@ -26,6 +26,7 @@ from ..helper import (convert_book_format, save_cover, save_cover_from_url, tags
                      get_convert_options, mark_book_modified, log_metadata_change,
                      replace_cover_thumbnail_cache, book_cover_is_locked)
 from ..services import isbn_extract
+from ..services.openlibrary_save import queue_save_search_data
 
 # Fields the SPA edit form can change, applied in this order. Title/authors come
 # first because they may restructure the book's directory; the rest follow.
@@ -576,6 +577,14 @@ def update_metadata(book_id):
             except Exception as exc:  # noqa: BLE001 — surface as a field error, don't 500
                 calibre_db.session.rollback()
                 errors["identifiers"] = str(exc)
+
+    # A successful SPA save is a metadata apply: queue the Open Library
+    # search-data save for this book (best-effort, keyed on the book's ISBN).
+    # The per-field edit_book_param path also queues, but identifiers are
+    # handled directly above, so this explicit call covers an apply whose only
+    # change was identifiers.
+    if not errors:
+        queue_save_search_data(book_id)
 
     # Re-fetch so the response reflects the committed state.
     fresh = _editable_book(book_id)

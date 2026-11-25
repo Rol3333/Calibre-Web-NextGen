@@ -3073,7 +3073,10 @@ def save_cover_from_filestorage(filepath, saved_filename, img, handle_factory=No
             staged_mode = os.stat(target).st_mode & 0o777
         except OSError:
             staged_mode = 0o644
-        os.fchmod(fd, staged_mode)
+        # os.fchmod is POSIX-only; Windows has no file-mode bits to set, so the
+        # staged file keeps its default permissions (fixes_v2 P1).
+        if hasattr(os, "fchmod"):
+            os.fchmod(fd, staged_mode)
         if isinstance(img, requests.Response):
             content_len = len(img.content) if img.content is not None else 0
             ct = img.headers.get("content-type") if hasattr(img, "headers") else None

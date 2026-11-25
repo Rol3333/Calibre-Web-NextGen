@@ -277,6 +277,9 @@ $(function () {
         type: "POST",
         data: {
           query: keyword,
+          // Lets /metadata/search queue the Open Library search-data save for
+          // this book (classic editor). The SPA passes the same field.
+          book_id: $("#meta-search input[name='book_id']").val(),
           csrf_token: $("input[name='csrf_token']").first().val(),
         },
         dataType: "json",
